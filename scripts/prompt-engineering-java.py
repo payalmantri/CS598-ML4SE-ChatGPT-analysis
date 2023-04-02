@@ -56,13 +56,11 @@ def generate_responses(df):
         # Add the response to the dataframe in the Response column
         df.at[index, 'Response from API'] = response
 
-# get top 5 rows in the dataframe
-
-# generate responses for the top 5 rows
-# generate_responses(df)
+# generate responses for the  number_of_rows_to_process rows
+generate_responses(df)
 
 # save the dataframe to excel file
-df.to_excel('milestone2-results.xlsx', index=False)
+df.to_excel('milestone2-results-java.xlsx', index=False)
 
 
 
