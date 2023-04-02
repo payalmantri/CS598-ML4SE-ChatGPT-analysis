@@ -10,6 +10,8 @@ https://github.com/mmabrouk/chatgpt-wrapper
 
 4. navigate to `~\CS598-ML4SE-ChatGPT-analysis\scripts\`
 
-5. in the `prompt-engineering.py` file modify the prompt and filenames in the `prompt`, `main_file`, and `adversary_file` variables
+5. in the `prompt-engineering-java.py` file, change the `number_of_rows_to_process' variable to the number of rows you want to process
+
+6. run `python prompt-engineering-java.py` in the terminal to get the results in 'milestone2-results.csv'
 
 
