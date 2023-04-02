@@ -21,10 +21,10 @@ print(response)
 # print()
 
 
-# metaPrompt = "Does this description match the following code correctly?"
+metaPrompt = "Does this description match the following code correctly?"
 
-# response = bot.ask(metaPrompt + "\nDescription:\n" + response + "\nCode:\n" +adversary_file_contents)
-# print(response)
+response = bot.ask(metaPrompt + "\nDescription:\n" + response + "\nCode:\n" +adversary_file_contents)
+print(response)
 
 """
 Things to prompt:
@@ -40,6 +40,7 @@ Task 2:
 a. generate unit tests for this code
 b. what kinds of edge cases should we test in this code
 c. generate a unit test for if <variable> is <situation>
+d. generate an exceptional unit test for the code
 
 Task 3:
 a. generate code that is semantically equivalent to <function>
