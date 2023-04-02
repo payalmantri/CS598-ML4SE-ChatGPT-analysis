@@ -14,4 +14,8 @@ https://github.com/mmabrouk/chatgpt-wrapper
 
 6. run `python prompt-engineering-java.py` in the terminal to get the results in 'milestone2-results.csv'
 
+7. If you have any library or dependency errors that arise when you try and run the script, make sure you pip install them 
+    
+    For example: `pip install openpyxl` 
+
 
