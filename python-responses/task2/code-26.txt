@@ -1,0 +1,71 @@
+
+-----------------------------------------
+ Prompt: can you write unit tests for the following function:
+Code:
+def is_dict_like(obj):
+    """
+    Check if the object is dict-like.
+
+    Parameters
+    ----------
+    obj : The object to check
+
+    Returns
+    -------
+    is_dict_like : bool
+        Whether `obj` has dict-like properties.
+
+    Examples
+    --------
+    >>> is_dict_like({1: 2})
+    True
+    >>> is_dict_like([1, 2, 3])
+    False
+    >>> is_dict_like(dict)
+    False
+    >>> is_dict_like(dict())
+    True
+    """
+    dict_like_attrs = ("__getitem__", "keys", "__contains__")
+    return (all(hasattr(obj, attr) for attr in dict_like_attrs)
+            # [GH 25196] exclude classes
+            and not isinstance(obj, type))
+-----------------------------------------
+ChatGPT response: import unittest
+
+class TestIsDictLike(unittest.TestCase):
+    
+    def test_dict(self):
+        self.assertTrue(is_dict_like({1: 2}))
+    
+    def test_list(self):
+        self.assertFalse(is_dict_like([1, 2, 3]))
+    
+    def test_empty_dict(self):
+        self.assertTrue(is_dict_like(dict()))
+    
+    def test_class(self):
+        self.assertFalse(is_dict_like(dict))
+    
+    def test_str(self):
+        self.assertFalse(is_dict_like('hello'))
+    
+    def test_set(self):
+        self.assertFalse(is_dict_like({1, 2, 3}))
+    
+    def test_custom_dict(self):
+        class CustomDict:
+            def __getitem__(self, key):
+                return key.upper()
+            
+            def keys(self):
+                return ['a', 'b', 'c']
+            
+            def __contains__(self, key):
+                return key in self.keys()
+        
+        self.assertTrue(is_dict_like(CustomDict()))
+    
+if __name__ == '__main__':
+    unittest.main()
+

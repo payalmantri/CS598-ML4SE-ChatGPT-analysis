@@ -1,0 +1,124 @@
+
+-----------------------------------------
+ Prompt: can you generate an exceptional unit test for this code
+Code:
+def _trim_css_to_bounds(css, image_shape):
+    """
+    Make sure a tuple in (top, right, bottom, left) order is within the bounds of the image.
+
+    :param css:  plain tuple representation of the rect in (top, right, bottom, left) order
+    :param image_shape: numpy shape of the image array
+    :return: a trimmed plain tuple representation of the rect in (top, right, bottom, left) order
+    """
+    return max(css[0], 0), min(css[1], image_shape[1]), min(css[2], image_shape[0]), max(css[3], 0)
+-----------------------------------------
+ChatGPT response: import unittest
+import numpy as np
+from my_module import _trim_css_to_bounds
+
+class TestTrimCssToBounds(unittest.TestCase):
+    def test_trim_css_to_bounds(self):
+        # Test with negative image_shape values
+        css = (10, 20, 30, 40)
+        image_shape = (-50, -60, 3)
+
+        with self.assertRaises(ValueError):
+            _trim_css_to_bounds(css, image_shape)
+
+if __name__ == '__main__':
+    unittest.main()
+
+
+-----------------------------------------
+ Prompt: can you generate an exceptional unit test for this code
+Code:
+def _trim_css_to_bounds(css, image_shape):
+    """
+    Make sure a tuple in (top, right, bottom, left) order is within the bounds of the image.
+
+    :param css:  plain tuple representation of the rect in (top, right, bottom, left) order
+    :param image_shape: numpy shape of the image array
+    :return: a trimmed plain tuple representation of the rect in (top, right, bottom, left) order
+    """
+    return max(css[0], 0), min(css[1], image_shape[1]), min(css[2], image_shape[0]), max(css[3], 0)
+-----------------------------------------
+ChatGPT response: def test_trim_css_to_bounds_with_invalid_css():
+    # Test with invalid css argument
+    css = [1, 2, "three", 4] # one of the values is a string instead of a numeric type
+    image_shape = (200, 300)
+    with pytest.raises(TypeError):
+        _trim_css_to_bounds(css, image_shape)
+
+
+-----------------------------------------
+ Prompt: generate a unit test for this code
+Code:
+def _trim_css_to_bounds(css, image_shape):
+    """
+    Make sure a tuple in (top, right, bottom, left) order is within the bounds of the image.
+
+    :param css:  plain tuple representation of the rect in (top, right, bottom, left) order
+    :param image_shape: numpy shape of the image array
+    :return: a trimmed plain tuple representation of the rect in (top, right, bottom, left) order
+    """
+    return max(css[0], 0), min(css[1], image_shape[1]), min(css[2], image_shape[0]), max(css[3], 0)
+-----------------------------------------
+ChatGPT response: import unittest
+import numpy as np
+from my_module import _trim_css_to_bounds
+
+class TestTrimCssToBounds(unittest.TestCase):
+    def test_trim_css_to_bounds(self):
+        css = (10, 20, 30, 40)
+        image_shape = (50, 60, 3)
+        expected_output = (10, 40, 30, 0)
+
+        result = _trim_css_to_bounds(css, image_shape)
+        self.assertEqual(result, expected_output)
+
+        # Test with values outside the image bounds
+        css = (-10, 80, 100, -20)
+        expected_output = (0, 60, 50, 0)
+
+        result = _trim_css_to_bounds(css, image_shape)
+        self.assertEqual(result, expected_output)
+
+        # Test with zero values
+        css = (0, 0, 0, 0)
+        expected_output = (0, 0, 0, 0)
+
+        result = _trim_css_to_bounds(css, image_shape)
+        self.assertEqual(result, expected_output)
+
+        # Test with image_shape values of 1
+        css = (10, 20, 30, 40)
+        image_shape = (1, 1, 3)
+        expected_output = (0, 0, 0, 0)
+
+        result = _trim_css_to_bounds(css, image_shape)
+        self.assertEqual(result, expected_output)
+
+if __name__ == '__main__':
+    unittest.main()
+
+
+-----------------------------------------
+ Prompt: generate a unit test for this code
+Code:
+def _trim_css_to_bounds(css, image_shape):
+    """
+    Make sure a tuple in (top, right, bottom, left) order is within the bounds of the image.
+
+    :param css:  plain tuple representation of the rect in (top, right, bottom, left) order
+    :param image_shape: numpy shape of the image array
+    :return: a trimmed plain tuple representation of the rect in (top, right, bottom, left) order
+    """
+    return max(css[0], 0), min(css[1], image_shape[1]), min(css[2], image_shape[0]), max(css[3], 0)
+-----------------------------------------
+ChatGPT response: def test_trim_css_to_bounds_with_valid_input():
+    # Test with valid input arguments
+    css = [10, 50, 200, 100]
+    image_shape = (300, 400)
+    expected_output = (10, 50, 200, 0)
+    assert _trim_css_to_bounds(css, image_shape) == expected_output
+

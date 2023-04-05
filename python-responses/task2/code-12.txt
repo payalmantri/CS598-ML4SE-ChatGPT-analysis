@@ -1,0 +1,189 @@
+
+-----------------------------------------
+ Prompt: what unit test cases would you test for this function
+Code:
+def _parse_datatype_string(s):
+    """
+    Parses the given data type string to a :class:`DataType`. The data type string format equals
+    to :class:`DataType.simpleString`, except that top level struct type can omit
+    the ``struct<>`` and atomic types use ``typeName()`` as their format, e.g. use ``byte`` instead
+    of ``tinyint`` for :class:`ByteType`. We can also use ``int`` as a short name
+    for :class:`IntegerType`. Since Spark 2.3, this also supports a schema in a DDL-formatted
+    string and case-insensitive strings.
+
+    >>> _parse_datatype_string("int ")
+    IntegerType
+    >>> _parse_datatype_string("INT ")
+    IntegerType
+    >>> _parse_datatype_string("a: byte, b: decimal(  16 , 8   ) ")
+    StructType(List(StructField(a,ByteType,true),StructField(b,DecimalType(16,8),true)))
+    >>> _parse_datatype_string("a DOUBLE, b STRING")
+    StructType(List(StructField(a,DoubleType,true),StructField(b,StringType,true)))
+    >>> _parse_datatype_string("a: array< short>")
+    StructType(List(StructField(a,ArrayType(ShortType,true),true)))
+    >>> _parse_datatype_string(" map<string , string > ")
+    MapType(StringType,StringType,true)
+
+    >>> # Error cases
+    >>> _parse_datatype_string("blabla") # doctest: +IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+        ...
+    ParseException:...
+    >>> _parse_datatype_string("a: int,") # doctest: +IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+        ...
+    ParseException:...
+    >>> _parse_datatype_string("array<int") # doctest: +IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+        ...
+    ParseException:...
+    >>> _parse_datatype_string("map<int, boolean>>") # doctest: +IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+        ...
+    ParseException:...
+    """
+    sc = SparkContext._active_spark_context
+
+    def from_ddl_schema(type_str):
+        return _parse_datatype_json_string(
+            sc._jvm.org.apache.spark.sql.types.StructType.fromDDL(type_str).json())
+
+    def from_ddl_datatype(type_str):
+        return _parse_datatype_json_string(
+            sc._jvm.org.apache.spark.sql.api.python.PythonSQLUtils.parseDataType(type_str).json())
+
+    try:
+        # DDL format, "fieldname datatype, fieldname datatype".
+        return from_ddl_schema(s)
+    except Exception as e:
+        try:
+            # For backwards compatibility, "integer", "struct<fieldname: datatype>" and etc.
+            return from_ddl_datatype(s)
+        except:
+            try:
+                # For backwards compatibility, "fieldname: datatype, fieldname: datatype" case.
+                return from_ddl_datatype("struct<%s>" % s.strip())
+            except:
+                raise e
+-----------------------------------------
+ChatGPT response: Here are some example unit test cases that could be used to test the _parse_datatype_string function:
+
+Test that the function returns the correct DataType object for a simple atomic type input string, such as "integer" or "float".
+Test that the function returns the correct DataType object for a simple named type input string, such as "byte" or "date".
+Test that the function returns the correct DataType object for a complex type input string, such as "array<string>" or "structname:string,age:integer".
+Test that the function can handle whitespace and case-insensitivity in the input string, such as "ARRAY < STRING >" or "iNt".
+Test that the function can handle a DDL-formatted schema input string, such as "a: byte, b: double, c: array<string>".
+Test that the function can handle a malformed input string and raises a ParseException exception.
+Test that the function can handle edge cases, such as empty strings or strings with unexpected characters.
+It is also important to test the function with input strings that represent a wide range of data types and structures to ensure that it is able to handle all possible inputs. Additionally, the function could be tested in combination with other functions that use it, such as functions that generate data frames or process data.
+
+-----------------------------------------
+ Prompt: can you write unit tests for this function
+Code:
+def _parse_datatype_string(s):
+    """
+    Parses the given data type string to a :class:`DataType`. The data type string format equals
+    to :class:`DataType.simpleString`, except that top level struct type can omit
+    the ``struct<>`` and atomic types use ``typeName()`` as their format, e.g. use ``byte`` instead
+    of ``tinyint`` for :class:`ByteType`. We can also use ``int`` as a short name
+    for :class:`IntegerType`. Since Spark 2.3, this also supports a schema in a DDL-formatted
+    string and case-insensitive strings.
+
+    >>> _parse_datatype_string("int ")
+    IntegerType
+    >>> _parse_datatype_string("INT ")
+    IntegerType
+    >>> _parse_datatype_string("a: byte, b: decimal(  16 , 8   ) ")
+    StructType(List(StructField(a,ByteType,true),StructField(b,DecimalType(16,8),true)))
+    >>> _parse_datatype_string("a DOUBLE, b STRING")
+    StructType(List(StructField(a,DoubleType,true),StructField(b,StringType,true)))
+    >>> _parse_datatype_string("a: array< short>")
+    StructType(List(StructField(a,ArrayType(ShortType,true),true)))
+    >>> _parse_datatype_string(" map<string , string > ")
+    MapType(StringType,StringType,true)
+
+    >>> # Error cases
+    >>> _parse_datatype_string("blabla") # doctest: +IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+        ...
+    ParseException:...
+    >>> _parse_datatype_string("a: int,") # doctest: +IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+        ...
+    ParseException:...
+    >>> _parse_datatype_string("array<int") # doctest: +IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+        ...
+    ParseException:...
+    >>> _parse_datatype_string("map<int, boolean>>") # doctest: +IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+        ...
+    ParseException:...
+    """
+    sc = SparkContext._active_spark_context
+
+    def from_ddl_schema(type_str):
+        return _parse_datatype_json_string(
+            sc._jvm.org.apache.spark.sql.types.StructType.fromDDL(type_str).json())
+
+    def from_ddl_datatype(type_str):
+        return _parse_datatype_json_string(
+            sc._jvm.org.apache.spark.sql.api.python.PythonSQLUtils.parseDataType(type_str).json())
+
+    try:
+        # DDL format, "fieldname datatype, fieldname datatype".
+        return from_ddl_schema(s)
+    except Exception as e:
+        try:
+            # For backwards compatibility, "integer", "struct<fieldname: datatype>" and etc.
+            return from_ddl_datatype(s)
+        except:
+            try:
+                # For backwards compatibility, "fieldname: datatype, fieldname: datatype" case.
+                return from_ddl_datatype("struct<%s>" % s.strip())
+            except:
+                raise e
+-----------------------------------------
+ChatGPT response: import unittest
+from pyspark.sql.types import *
+from your_module import _parse_datatype_string
+
+class TestParseDataTypeString(unittest.TestCase):
+    def test_parse_simple_atomic_type(self):
+        self.assertEqual(_parse_datatype_string("integer"), IntegerType())
+        self.assertEqual(_parse_datatype_string("boolean"), BooleanType())
+        self.assertEqual(_parse_datatype_string("double"), DoubleType())
+        
+    def test_parse_simple_named_type(self):
+        self.assertEqual(_parse_datatype_string("byte"), ByteType())
+        self.assertEqual(_parse_datatype_string("timestamp"), TimestampType())
+        self.assertEqual(_parse_datatype_string("decimal"), DecimalType(10, 0))
+        
+    def test_parse_complex_type(self):
+        self.assertEqual(_parse_datatype_string("array<string>"), ArrayType(StringType()))
+        self.assertEqual(_parse_datatype_string("map<integer,boolean>"), MapType(IntegerType(), BooleanType()))
+        self.assertEqual(_parse_datatype_string("struct<name:string,age:integer>"), StructType([StructField("name", StringType()), StructField("age", IntegerType())]))
+        
+    def test_parse_case_insensitive(self):
+        self.assertEqual(_parse_datatype_string("ArRaY< StRiNg >"), ArrayType(StringType()))
+        self.assertEqual(_parse_datatype_string("INT"), IntegerType())
+        
+    def test_parse_ddl_schema(self):
+        self.assertEqual(_parse_datatype_string("a: byte, b: double, c: array<string>"), StructType([StructField("a", ByteType()), StructField("b", DoubleType()), StructField("c", ArrayType(StringType()))]))
+        
+    def test_parse_malformed_input(self):
+        with self.assertRaises(ParseException):
+            _parse_datatype_string("blah")
+        with self.assertRaises(ParseException):
+            _parse_datatype_string("array<int")
+        with self.assertRaises(ParseException):
+            _parse_datatype_string("map<int, boolean>>")
+            
+    def test_parse_edge_cases(self):
+        self.assertEqual(_parse_datatype_string(""), NullType())
+        self.assertEqual(_parse_datatype_string("   "), NullType())
+        self.assertEqual(_parse_datatype_string("int "), IntegerType())
+
+if __name__ == '__main__':
+    unittest.main()
+

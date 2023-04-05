@@ -1,0 +1,32 @@
+
+----------------------------------------
+ Prompt: can you write semantically equivalent but different code to the given function
+Code:
+def _perspective_warp(c, magnitude:partial(uniform,size=8)=0, invert=False):
+    "Apply warp of `magnitude` to `c`."
+    magnitude = magnitude.view(4,2)
+    targ_pts = [[x+m for x,m in zip(xs, ms)] for xs, ms in zip(_orig_pts, magnitude)]
+    return _do_perspective_warp(c, targ_pts, invert)
+-----------------------------------------
+ChatGPT response: import torch
+from torch.nn.functional import affine_grid, grid_sample
+from functools import partial
+
+def _perspective_warp(c, magnitude: partial(torch.Tensor.uniform_, size=(8,), requires_grad=True)=0, invert=False):
+    # Generate a batch of affine transformation matrices from the magnitude tensor
+    theta = torch.zeros((c.shape[0], 2, 3), dtype=torch.float32, requires_grad=True)
+    theta[:, 0, 0] = magnitude[0] + 1
+    theta[:, 0, 1] = magnitude[1]
+    theta[:, 0, 2] = magnitude[2]
+    theta[:, 1, 0] = magnitude[3]
+    theta[:, 1, 1] = magnitude[4] + 1
+    theta[:, 1, 2] = magnitude[5]
+    grid = affine_grid(theta, c.size())
+
+    # Apply the perspective warp using grid sampling
+    if invert:
+        grid = 2 * torch.tensor([0.5, -0.5], dtype=torch.float32) + grid
+    output = grid_sample(c, grid)
+
+    return output
+

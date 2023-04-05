@@ -1,0 +1,39 @@
+
+-----------------------------------------
+ Prompt: what does the following code do?
+Code:
+def is_sequence(obj):
+    """
+    Check if the object is a sequence of objects.
+    String types are not included as sequences here.
+
+    Parameters
+    ----------
+    obj : The object to check
+
+    Returns
+    -------
+    is_sequence : bool
+        Whether `obj` is a sequence of objects.
+
+    Examples
+    --------
+    >>> l = [1, 2, 3]
+    >>>
+    >>> is_sequence(l)
+    True
+    >>> is_sequence(iter(l))
+    False
+    """
+
+    try:
+        iter(obj)  # Can iterate over it.
+        len(obj)   # Has a length associated with it.
+        return not isinstance(obj, (str, bytes))
+    except (TypeError, AttributeError):
+        return False
+
+-----------------------------------------
+ChatGPT response: This is a Python function called is_sequence() that takes an object as input and checks whether it is a sequence of objects. The function first checks whether the input object is iterable (i.e., it can be looped over) and has a length associated with it using the iter() and len() functions respectively. If these conditions are met, the function then checks whether the input object is a string or bytes using the isinstance() function. If the input object satisfies all these conditions, the function returns True, indicating that the object is a sequence of objects. Otherwise, the function returns False.
+
+The function also includes a docstring that explains its purpose, parameters, return value, and provides examples of how to use it.

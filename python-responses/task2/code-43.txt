@@ -1,0 +1,40 @@
+
+-----------------------------------------
+ Prompt: can you write unit tests for the given code
+Code:
+def adjust_learning_rate(optimizer, epoch, gammas, schedule):
+  """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
+  lr = args.learning_rate
+  assert len(gammas) == len(schedule), "length of gammas and schedule should be equal"
+  for (gamma, step) in zip(gammas, schedule):
+    if (epoch >= step):
+      lr = lr * gamma
+    else:
+      break
+  for param_group in optimizer.param_groups:
+    param_group['lr'] = lr
+  return lr
+-----------------------------------------
+ChatGPT response: import torch.optim as optim
+
+def test_adjust_learning_rate():
+    optimizer = optim.SGD([torch.randn(10)], lr=0.1)
+    gammas = [0.1, 0.01, 0.001]
+    schedule = [30, 60, 90]
+    
+    # Test with epoch < first step
+    lr = adjust_learning_rate(optimizer, epoch=10, gammas=gammas, schedule=schedule)
+    assert lr == 0.1, f"Unexpected learning rate: {lr}"
+    
+    # Test with epoch == first step
+    lr = adjust_learning_rate(optimizer, epoch=30, gammas=gammas, schedule=schedule)
+    assert lr == 0.01, f"Unexpected learning rate: {lr}"
+    
+    # Test with epoch > first step, but < second step
+    lr = adjust_learning_rate(optimizer, epoch=50, gammas=gammas, schedule=schedule)
+    assert lr == 0.001, f"Unexpected learning rate: {lr}"
+    
+    # Test with epoch > last step
+    lr = adjust_learning_rate(optimizer, epoch=100, gammas=gammas, schedule=schedule)
+    assert lr == 0.0001, f"Unexpected learning rate: {lr}"
+

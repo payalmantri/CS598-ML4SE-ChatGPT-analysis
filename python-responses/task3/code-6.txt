@@ -1,0 +1,85 @@
+
+----------------------------------------
+ Prompt: can you write a semantically equivalent code to the original function without the if statement?
+-----------------------------------------
+ChatGPT response: def load_image_file(file, mode='RGB'):
+    """
+    Loads an image file (.jpg, .png, etc) into a numpy array
+
+    :param file: image file name or file object to load
+    :param mode: format to convert the image to. Only 'RGB' (8-bit RGB, 3 channels) and 'L' (black and white) are supported.
+    :return: image contents as numpy array
+    """
+    allowed_modes = ['RGB', 'L']
+    if mode not in allowed_modes:
+        raise ValueError(f"Invalid mode '{mode}'. Allowed modes are {allowed_modes}.")
+    im = PIL.Image.open(file).convert(mode)
+    return np.array(im)
+
+
+----------------------------------------
+ Prompt: this is not semantically equivalent because it has more error checking than the original function. the original function does not check if the mode is one of the allowed strings
+-----------------------------------------
+ChatGPT response: def load_image_file(file, mode='RGB'):
+    """
+    Loads an image file (.jpg, .png, etc) into a numpy array
+
+    :param file: image file name or file object to load
+    :param mode: format to convert the image to. Only 'RGB' (8-bit RGB, 3 channels) and 'L' (black and white) are supported.
+    :return: image contents as numpy array
+    """
+    if mode not in ['RGB', 'L']:
+        raise ValueError(f"Invalid mode '{mode}'. Allowed modes are 'RGB' and 'L'.")
+    im = PIL.Image.open(file)
+    im = im.convert(mode)
+    return np.array(im)
+
+
+----------------------------------------
+ Prompt: can you generate semantically equivalent code to the original function? you may use an if statement
+Code:
+# Original
+def load_image_file(file, mode='RGB'):
+    """
+    Loads an image file (.jpg, .png, etc) into a numpy array
+
+    :param file: image file name or file object to load
+    :param mode: format to convert the image to. Only 'RGB' (8-bit RGB, 3 channels) and 'L' (black and white) are supported.
+    :return: image contents as numpy array
+    """
+    im = PIL.Image.open(file)
+    if mode:
+        im = im.convert(mode)
+    return np.array(im)
+
+
+# ChatGPT generated
+def load_image_file(file, mode='RGB'):
+    """
+    Loads an image file (.jpg, .png, etc) into a numpy array
+
+    :param file: image file name or file object to load
+    :param mode: format to convert the image to. Only 'RGB' (8-bit RGB, 3 channels) and 'L' (black and white) are supported.
+    :return: image contents as numpy array
+    """
+    allowed_modes = ['RGB', 'L']
+    if mode not in allowed_modes:
+        raise ValueError(f"Invalid mode '{mode}'. Allowed modes are {allowed_modes}.")
+    im = PIL.Image.open(file).convert(mode)
+    return np.array(im)
+-----------------------------------------
+ChatGPT response: def load_image_file(file, mode='RGB'):
+    """
+    Loads an image file (.jpg, .png, etc) into a numpy array
+
+    :param file: image file name or file object to load
+    :param mode: format to convert the image to. Only 'RGB' (8-bit RGB, 3 channels) and 'L' (black and white) are supported.
+    :return: image contents as numpy array
+    """
+    if mode is not None:
+        im = PIL.Image.open(file)
+        im = im.convert(mode)
+    else:
+        im = PIL.Image.open(file)
+    return np.array(im)
+

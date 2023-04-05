@@ -1,0 +1,94 @@
+
+-----------------------------------------
+ Prompt: can you generate unit tests for this code
+Code:
+def _infer_schema(row, names=None):
+    """Infer the schema from dict/namedtuple/object"""
+    if isinstance(row, dict):
+        items = sorted(row.items())
+
+    elif isinstance(row, (tuple, list)):
+        if hasattr(row, "__fields__"):  # Row
+            items = zip(row.__fields__, tuple(row))
+        elif hasattr(row, "_fields"):  # namedtuple
+            items = zip(row._fields, tuple(row))
+        else:
+            if names is None:
+                names = ['_%d' % i for i in range(1, len(row) + 1)]
+            elif len(names) < len(row):
+                names.extend('_%d' % i for i in range(len(names) + 1, len(row) + 1))
+            items = zip(names, row)
+
+    elif hasattr(row, "__dict__"):  # object
+        items = sorted(row.__dict__.items())
+
+    else:
+        raise TypeError("Can not infer schema for type: %s" % type(row))
+
+    fields = [StructField(k, _infer_type(v), True) for k, v in items]
+    return StructType(fields)
+-----------------------------------------
+ChatGPT response: import unittest
+from pyspark.sql.types import StructType, StructField, IntegerType, StringType, BooleanType
+from collections import namedtuple
+
+class TestInferSchema(unittest.TestCase):
+    def test_dict(self):
+        row = {'name': 'Alice', 'age': 25, 'is_student': True}
+        expected_schema = StructType([
+            StructField('age', IntegerType(), True),
+            StructField('is_student', BooleanType(), True),
+            StructField('name', StringType(), True)
+        ])
+        schema = _infer_schema(row)
+        self.assertEqual(schema, expected_schema)
+
+    def test_tuple(self):
+        row = ('Alice', 25, True)
+        expected_schema = StructType([
+            StructField('_1', StringType(), True),
+            StructField('_2', IntegerType(), True),
+            StructField('_3', BooleanType(), True)
+        ])
+        schema = _infer_schema(row)
+        self.assertEqual(schema, expected_schema)
+
+    def test_namedtuple(self):
+        Row = namedtuple('Row', ['name', 'age', 'is_student'])
+        row = Row('Alice', 25, True)
+        expected_schema = StructType([
+            StructField('name', StringType(), True),
+            StructField('age', IntegerType(), True),
+            StructField('is_student', BooleanType(), True)
+        ])
+        schema = _infer_schema(row)
+        self.assertEqual(schema, expected_schema)
+
+    def test_list(self):
+        row = ['Alice', 25, True]
+        expected_schema = StructType([
+            StructField('_1', StringType(), True),
+            StructField('_2', IntegerType(), True),
+            StructField('_3', BooleanType(), True)
+        ])
+        schema = _infer_schema(row)
+        self.assertEqual(schema, expected_schema)
+
+    def test_object(self):
+        class Person:
+            def __init__(self, name, age, is_student):
+                self.name = name
+                self.age = age
+                self.is_student = is_student
+        row = Person('Alice', 25, True)
+        expected_schema = StructType([
+            StructField('age', IntegerType(), True),
+            StructField('is_student', BooleanType(), True),
+            StructField('name', StringType(), True)
+        ])
+        schema = _infer_schema(row)
+        self.assertEqual(schema, expected_schema)
+
+if __name__ == '__main__':
+    unittest.main()
+

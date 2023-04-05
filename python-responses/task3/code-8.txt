@@ -1,0 +1,51 @@
+
+----------------------------------------
+ Prompt: can you write a semantically equivalent function to the function above, but different
+Code:
+def face_locations(img, number_of_times_to_upsample=1, model="hog"):
+    """
+    Returns an array of bounding boxes of human faces in a image
+
+    :param img: An image (as a numpy array)
+    :param number_of_times_to_upsample: How many times to upsample the image looking for faces. Higher numbers find smaller faces.
+    :param model: Which face detection model to use. "hog" is less accurate but faster on CPUs. "cnn" is a more accurate
+                  deep-learning model which is GPU/CUDA accelerated (if available). The default is "hog".
+    :return: A list of tuples of found face locations in css (top, right, bottom, left) order
+    """
+    if model == "cnn":
+        return [_trim_css_to_bounds(_rect_to_css(face.rect), img.shape) for face in _raw_face_locations(img, number_of_times_to_upsample, "cnn")]
+    else:
+        return [_trim_css_to_bounds(_rect_to_css(face), img.shape) for face in _raw_face_locations(img, number_of_times_to_upsample, model)]
+-----------------------------------------
+ChatGPT response: import cv2
+
+def face_locations(img, number_of_times_to_upsample=1, model="hog"):
+    """
+    Returns an array of bounding boxes of human faces in a image
+
+    :param img: An image (as a numpy array)
+    :param number_of_times_to_upsample: How many times to upsample the image looking for faces. Higher numbers find smaller faces.
+    :param model: Which face detection model to use. "hog" is less accurate but faster on CPUs. "cnn" is a more accurate
+                  deep-learning model which is GPU/CUDA accelerated (if available). The default is "hog".
+    :return: A list of tuples of found face locations in css (top, right, bottom, left) order
+    """
+    if model == "hog":
+        face_detector = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+    elif model == "cnn":
+        face_detector = cv2.dnn.readNetFromCaffe(cv2.data.prototxt, cv2.data.caffeModel)
+    else:
+        raise ValueError("Invalid model: " + model)
+    
+    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    faces = face_detector.detectMultiScale(gray_img, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+
+    result = []
+    for (x, y, w, h) in faces:
+        top = y
+        right = x + w
+        bottom = y + h
+        left = x
+        result.append((top, right, bottom, left))
+    
+    return result
+

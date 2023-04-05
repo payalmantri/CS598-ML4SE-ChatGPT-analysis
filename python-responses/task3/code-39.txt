@@ -1,0 +1,53 @@
+
+----------------------------------------
+ Prompt: can you write semantically equivalent but different code to the given function
+Code:
+def _tilt(c, direction:uniform_int, magnitude:uniform=0, invert=False):
+    "Tilt `c` field with random `direction` and `magnitude`."
+    orig_pts = [[-1,-1], [-1,1], [1,-1], [1,1]]
+    if direction == 0:   targ_pts = [[-1,-1], [-1,1], [1,-1-magnitude], [1,1+magnitude]]
+    elif direction == 1: targ_pts = [[-1,-1-magnitude], [-1,1+magnitude], [1,-1], [1,1]]
+    elif direction == 2: targ_pts = [[-1,-1], [-1-magnitude,1], [1,-1], [1+magnitude,1]]
+    elif direction == 3: targ_pts = [[-1-magnitude,-1], [-1,1], [1+magnitude,-1], [1,1]]
+    coeffs = _find_coeffs(targ_pts, _orig_pts) if invert else _find_coeffs(_orig_pts, targ_pts)
+    return _apply_perspective(c, coeffs)
+-----------------------------------------
+ChatGPT response: import cv2
+import numpy as np
+from numpy.random import uniform
+
+def _tilt(c, direction: int, magnitude: float = 0, invert: bool = False):
+    "Tilt `c` field with random `direction` and `magnitude`."
+    rows, cols = c.shape[:2]
+    orig_pts = np.float32([[-1, -1], [-1, 1], [1, -1], [1, 1]])
+    if direction == 0:
+        targ_pts = np.float32([[-1, -1], [-1, 1], [1, -1 - magnitude], [1, 1 + magnitude]])
+    elif direction == 1:
+        targ_pts = np.float32([[-1, -1 - magnitude], [-1, 1 + magnitude], [1, -1], [1, 1]])
+    elif direction == 2:
+        targ_pts = np.float32([[-1, -1], [-1 - magnitude, 1], [1, -1], [1 + magnitude, 1]])
+    elif direction == 3:
+        targ_pts = np.float32([[-1 - magnitude, -1], [-1, 1], [1 + magnitude, -1], [1, 1]])
+    coeffs = cv2.getPerspectiveTransform(targ_pts, orig_pts) if invert else cv2.getPerspectiveTransform(orig_pts, targ_pts)
+    tilted = cv2.warpPerspective(c, coeffs, (cols, rows))
+    return tilted
+
+
+----------------------------------------
+ Prompt: will the cv2 function call output the same data type
+Code:
+def _tilt(c, direction:uniform_int, magnitude:uniform=0, invert=False):
+    "Tilt `c` field with random `direction` and `magnitude`."
+    orig_pts = [[-1,-1], [-1,1], [1,-1], [1,1]]
+    if direction == 0:   targ_pts = [[-1,-1], [-1,1], [1,-1-magnitude], [1,1+magnitude]]
+    elif direction == 1: targ_pts = [[-1,-1-magnitude], [-1,1+magnitude], [1,-1], [1,1]]
+    elif direction == 2: targ_pts = [[-1,-1], [-1-magnitude,1], [1,-1], [1+magnitude,1]]
+    elif direction == 3: targ_pts = [[-1-magnitude,-1], [-1,1], [1+magnitude,-1], [1,1]]
+    coeffs = _find_coeffs(targ_pts, _orig_pts) if invert else _find_coeffs(_orig_pts, targ_pts)
+    return _apply_perspective(c, coeffs)
+-----------------------------------------
+ChatGPT response: The cv2.warpPerspective function will output an image with the same data type as the input image. In the case of the _tilt function, the input image c is likely to be a NumPy array with a data type of np.float32 or np.uint8 (corresponding to 32-bit float or 8-bit unsigned integer, respectively).
+
+When cv2.warpPerspective is called with a src image of type np.float32, the output image will also have the same data type np.float32. Similarly, when cv2.warpPerspective is called with a src image of type np.uint8, the output image will also have the same data type np.uint8.
+
+In either case, the data type of the output image will be the same as the data type of the input image.

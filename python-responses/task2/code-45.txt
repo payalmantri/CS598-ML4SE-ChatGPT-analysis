@@ -1,0 +1,50 @@
+
+-----------------------------------------
+ Prompt: can you write unit tests for the given code
+Code:
+def get_layer_opt(self, lrs, wds):
+
+        """Method returns an instance of the LayerOptimizer class, which
+        allows for setting differential learning rates for different
+        parts of the model.
+
+        An example of how a model maybe differentiated into different parts
+        for application of differential learning rates and weight decays is
+        seen in ../.../courses/dl1/fastai/conv_learner.py, using the dict
+        'model_meta'. Currently, this seems supported only for convolutional
+        networks such as VGG-19, ResNet-XX etc.
+
+        Args:
+            lrs (float or list(float)): learning rate(s) for the model
+
+            wds (float or list(float)): weight decay parameter(s).
+
+        Returns:
+            An instance of a LayerOptimizer
+        """
+        return LayerOptimizer(self.opt_fn, self.get_layer_groups(), lrs, wds)
+-----------------------------------------
+ChatGPT response: import unittest
+from mock import MagicMock
+from fastai.optimizer import OptimWrapper, LayerOptimizer
+
+class TestModel(unittest.TestCase):
+    
+    def setUp(self):
+        self.model = Model()
+        self.model.opt_fn = OptimWrapper
+        self.model.get_layer_groups = MagicMock(return_value=[1,2,3])
+        
+    def test_get_layer_opt(self):
+        lrs = [0.1, 0.2, 0.3]
+        wds = [0.01, 0.02, 0.03]
+        layer_opt = self.model.get_layer_opt(lrs, wds)
+        self.assertIsInstance(layer_opt, LayerOptimizer)
+        self.assertEqual(layer_opt.opt_fn, OptimWrapper)
+        self.assertEqual(layer_opt.layer_groups, [1,2,3])
+        self.assertEqual(layer_opt.lrs, lrs)
+        self.assertEqual(layer_opt.wds, wds)
+
+if __name__ == '__main__':
+    unittest.main()
+

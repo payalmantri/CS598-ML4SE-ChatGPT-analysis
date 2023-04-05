@@ -1,0 +1,54 @@
+
+-----------------------------------------
+ Prompt: what does the following code do?
+Code:
+def _apply_perspective(coords:FlowField, coeffs:Points)->FlowField:
+    "Transform `coords` with `coeffs`."
+    size = coords.flow.size()
+    #compress all the dims expect the last one ang adds ones, coords become N * 3
+    coords.flow = coords.flow.view(-1,2)
+    #Transform the coeffs in a 3*3 matrix with a 1 at the bottom left
+    coeffs = torch.cat([coeffs, FloatTensor([1])]).view(3,3)
+    coords.flow = torch.addmm(coeffs[:,2], coords.flow, coeffs[:,:2].t())
+    coords.flow.mul_(1/coords.flow[:,2].unsqueeze(1))
+    coords.flow = coords.flow[:,:2].view(size)
+    return coords
+
+-----------------------------------------
+ChatGPT response: This code defines a function called _apply_perspective that takes two arguments: coords and coeffs.
+
+The coords argument is of type FlowField, which appears to be a data structure that holds the coordinates of flow fields. The coeffs argument is of type Points, which is likely a data structure that holds the coefficients for a perspective transformation.
+
+The purpose of the function is to apply a perspective transformation to the coords flow field using the coeffs coefficients.
+
+The function first retrieves the size of the flow field using size = coords.flow.size(). It then compresses all the dimensions of the flow field except for the last one and adds ones, effectively converting the flow field from N x 2 to N x 3 shape, where N is the number of points in the flow field.
+
+Next, the function converts the coeffs coefficients into a 3x3 matrix by concatenating a 1 to the bottom-left corner of coeffs, then reshaping the resulting vector into a 3x3 matrix.
+
+The function then applies the perspective transformation to the flow field using matrix multiplication and addition: coords.flow = torch.addmm(coeffs[:,2], coords.flow, coeffs[:,:2].t()).
+
+After the transformation, the function normalizes the resulting flow field by dividing by the last coordinate value in each row, effectively setting the last coordinate value to 1: coords.flow.mul_(1/coords.flow[:,2].unsqueeze(1)).
+
+Finally, the function converts the flow field back to its original shape by slicing the first two columns and reshaping to size. The resulting flow field is returned.
+
+-----------------------------------------
+ Prompt: why is coords both and input and output. couldn't it just be an input?
+
+-----------------------------------------
+ChatGPT response: It's possible that coords could be passed into the function as a mutable object, which means that it can be modified in place. This allows the function to directly modify the coords object rather than creating a new one, which can be more efficient in terms of memory usage.
+
+In this specific case, coords is modified in place as the function progresses through the various steps of applying the perspective transformation. The flow field of coords is modified in several places throughout the function, and the final result is returned as the modified coords object. Therefore, it's necessary for coords to be both an input and an output of the function.
+
+However, if modifying the input object is not desired or appropriate, the function could be modified to create a new object to hold the result of the perspective transformation instead of modifying the input object. This would require more memory usage and could potentially slow down the function, but would ensure that the original coords object remains unchanged.
+
+-----------------------------------------
+ Prompt: what would happen if coords was not a FlowField object
+
+-----------------------------------------
+ChatGPT response: If coords was not a FlowField object, then the function _apply_perspective would likely raise an error or fail to execute correctly, depending on how the object is being used within the function.
+
+For example, if coords is expected to have a flow attribute that contains the coordinates of a flow field, then trying to access coords.flow would result in an attribute error, since coords does not have a flow attribute.
+
+Similarly, if coords is not a tensor or is not compatible with tensor operations used in the function (e.g. view, cat, addmm, etc.), then the function would fail to execute correctly, and a type error or a runtime error could be raised.
+
+Overall, the function _apply_perspective is designed to work with a specific data structure (FlowField) and assumes that coords will be an instance of that structure. If coords is not of the expected type or does not have the expected attributes or properties, then the function would need to be modified to work with the new data structure or type.

@@ -1,0 +1,156 @@
+
+-----------------------------------------
+ Prompt: can you write unit tests for the following function:
+Code:
+def is_sequence(obj):
+    """
+    Check if the object is a sequence of objects.
+    String types are not included as sequences here.
+
+    Parameters
+    ----------
+    obj : The object to check
+
+    Returns
+    -------
+    is_sequence : bool
+        Whether `obj` is a sequence of objects.
+
+    Examples
+    --------
+    >>> l = [1, 2, 3]
+    >>>
+    >>> is_sequence(l)
+    True
+    >>> is_sequence(iter(l))
+    False
+    """
+
+    try:
+        iter(obj)  # Can iterate over it.
+        len(obj)   # Has a length associated with it.
+        return not isinstance(obj, (str, bytes))
+    except (TypeError, AttributeError):
+        return False
+-----------------------------------------
+ChatGPT response: import unittest
+
+class TestIsSequence(unittest.TestCase):
+    def test_list(self):
+        l = [1, 2, 3]
+        self.assertTrue(is_sequence(l))
+        
+    def test_tuple(self):
+        t = (1, 2, 3)
+        self.assertTrue(is_sequence(t))
+        
+    def test_range(self):
+        r = range(1, 4)
+        self.assertTrue(is_sequence(r))
+        
+    def test_set(self):
+        s = {1, 2, 3}
+        self.assertFalse(is_sequence(s))
+        
+    def test_string(self):
+        s = "hello"
+        self.assertFalse(is_sequence(s))
+        
+    def test_bytes(self):
+        b = b"hello"
+        self.assertFalse(is_sequence(b))
+        
+    def test_iterator(self):
+        l = [1, 2, 3]
+        itr = iter(l)
+        self.assertFalse(is_sequence(itr))
+        
+    def test_non_sequence(self):
+        n = 42
+        self.assertFalse(is_sequence(n))
+        
+if __name__ == '__main__':
+    unittest.main()
+
+
+-----------------------------------------
+ Prompt: can you write exceptional unit tests for the given function
+Code:
+def is_sequence(obj):
+    """
+    Check if the object is a sequence of objects.
+    String types are not included as sequences here.
+
+    Parameters
+    ----------
+    obj : The object to check
+
+    Returns
+    -------
+    is_sequence : bool
+        Whether `obj` is a sequence of objects.
+
+    Examples
+    --------
+    >>> l = [1, 2, 3]
+    >>>
+    >>> is_sequence(l)
+    True
+    >>> is_sequence(iter(l))
+    False
+    """
+
+    try:
+        iter(obj)  # Can iterate over it.
+        len(obj)   # Has a length associated with it.
+        return not isinstance(obj, (str, bytes))
+    except (TypeError, AttributeError):
+        return False
+-----------------------------------------
+ChatGPT response: import unittest
+
+class TestIsSequence(unittest.TestCase):
+    def test_list(self):
+        l = [1, 2, 3]
+        self.assertTrue(is_sequence(l))
+        
+    def test_tuple(self):
+        t = (1, 2, 3)
+        self.assertTrue(is_sequence(t))
+        
+    def test_range(self):
+        r = range(1, 4)
+        self.assertTrue(is_sequence(r))
+        
+    def test_set(self):
+        s = {1, 2, 3}
+        self.assertFalse(is_sequence(s))
+        
+    def test_string(self):
+        s = "hello"
+        self.assertFalse(is_sequence(s))
+        
+    def test_bytes(self):
+        b = b"hello"
+        self.assertFalse(is_sequence(b))
+        
+    def test_iterator(self):
+        l = [1, 2, 3]
+        itr = iter(l)
+        self.assertFalse(is_sequence(itr))
+        
+    def test_non_sequence(self):
+        n = 42
+        self.assertFalse(is_sequence(n))
+        
+    def test_no_len(self):
+        with self.assertRaises(TypeError):
+            is_sequence(iter([1, 2, 3]))
+            
+    def test_no_iter(self):
+        with self.assertRaises(TypeError):
+            is_sequence(42)
+        
+if __name__ == '__main__':
+    unittest.main()
+

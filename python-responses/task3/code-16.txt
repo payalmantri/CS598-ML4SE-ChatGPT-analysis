@@ -1,0 +1,55 @@
+
+----------------------------------------
+ Prompt: can you generate semantically equivalent code to the given function?
+Code:
+def _has_nulltype(dt):
+    """ Return whether there is NullType in `dt` or not """
+    if isinstance(dt, StructType):
+        return any(_has_nulltype(f.dataType) for f in dt.fields)
+    elif isinstance(dt, ArrayType):
+        return _has_nulltype((dt.elementType))
+    elif isinstance(dt, MapType):
+        return _has_nulltype(dt.keyType) or _has_nulltype(dt.valueType)
+    else:
+        return isinstance(dt, NullType)
+-----------------------------------------
+ChatGPT response: def has_nulltype(dt):
+    """
+    Returns whether there is NullType in `dt` or not.
+    """
+    def check_nulltype(dt):
+        if dt is None:
+            return False
+        elif isinstance(dt, StructType):
+            return any(check_nulltype(f.dataType) for f in dt.fields)
+        elif isinstance(dt, ArrayType):
+            return check_nulltype(dt.elementType)
+        elif isinstance(dt, MapType):
+            return check_nulltype(dt.keyType) or check_nulltype(dt.valueType)
+        else:
+            return isinstance(dt, NullType)
+
+    return check_nulltype(dt)
+
+
+----------------------------------------
+ Prompt: can you generate something that is more different to the original function than what you have provided
+-----------------------------------------
+ChatGPT response: def has_nulltype(dt):
+    """
+    Returns whether there is NullType in `dt` or not.
+    """
+    stack = [dt]
+    while stack:
+        item = stack.pop()
+        if isinstance(item, StructType):
+            stack.extend([f.dataType for f in item.fields])
+        elif isinstance(item, ArrayType):
+            stack.append(item.elementType)
+        elif isinstance(item, MapType):
+            stack.append(item.keyType)
+            stack.append(item.valueType)
+        elif isinstance(item, NullType):
+            return True
+    return False
+

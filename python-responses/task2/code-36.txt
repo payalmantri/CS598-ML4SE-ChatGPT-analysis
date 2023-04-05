@@ -1,0 +1,145 @@
+
+-----------------------------------------
+ Prompt: can you write unit tests for the given code
+Code:
+def _do_perspective_warp(c:FlowField, targ_pts:Points, invert=False):
+    "Apply warp to `targ_pts` from `_orig_pts` to `c` `FlowField`."
+    if invert: return _apply_perspective(c, _find_coeffs(targ_pts, _orig_pts))
+    return _apply_perspective(c, _find_coeffs(_orig_pts, targ_pts))
+-----------------------------------------
+ChatGPT response: import numpy as np
+from mylibrary import FlowField, Points, _do_perspective_warp
+
+def test_forward_perspective_warp():
+    # Define a dummy flow field and source/target points
+    c = FlowField(np.random.rand(4, 4))
+    src_pts = Points(np.random.rand(4, 2))
+    tgt_pts = Points(np.random.rand(4, 2))
+    
+    # Apply forward perspective warp
+    result = _do_perspective_warp(c, tgt_pts)
+    
+    # Check that result has the correct shape and type
+    assert isinstance(result, Points)
+    assert result.shape == (4, 2)
+    
+    # TODO: Add more checks for expected result
+    
+def test_inverse_perspective_warp():
+    # Define a dummy flow field and source/target points
+    c = FlowField(np.random.rand(4, 4))
+    src_pts = Points(np.random.rand(4, 2))
+    tgt_pts = Points(np.random.rand(4, 2))
+    
+    # Apply inverse perspective warp
+    result = _do_perspective_warp(c, tgt_pts, invert=True)
+    
+    # Check that result has the correct shape and type
+    assert isinstance(result, Points)
+    assert result.shape == (4, 2)
+    
+    # TODO: Add more checks for expected result
+    
+def test_invalid_input():
+    # Test that the function raises an error for invalid input
+    c = FlowField(np.random.rand(4, 4))
+    tgt_pts = Points(np.random.rand(4, 2))
+    
+    # Test invalid input for `invert` flag
+    try:
+        _do_perspective_warp(c, tgt_pts, invert=123)
+    except ValueError:
+        pass
+    else:
+        assert False, "Expected a ValueError for invalid `invert` flag"
+    
+    # Test invalid input for `targ_pts` argument
+    try:
+        _do_perspective_warp(c, np.random.rand(5, 2))
+    except ValueError:
+        pass
+    else:
+        assert False, "Expected a ValueError for invalid `targ_pts` argument"
+
+
+-----------------------------------------
+ Prompt: how do you know the input to FlowField?
+-----------------------------------------
+ChatGPT response: In the given code, we can see that c is passed as the first argument to the _apply_perspective() function, which suggests that c is an instance of some class that is compatible with _apply_perspective().
+
+We can also see that the _do_perspective_warp() function expects c to be a FlowField object, as indicated by the type hint in the function signature: c: FlowField.
+
+From this, we can infer that FlowField is a custom class defined elsewhere in the code, and that instances of this class represent some kind of data structure or container that holds information about the flow field that maps points from the source image to the target image after the perspective warp.
+
+However, without access to the implementation details of the FlowField class, we cannot determine exactly what kind of input it expects or what methods and attributes it provides.
+
+-----------------------------------------
+ Prompt: How do you know a FlowField can take in a np array as input to its constructor?
+FlowField(np.random.rand(4, 4))
+-----------------------------------------
+ChatGPT response: I apologize for the confusion in my previous response. I made an incorrect assumption that FlowField accepts a NumPy array as input to its constructor.
+
+Based on the available code snippet, we cannot say for certain what arguments the FlowField constructor expects, since the implementation details of FlowField are not provided. It is possible that FlowField does indeed accept a NumPy array as input, but we cannot be sure without additional context or information.
+
+Therefore, it is important to refer to the documentation or source code for the FlowField class to determine what kind of input it expects and how it should be used.
+
+-----------------------------------------
+ Prompt: can you change the unit tests given that we do not know the input to the FlowFiled constructor
+-----------------------------------------
+ChatGPT response: import numpy as np
+from mylibrary import FlowField, Points, _do_perspective_warp
+
+def test_forward_perspective_warp():
+    # Define a dummy flow field and source/target points
+    c = FlowField()
+    c.data = np.random.rand(4, 4)
+    src_pts = Points(np.random.rand(4, 2))
+    tgt_pts = Points(np.random.rand(4, 2))
+    
+    # Apply forward perspective warp
+    result = _do_perspective_warp(c, tgt_pts)
+    
+    # Check that result has the correct shape and type
+    assert isinstance(result, Points)
+    assert result.shape == (4, 2)
+    
+    # TODO: Add more checks for expected result
+    
+def test_inverse_perspective_warp():
+    # Define a dummy flow field and source/target points
+    c = FlowField()
+    c.data = np.random.rand(4, 4)
+    src_pts = Points(np.random.rand(4, 2))
+    tgt_pts = Points(np.random.rand(4, 2))
+    
+    # Apply inverse perspective warp
+    result = _do_perspective_warp(c, tgt_pts, invert=True)
+    
+    # Check that result has the correct shape and type
+    assert isinstance(result, Points)
+    assert result.shape == (4, 2)
+    
+    # TODO: Add more checks for expected result
+    
+def test_invalid_input():
+    # Test that the function raises an error for invalid input
+    c = FlowField()
+    c.data = np.random.rand(4, 4)
+    tgt_pts = Points(np.random.rand(4, 2))
+    
+    # Test invalid input for `invert` flag
+    try:
+        _do_perspective_warp(c, tgt_pts, invert=123)
+    except ValueError:
+        pass
+    else:
+        assert False, "Expected a ValueError for invalid `invert` flag"
+    
+    # Test invalid input for `targ_pts` argument
+    try:
+        _do_perspective_warp(c, np.random.rand(5, 2))
+    except ValueError:
+        pass
+    else:
+        assert False, "Expected a ValueError for invalid `targ_pts` argument"
+

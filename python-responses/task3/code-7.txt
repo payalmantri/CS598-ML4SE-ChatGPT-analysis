@@ -1,0 +1,43 @@
+
+----------------------------------------
+ Prompt: can you generate semantically equivalent, but different code to the function above
+Code:
+def _raw_face_locations(img, number_of_times_to_upsample=1, model="hog"):
+    """
+    Returns an array of bounding boxes of human faces in a image
+
+    :param img: An image (as a numpy array)
+    :param number_of_times_to_upsample: How many times to upsample the image looking for faces. Higher numbers find smaller faces.
+    :param model: Which face detection model to use. "hog" is less accurate but faster on CPUs. "cnn" is a more accurate
+                  deep-learning model which is GPU/CUDA accelerated (if available). The default is "hog".
+    :return: A list of dlib 'rect' objects of found face locations
+    """
+    if model == "cnn":
+        return cnn_face_detector(img, number_of_times_to_upsample)
+    else:
+        return face_detector(img, number_of_times_to_upsample)
+-----------------------------------------
+ChatGPT response: import cv2
+import numpy as np
+
+def _raw_face_locations(img, number_of_times_to_upsample=1, model="hog"):
+    """
+    Returns an array of bounding boxes of human faces in an image
+
+    :param img: An image (as a numpy array)
+    :param number_of_times_to_upsample: How many times to upsample the image looking for faces. Higher numbers find smaller faces.
+    :param model: Which face detection model to use. "hog" is less accurate but faster on CPUs. "cnn" is a more accurate
+                  deep-learning model which is GPU/CUDA accelerated (if available). The default is "hog".
+    :return: A list of OpenCV-style face detection bounding boxes
+    """
+    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+    if model == "hog":
+        face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+    elif model == "cnn":
+        face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_alt2.xml")
+        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=3, minSize=(80, 80))
+    else:
+        raise ValueError("Invalid face detection model specified")
+    return [dlib.rectangle(x, y, x+w, y+h) for (x, y, w, h) in faces]
+

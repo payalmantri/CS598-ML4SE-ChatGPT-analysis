@@ -1,0 +1,139 @@
+
+-----------------------------------------
+ Prompt: can you write unit tests for the following function:
+Code:
+def is_list_like(obj, allow_sets=True):
+    """
+    Check if the object is list-like.
+
+    Objects that are considered list-like are for example Python
+    lists, tuples, sets, NumPy arrays, and Pandas Series.
+
+    Strings and datetime objects, however, are not considered list-like.
+
+    Parameters
+    ----------
+    obj : The object to check
+    allow_sets : boolean, default True
+        If this parameter is False, sets will not be considered list-like
+
+        .. versionadded:: 0.24.0
+
+    Returns
+    -------
+    is_list_like : bool
+        Whether `obj` has list-like properties.
+
+    Examples
+    --------
+    >>> is_list_like([1, 2, 3])
+    True
+    >>> is_list_like({1, 2, 3})
+    True
+    >>> is_list_like(datetime(2017, 1, 1))
+    False
+    >>> is_list_like("foo")
+    False
+    >>> is_list_like(1)
+    False
+    >>> is_list_like(np.array([2]))
+    True
+    >>> is_list_like(np.array(2)))
+    False
+    """
+
+    return (isinstance(obj, abc.Iterable) and
+            # we do not count strings/unicode/bytes as list-like
+            not isinstance(obj, (str, bytes)) and
+
+            # exclude zero-dimensional numpy arrays, effectively scalars
+            not (isinstance(obj, np.ndarray) and obj.ndim == 0) and
+
+            # exclude sets if allow_sets is False
+            not (allow_sets is False and isinstance(obj, abc.Set)))
+-----------------------------------------
+ChatGPT response: import numpy as np
+import pandas as pd
+import pytest
+
+from my_module import construct_1d_arraylike_from_scalar
+
+
+def test_construct_1d_arraylike_from_scalar_numpy_int():
+    value = 1
+    length = 5
+    dtype = np.int32
+    arr = construct_1d_arraylike_from_scalar(value, length, dtype)
+    assert isinstance(arr, np.ndarray)
+    assert arr.dtype == dtype
+    assert arr.shape == (length,)
+    assert np.all(arr == value)
+
+
+def test_construct_1d_arraylike_from_scalar_pandas_int():
+    value = 1
+    length = 5
+    dtype = pd.Int32Dtype()
+    arr = construct_1d_arraylike_from_scalar(value, length, dtype)
+    assert isinstance(arr, pd.Series)
+    assert arr.dtype == dtype
+    assert arr.shape == (length,)
+    assert arr.isna().sum() == 0
+    assert np.all(arr == value)
+
+
+def test_construct_1d_arraylike_from_scalar_numpy_float_with_nan():
+    value = np.nan
+    length = 5
+    dtype = np.int32
+    arr = construct_1d_arraylike_from_scalar(value, length, dtype)
+    assert isinstance(arr, np.ndarray)
+    assert arr.dtype == np.float64
+    assert arr.shape == (length,)
+    assert np.all(np.isnan(arr))
+
+
+def test_construct_1d_arraylike_from_scalar_numpy_string():
+    value = "hello"
+    length = 5
+    dtype = np.dtype("U")
+    arr = construct_1d_arraylike_from_scalar(value, length, dtype)
+    assert isinstance(arr, np.ndarray)
+    assert arr.dtype == np.dtype("O")
+    assert arr.shape == (length,)
+    assert np.all(arr == value)
+
+
+def test_construct_1d_arraylike_from_scalar_pandas_string():
+    value = "hello"
+    length = 5
+    dtype = pd.StringDtype()
+    arr = construct_1d_arraylike_from_scalar(value, length, dtype)
+    assert isinstance(arr, pd.Series)
+    assert arr.dtype == dtype
+    assert arr.shape == (length,)
+    assert arr.isna().sum() == 0
+    assert np.all(arr == value)
+
+
+def test_construct_1d_arraylike_from_scalar_pandas_datetime():
+    value = pd.Timestamp("2022-01-01", tz="UTC")
+    length = 5
+    dtype = pd.Timestamp
+    arr = construct_1d_arraylike_from_scalar(value, length, dtype)
+    assert isinstance(arr, pd.DatetimeIndex)
+    assert arr.dtype == dtype
+    assert arr.shape == (length,)
+    assert np.all(arr == value)
+
+
+def test_construct_1d_arraylike_from_scalar_pandas_categorical():
+    value = "A"
+    length = 5
+    dtype = pd.CategoricalDtype(categories=["A", "B", "C"])
+    arr = construct_1d_arraylike_from_scalar(value, length, dtype)
+    assert isinstance(arr, pd.Categorical)
+    assert arr.dtype == dtype
+    assert arr.shape == (length,)
+    assert np.all(arr == value)
+

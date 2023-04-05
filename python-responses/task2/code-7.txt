@@ -1,0 +1,77 @@
+
+-----------------------------------------
+ Prompt: can you write unit tests for this function
+Code:
+def _raw_face_locations(img, number_of_times_to_upsample=1, model="hog"):
+    """
+    Returns an array of bounding boxes of human faces in a image
+
+    :param img: An image (as a numpy array)
+    :param number_of_times_to_upsample: How many times to upsample the image looking for faces. Higher numbers find smaller faces.
+    :param model: Which face detection model to use. "hog" is less accurate but faster on CPUs. "cnn" is a more accurate
+                  deep-learning model which is GPU/CUDA accelerated (if available). The default is "hog".
+    :return: A list of dlib 'rect' objects of found face locations
+    """
+    if model == "cnn":
+        return cnn_face_detector(img, number_of_times_to_upsample)
+    else:
+        return face_detector(img, number_of_times_to_upsample)
+-----------------------------------------
+ChatGPT response: import numpy as np
+import unittest
+from your_module import _raw_face_locations
+
+class TestRawFaceLocations(unittest.TestCase):
+    def test_hog_detector(self):
+        # Test HOG-based face detection on an image
+        img = np.zeros((100, 100, 3), dtype=np.uint8)
+        face_locations = _raw_face_locations(img, model="hog")
+        self.assertEqual(len(face_locations), 0)
+
+    def test_cnn_detector(self):
+        # Test CNN-based face detection on an image
+        img = np.zeros((100, 100, 3), dtype=np.uint8)
+        face_locations = _raw_face_locations(img, model="cnn")
+        self.assertEqual(len(face_locations), 0)
+
+    def test_number_of_times_to_upsample(self):
+        # Test the number of times to upsample the image
+        img = np.zeros((100, 100, 3), dtype=np.uint8)
+        face_locations_1 = _raw_face_locations(img, number_of_times_to_upsample=1)
+        face_locations_2 = _raw_face_locations(img, number_of_times_to_upsample=2)
+        self.assertGreater(len(face_locations_2), len(face_locations_1))
+
+if __name__ == '__main__':
+    unittest.main()
+
+
+-----------------------------------------
+ Prompt: can you generate some unit tests for actually finding a face in an image '
+-----------------------------------------
+ChatGPT response: import numpy as np
+import unittest
+from your_module import _raw_face_locations
+
+class TestRawFaceLocations(unittest.TestCase):
+    def setUp(self):
+        # Create a test image with a face
+        self.img = np.zeros((200, 200, 3), dtype=np.uint8)
+        self.img[50:150, 50:150, :] = 255
+
+    def test_hog_detector(self):
+        # Test HOG-based face detection on an image with a face
+        face_locations = _raw_face_locations(self.img, model="hog")
+        self.assertEqual(len(face_locations), 1)
+        self.assertGreater(face_locations[0].right - face_locations[0].left, 50)
+        self.assertGreater(face_locations[0].bottom - face_locations[0].top, 50)
+
+    def test_cnn_detector(self):
+        # Test CNN-based face detection on an image with a face
+        face_locations = _raw_face_locations(self.img, model="cnn")
+        self.assertEqual(len(face_locations), 1)
+        self.assertGreater(face_locations[0].right - face_locations[0].left, 50)
+        self.assertGreater(face_locations[0].bottom - face_locations[0].top, 50)
+
+if __name__ == '__main__':
+    unittest.main()
+

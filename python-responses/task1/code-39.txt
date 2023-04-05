@@ -1,0 +1,20 @@
+
+-----------------------------------------
+ Prompt: what does the following code do?
+Code:
+def _tilt(c, direction:uniform_int, magnitude:uniform=0, invert=False):
+    "Tilt `c` field with random `direction` and `magnitude`."
+    orig_pts = [[-1,-1], [-1,1], [1,-1], [1,1]]
+    if direction == 0:   targ_pts = [[-1,-1], [-1,1], [1,-1-magnitude], [1,1+magnitude]]
+    elif direction == 1: targ_pts = [[-1,-1-magnitude], [-1,1+magnitude], [1,-1], [1,1]]
+    elif direction == 2: targ_pts = [[-1,-1], [-1-magnitude,1], [1,-1], [1+magnitude,1]]
+    elif direction == 3: targ_pts = [[-1-magnitude,-1], [-1,1], [1+magnitude,-1], [1,1]]
+    coeffs = _find_coeffs(targ_pts, _orig_pts) if invert else _find_coeffs(_orig_pts, targ_pts)
+    return _apply_perspective(c, coeffs)
+
+-----------------------------------------
+ChatGPT response: The _tilt function tilts the c field in a random direction and by a random magnitude. The c field is likely a two-dimensional array or image, and the function applies a perspective transformation to it.
+
+The direction parameter is an integer value between 0 and 3, inclusive, that specifies the direction in which the tilt should occur. The magnitude parameter is a float value between 0 and 1, inclusive, that determines the amount of tilt. If invert is True, the transformation is applied in reverse, effectively un-tilting the field.
+
+The function generates four original points (orig_pts) and four target points (targ_pts) based on the specified direction and magnitude. It then calculates the coefficients for the perspective transformation using either _find_coeffs(targ_pts, orig_pts) or _find_coeffs(orig_pts, targ_pts) depending on whether or not invert is True. Finally, the _apply_perspective function applies the perspective transformation to the c field using the calculated coefficients.

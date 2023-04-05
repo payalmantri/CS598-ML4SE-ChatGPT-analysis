@@ -1,0 +1,65 @@
+
+----------------------------------------
+ Prompt: can you write semantically equivalent but different code to the given function
+Code:
+def get_transforms(do_flip:bool=True, flip_vert:bool=False, max_rotate:float=10., max_zoom:float=1.1,
+                   max_lighting:float=0.2, max_warp:float=0.2, p_affine:float=0.75,
+                   p_lighting:float=0.75, xtra_tfms:Optional[Collection[Transform]]=None)->Collection[Transform]:
+    "Utility func to easily create a list of flip, rotate, `zoom`, warp, lighting transforms."
+    res = [rand_crop()]
+    if do_flip:    res.append(dihedral_affine() if flip_vert else flip_lr(p=0.5))
+    if max_warp:   res.append(symmetric_warp(magnitude=(-max_warp,max_warp), p=p_affine))
+    if max_rotate: res.append(rotate(degrees=(-max_rotate,max_rotate), p=p_affine))
+    if max_zoom>1: res.append(rand_zoom(scale=(1.,max_zoom), p=p_affine))
+    if max_lighting:
+        res.append(brightness(change=(0.5*(1-max_lighting), 0.5*(1+max_lighting)), p=p_lighting))
+        res.append(contrast(scale=(1-max_lighting, 1/(1-max_lighting)), p=p_lighting))
+    #       train                   , valid
+    return (res + listify(xtra_tfms), [crop_pad()])
+-----------------------------------------
+ChatGPT response: from functools import partial
+import random
+import torchvision.transforms as T
+
+def get_transforms(do_flip=True, flip_vert=False, max_rotate=10, max_zoom=1.1,
+                   max_lighting=0.2, max_warp=0.2, p_affine=0.75,
+                   p_lighting=0.75, xtra_tfms=None):
+    "Utility func to easily create a list of flip, rotate, `zoom`, warp, lighting transforms."
+    
+    # Define transforms
+    rand_crop = T.RandomCrop(size=224, padding=8, pad_if_needed=True)
+    flip_lr = T.RandomHorizontalFlip(p=0.5)
+    flip_ud = T.RandomVerticalFlip(p=0.5)
+    dihedral_affine = partial(T.RandomAffine(degrees=[0, 360], translate=[0.1, 0.1], scale=[0.9, 1.1], shear=[-5, 5, -5, 5]))
+    symmetric_warp = partial(T.RandomAffine(degrees=0, translate=[-max_warp, max_warp], scale=[1-max_warp, 1+max_warp], shear=0, resample=T.InterpolationMode.BILINEAR))
+    rotate = partial(T.RandomRotation(degrees=(-max_rotate, max_rotate), resample=T.InterpolationMode.BILINEAR))
+    rand_zoom = partial(T.RandomAffine(degrees=0, translate=0, scale=[1, max_zoom], shear=0, resample=T.InterpolationMode.BILINEAR))
+    brightness = partial(T.ColorJitter(brightness=[0.5*(1-max_lighting), 0.5*(1+max_lighting)]))
+    contrast = partial(T.ColorJitter(contrast=[1-max_lighting, 1/(1-max_lighting)]))
+    
+    # Define list of transforms
+    transform_list = []
+    if do_flip:
+        if flip_vert:
+            transform_list.append(dihedral_affine())
+        else:
+            transform_list.append(flip_lr)
+            transform_list.append(flip_ud)
+    if max_warp:
+        transform_list.append(symmetric_warp())
+    if max_rotate:
+        transform_list.append(rotate())
+    if max_zoom > 1:
+        transform_list.append(rand_zoom())
+    if max_lighting:
+        transform_list.append(brightness())
+        transform_list.append(contrast())
+    if xtra_tfms:
+        transform_list += xtra_tfms
+    
+    # Define train and validation transforms
+    train_transform = T.Compose([rand_crop] + transform_list)
+    valid_transform = T.Compose([T.Resize(256), T.CenterCrop(224)])
+    
+    return train_transform, valid_transform
+

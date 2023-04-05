@@ -1,0 +1,30 @@
+
+-----------------------------------------
+ Prompt: can you write unit tests for the given code
+Code:
+def rand_resize_crop(size:int, max_scale:float=2., ratios:Tuple[float,float]=(0.75,1.33)):
+    "Randomly resize and crop the image to a ratio in `ratios` after a zoom of `max_scale`."
+    return [zoom_squish(scale=(1.,max_scale,8), squish=(*ratios,8), invert=(0.5,8), row_pct=(0.,1.), col_pct=(0.,1.)),
+            crop(size=size)]
+-----------------------------------------
+ChatGPT response: def test_rand_resize_crop():
+    size = 224
+    max_scale = 2.
+    ratios = (0.75, 1.33)
+    tfms = rand_resize_crop(size, max_scale, ratios)
+
+    # Check that two transforms were returned
+    assert len(tfms) == 2
+
+    # Check that the first transform is a zoom_squish transform with the given parameters
+    assert isinstance(tfms[0], zoom_squish)
+    assert tfms[0].scale == (1., max_scale, 8)
+    assert tfms[0].squish == (*ratios, 8)
+    assert tfms[0].invert == (0.5, 8)
+    assert tfms[0].row_pct == (0., 1.)
+    assert tfms[0].col_pct == (0., 1.)
+
+    # Check that the second transform is a crop transform with the given size
+    assert isinstance(tfms[1], crop)
+    assert tfms[1].size == (size, size)
+

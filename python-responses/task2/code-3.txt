@@ -1,0 +1,111 @@
+
+-----------------------------------------
+ Prompt: can you write a unit test for the above code?
+Code:
+def _rect_to_css(rect):
+    """
+    Convert a dlib 'rect' object to a plain tuple in (top, right, bottom, left) order
+
+    :param rect: a dlib 'rect' object
+    :return: a plain tuple representation of the rect in (top, right, bottom, left) order
+    """
+    return rect.top(), rect.right(), rect.bottom(), rect.left()
+-----------------------------------------
+ChatGPT response: import unittest
+import dlib
+
+class TestRectToCss(unittest.TestCase):
+    
+    def test_rect_to_css(self):
+        # Create a sample dlib rectangle object
+        rect = dlib.rectangle(10, 20, 30, 40)
+        
+        # Call the _rect_to_css function
+        result = _rect_to_css(rect)
+        
+        # Assert the result is a tuple with the correct values
+        self.assertIsInstance(result, tuple)
+        self.assertEqual(result, (10, 40, 30, 20))
+
+
+-----------------------------------------
+ Prompt: can you write an exceptional unit test for the above code?
+Code:
+def _rect_to_css(rect):
+    """
+    Convert a dlib 'rect' object to a plain tuple in (top, right, bottom, left) order
+
+    :param rect: a dlib 'rect' object
+    :return: a plain tuple representation of the rect in (top, right, bottom, left) order
+    """
+    return rect.top(), rect.right(), rect.bottom(), rect.left()
+-----------------------------------------
+ChatGPT response: import unittest
+import dlib
+
+class TestRectToCss(unittest.TestCase):
+    
+    def test_rect_to_css(self):
+        # Test with a None input
+        with self.assertRaises(TypeError):
+            _rect_to_css(None)
+        
+        # Test with an object that is not a dlib rectangle
+        with self.assertRaises(AttributeError):
+            _rect_to_css(123)
+
+
+-----------------------------------------
+ Prompt: can you write a unit test for the above code?
+Code:
+def _rect_to_css(rect):
+    """
+    Convert a dlib 'rect' object to a plain tuple in (top, right, bottom, left) order
+
+    :param rect: a dlib 'rect' object
+    :return: a plain tuple representation of the rect in (top, right, bottom, left) order
+    """
+    return rect.top(), rect.right(), rect.bottom(), rect.left()
+-----------------------------------------
+ChatGPT response: import unittest
+
+class TestRectToCss(unittest.TestCase):
+    
+    def test_rect_to_css(self):
+        # Test a rectangle with top=10, right=50, bottom=30, left=20
+        rect = MockRect(10, 50, 30, 20)
+        css = _rect_to_css(rect)
+        self.assertEqual(css, (10, 50, 30, 20))
+        
+        # Test a rectangle with top=0, right=0, bottom=0, left=0
+        rect = MockRect(0, 0, 0, 0)
+        css = _rect_to_css(rect)
+        self.assertEqual(css, (0, 0, 0, 0))
+        
+        # Test a rectangle with negative coordinates
+        rect = MockRect(-10, -5, -5, -10)
+        css = _rect_to_css(rect)
+        self.assertEqual(css, (-10, -5, -5, -10))
+
+class MockRect:
+    def __init__(self, top, right, bottom, left):
+        self._top = top
+        self._right = right
+        self._bottom = bottom
+        self._left = left
+        
+    def top(self):
+        return self._top
+    
+    def right(self):
+        return self._right
+    
+    def bottom(self):
+        return self._bottom
+    
+    def left(self):
+        return self._left
+
+if __name__ == '__main__':
+    unittest.main()
+

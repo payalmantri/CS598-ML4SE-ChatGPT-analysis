@@ -1,0 +1,128 @@
+
+----------------------------------------
+ Prompt: can you write semantically equivalent code to the given function
+Code:
+def is_sequence(obj):
+    """
+    Check if the object is a sequence of objects.
+    String types are not included as sequences here.
+
+    Parameters
+    ----------
+    obj : The object to check
+
+    Returns
+    -------
+    is_sequence : bool
+        Whether `obj` is a sequence of objects.
+
+    Examples
+    --------
+    >>> l = [1, 2, 3]
+    >>>
+    >>> is_sequence(l)
+    True
+    >>> is_sequence(iter(l))
+    False
+    """
+
+    try:
+        iter(obj)  # Can iterate over it.
+        len(obj)   # Has a length associated with it.
+        return not isinstance(obj, (str, bytes))
+    except (TypeError, AttributeError):
+        return False
+-----------------------------------------
+ChatGPT response: def is_sequence(obj):
+    """
+    Check if the object is a sequence of objects.
+    String types are not included as sequences here.
+
+    Parameters
+    ----------
+    obj : The object to check
+
+    Returns
+    -------
+    is_sequence : bool
+        Whether `obj` is a sequence of objects.
+
+    Examples
+    --------
+    >>> l = [1, 2, 3]
+    >>>
+    >>> is_sequence(l)
+    True
+    >>> is_sequence(iter(l))
+    False
+    """
+
+    if isinstance(obj, (list, tuple, range)):
+        return True
+    
+    try:
+        len(obj)
+        return not isinstance(obj, (str, bytes))
+    except TypeError:
+        return False
+
+
+----------------------------------------
+ Prompt: are lists, tuples and ranges the only python types that have the iter function and the len functions defined on them, or could we have a custom data type that satisfies this
+-----------------------------------------
+ChatGPT response: No, lists, tuples, and ranges are not the only Python types that have the iter() and len() functions defined on them. Other built-in sequence types such as strings, bytes, and bytearrays also support these functions. In addition, custom objects can implement the __iter__() and __len__() methods to support iteration and length calculation, respectively.
+
+For example, we can define a custom sequence class that implements these methods:
+
+ruby
+Copy code
+class MySequence:
+    def __init__(self, data):
+        self.data = data
+        
+    def __iter__(self):
+        return iter(self.data)
+    
+    def __len__(self):
+        return len(self.data)
+In this case, we have defined a custom MySequence class that wraps a list of data and implements the __iter__() and __len__() methods. This class can be used as a sequence in the is_sequence() function, and the function will correctly return True if MySequence objects are passed as inputs.
+
+So, the is_sequence() function is not limited to only built-in sequence types but can also work with any custom object that implements the necessary methods.
+
+----------------------------------------
+ Prompt: can you rewrite the semantically equivalent function you provided earlier to include these types
+-----------------------------------------
+ChatGPT response: def is_sequence(obj):
+    """
+    Check if the object is a sequence of objects.
+    String types and custom sequence types are included as sequences here.
+
+    Parameters
+    ----------
+    obj : The object to check
+
+    Returns
+    -------
+    is_sequence : bool
+        Whether `obj` is a sequence of objects.
+
+    Examples
+    --------
+    >>> l = [1, 2, 3]
+    >>>
+    >>> is_sequence(l)
+    True
+    >>> is_sequence(iter(l))
+    False
+    """
+
+    if isinstance(obj, (list, tuple, range, str, bytes)):
+        return True
+    
+    try:
+        iter(obj)
+        len(obj)
+        return True
+    except TypeError:
+        return False
+

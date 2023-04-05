@@ -1,0 +1,15 @@
+
+-----------------------------------------
+ Prompt: what does the following code do?
+Code:
+def rand_resize_crop(size:int, max_scale:float=2., ratios:Tuple[float,float]=(0.75,1.33)):
+    "Randomly resize and crop the image to a ratio in `ratios` after a zoom of `max_scale`."
+    return [zoom_squish(scale=(1.,max_scale,8), squish=(*ratios,8), invert=(0.5,8), row_pct=(0.,1.), col_pct=(0.,1.)),
+            crop(size=size)]
+
+-----------------------------------------
+ChatGPT response: The function rand_resize_crop returns a list of two image transformation operations that are used to randomly resize and crop an image.
+
+The first transformation, zoom_squish, randomly resizes and squishes an image by a factor of max_scale, and then randomly crops the image to one of the ratios given in the ratios tuple. The invert parameter determines the probability of inverting the image horizontally or vertically, while row_pct and col_pct determine the vertical and horizontal position of the cropped image.
+
+The second transformation, crop, simply crops the image to a square of size size.

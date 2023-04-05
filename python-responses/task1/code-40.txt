@@ -1,0 +1,36 @@
+
+-----------------------------------------
+ Prompt: what does the following code do?
+Code:
+def get_transforms(do_flip:bool=True, flip_vert:bool=False, max_rotate:float=10., max_zoom:float=1.1,
+                   max_lighting:float=0.2, max_warp:float=0.2, p_affine:float=0.75,
+                   p_lighting:float=0.75, xtra_tfms:Optional[Collection[Transform]]=None)->Collection[Transform]:
+    "Utility func to easily create a list of flip, rotate, `zoom`, warp, lighting transforms."
+    res = [rand_crop()]
+    if do_flip:    res.append(dihedral_affine() if flip_vert else flip_lr(p=0.5))
+    if max_warp:   res.append(symmetric_warp(magnitude=(-max_warp,max_warp), p=p_affine))
+    if max_rotate: res.append(rotate(degrees=(-max_rotate,max_rotate), p=p_affine))
+    if max_zoom>1: res.append(rand_zoom(scale=(1.,max_zoom), p=p_affine))
+    if max_lighting:
+        res.append(brightness(change=(0.5*(1-max_lighting), 0.5*(1+max_lighting)), p=p_lighting))
+        res.append(contrast(scale=(1-max_lighting, 1/(1-max_lighting)), p=p_lighting))
+    #       train                   , valid
+    return (res + listify(xtra_tfms), [crop_pad()])
+
+-----------------------------------------
+ChatGPT response: The given code defines a function called get_transforms which returns a collection of image transformations that can be applied to an input image.
+
+The function takes in several arguments:
+
+do_flip: a boolean that determines whether the image should be flipped horizontally or not.
+flip_vert: a boolean that determines whether the image should be flipped vertically or not.
+max_rotate: a float that determines the maximum angle in degrees by which the image can be rotated.
+max_zoom: a float that determines the maximum zoom level for the image.
+max_lighting: a float that determines the maximum brightness or contrast level for the image.
+max_warp: a float that determines the maximum warping applied to the image.
+p_affine: a float that determines the probability of applying an affine transformation.
+p_lighting: a float that determines the probability of applying a brightness or contrast adjustment.
+xtra_tfms: an optional collection of additional transformations to be applied to the image.
+The function starts by initializing a list called res with a single transformation which is a random crop of the image. If do_flip is True, it appends a horizontal flip or a dihedral affine transformation depending on the value of flip_vert. If max_warp is not zero, it appends a symmetric warp transformation. If max_rotate is not zero, it appends a rotation transformation. If max_zoom is greater than 1, it appends a random zoom transformation. If max_lighting is not zero, it appends a brightness and contrast transformation. Finally, it appends any additional transformations specified in xtra_tfms.
+
+The function returns a collection of transformations which consists of the list res along with a crop and pad transformation. The collection returned by this function can be used as input to image augmentation techniques used in deep learning applications.

@@ -1,0 +1,20 @@
+
+-----------------------------------------
+ Prompt: what does the following code do?
+Code:
+def _do_perspective_warp(c:FlowField, targ_pts:Points, invert=False):
+    "Apply warp to `targ_pts` from `_orig_pts` to `c` `FlowField`."
+    if invert: return _apply_perspective(c, _find_coeffs(targ_pts, _orig_pts))
+    return _apply_perspective(c, _find_coeffs(_orig_pts, targ_pts))
+
+-----------------------------------------
+ChatGPT response: The given code defines a function named _do_perspective_warp that takes three parameters:
+
+c: A FlowField object, which is an instance of some custom class, representing the flow field that maps points from the source image to the target image after the perspective warp.
+targ_pts: A Points object, which is an instance of some custom class, representing the target points in the target image that will be warped to match the corresponding points in the source image.
+invert: A Boolean flag that determines whether to apply the forward perspective warp or its inverse.
+The function first checks if the invert flag is set to True, in which case it applies the perspective warp to targ_pts using the coefficients obtained by finding the inverse transform from targ_pts to _orig_pts. _orig_pts likely refers to some pre-defined set of points in the source image that define the perspective transformation.
+
+If invert is False (default), the function applies the perspective warp to c using the coefficients obtained by finding the transform from _orig_pts to targ_pts.
+
+The _apply_perspective() and _find_coeffs() functions that are called within this function are likely custom functions that perform the actual perspective warp and coefficient calculation, respectively, but their implementation details are not provided in the given code.

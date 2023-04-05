@@ -1,0 +1,27 @@
+
+----------------------------------------
+ Prompt: can you write semantically equivalent code to the given function
+Code:
+def _apply_perspective(coords:FlowField, coeffs:Points)->FlowField:
+    "Transform `coords` with `coeffs`."
+    size = coords.flow.size()
+    #compress all the dims expect the last one ang adds ones, coords become N * 3
+    coords.flow = coords.flow.view(-1,2)
+    #Transform the coeffs in a 3*3 matrix with a 1 at the bottom left
+    coeffs = torch.cat([coeffs, FloatTensor([1])]).view(3,3)
+    coords.flow = torch.addmm(coeffs[:,2], coords.flow, coeffs[:,:2].t())
+    coords.flow.mul_(1/coords.flow[:,2].unsqueeze(1))
+    coords.flow = coords.flow[:,:2].view(size)
+    return coords
+-----------------------------------------
+ChatGPT response: def _apply_perspective(coords:FlowField, coeffs:Points)->FlowField:
+    # Convert flow field to homogeneous coordinates
+    hom_coords = torch.cat([coords.flow, torch.ones(coords.flow.shape[0], 1)], dim=1)
+    # Convert perspective transformation coefficients to a 3x3 matrix
+    coeffs_mat = torch.cat([coeffs, torch.tensor([1.0])]).view(3, 3)
+    # Apply transformation
+    hom_result = torch.matmul(hom_coords, coeffs_mat.t())
+    result = hom_result[:, :2] / hom_result[:, 2].unsqueeze(1)
+    # Convert result back to flow field
+    return FlowField(result)
+

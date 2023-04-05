@@ -1,0 +1,256 @@
+
+-----------------------------------------
+ Prompt: what kinds of unit tests would you write for this function
+Code:
+def face_landmarks(face_image, face_locations=None, model="large"):
+    """
+    Given an image, returns a dict of face feature locations (eyes, nose, etc) for each face in the image
+
+    :param face_image: image to search
+    :param face_locations: Optionally provide a list of face locations to check.
+    :param model: Optional - which model to use. "large" (default) or "small" which only returns 5 points but is faster.
+    :return: A list of dicts of face feature locations (eyes, nose, etc)
+    """
+    landmarks = _raw_face_landmarks(face_image, face_locations, model)
+    landmarks_as_tuples = [[(p.x, p.y) for p in landmark.parts()] for landmark in landmarks]
+
+    # For a definition of each point index, see https://cdn-images-1.medium.com/max/1600/1*AbEg31EgkbXSQehuNJBlWg.png
+    if model == 'large':
+        return [{
+            "chin": points[0:17],
+            "left_eyebrow": points[17:22],
+            "right_eyebrow": points[22:27],
+            "nose_bridge": points[27:31],
+            "nose_tip": points[31:36],
+            "left_eye": points[36:42],
+            "right_eye": points[42:48],
+            "top_lip": points[48:55] + [points[64]] + [points[63]] + [points[62]] + [points[61]] + [points[60]],
+            "bottom_lip": points[54:60] + [points[48]] + [points[60]] + [points[67]] + [points[66]] + [points[65]] + [points[64]]
+        } for points in landmarks_as_tuples]
+    elif model == 'small':
+        return [{
+            "nose_tip": [points[4]],
+            "left_eye": points[2:4],
+            "right_eye": points[0:2],
+        } for points in landmarks_as_tuples]
+    else:
+        raise ValueError("Invalid landmarks model type. Supported models are ['small', 'large'].")
+-----------------------------------------
+ChatGPT response: Here are some unit tests I would write for this function:
+
+Test that the function returns a list of dictionaries.
+Test that the function returns the expected number of dictionaries (one for each face in the input image).
+Test that the keys of the dictionaries returned by the function match the expected keys ("chin", "left_eyebrow", "right_eyebrow", "nose_bridge", "nose_tip", "left_eye", "right_eye", "top_lip", and "bottom_lip" for the "large" model; "nose_tip", "left_eye", and "right_eye" for the "small" model).
+Test that the values of the dictionaries returned by the function are tuples of (x, y) coordinates.
+Test that the function can handle an input image with no faces detected (i.e. returns an empty list).
+Test that the function raises a ValueError when an invalid model argument is provided.
+Test that the function returns the expected output for a given input image and face locations, and model.
+Additionally, some integration tests can be added to ensure that the function integrates well with other parts of the system, such as the _raw_face_landmarks function, which is called within the face_landmarks function.
+
+-----------------------------------------
+ Prompt: please write some unit tests for this function
+-----------------------------------------
+ChatGPT response: import unittest
+
+class TestFaceLandmarks(unittest.TestCase):
+
+    def setUp(self):
+        # set up any variables or objects needed for the tests
+        pass
+
+    def tearDown(self):
+        # clean up after each test
+        pass
+
+    def test_returns_list_of_dicts(self):
+        # test that the function returns a list of dictionaries
+        pass
+
+    def test_returns_expected_number_of_dicts(self):
+        # test that the function returns the expected number of dictionaries
+        pass
+
+    def test_dictionary_keys_match_expected(self):
+        # test that the keys of the dictionaries match the expected keys
+        pass
+
+    def test_dictionary_values_are_tuples(self):
+        # test that the values of the dictionaries are tuples of (x,y) coordinates
+        pass
+
+    def test_handles_input_with_no_faces_detected(self):
+        # test that the function can handle an input image with no faces detected
+        pass
+
+    def test_raises_error_for_invalid_model_argument(self):
+        # test that the function raises a ValueError when an invalid model argument is provided
+        pass
+
+    def test_returns_expected_output_for_given_input(self):
+        # test that the function returns the expected output for a given input image and face locations, and model
+        pass
+
+if __name__ == '__main__':
+    unittest.main()
+
+
+-----------------------------------------
+ Prompt: can you implement the body of the unit tests in the code you provided
+-----------------------------------------
+ChatGPT response: import unittest
+
+class TestFaceLandmarks(unittest.TestCase):
+
+    def setUp(self):
+        # set up any variables or objects needed for the tests
+        pass
+
+    def tearDown(self):
+        # clean up after each test
+        pass
+
+    def test_returns_list_of_dicts(self):
+        # test that the function returns a list of dictionaries
+        face_image = ... # provide input image
+        landmarks = face_landmarks(face_image)
+        self.assertIsInstance(landmarks, list)
+        for landmark in landmarks:
+            self.assertIsInstance(landmark, dict)
+
+    def test_returns_expected_number_of_dicts(self):
+        # test that the function returns the expected number of dictionaries
+        face_image = ... # provide input image
+        landmarks = face_landmarks(face_image)
+        self.assertEqual(len(landmarks), expected_num_of_faces)
+
+    def test_dictionary_keys_match_expected(self):
+        # test that the keys of the dictionaries match the expected keys
+        face_image = ... # provide input image
+        landmarks = face_landmarks(face_image)
+        expected_keys = ["chin", "left_eyebrow", "right_eyebrow", "nose_bridge", "nose_tip", "left_eye", "right_eye", "top_lip", "bottom_lip"]
+        for landmark in landmarks:
+            self.assertListEqual(sorted(landmark.keys()), sorted(expected_keys))
+
+    def test_dictionary_values_are_tuples(self):
+        # test that the values of the dictionaries are tuples of (x,y) coordinates
+        face_image = ... # provide input image
+        landmarks = face_landmarks(face_image)
+        for landmark in landmarks:
+            for key, value in landmark.items():
+                for point in value:
+                    self.assertIsInstance(point, tuple)
+                    self.assertEqual(len(point), 2)
+
+    def test_handles_input_with_no_faces_detected(self):
+        # test that the function can handle an input image with no faces detected
+        face_image = ... # provide input image with no faces
+        landmarks = face_landmarks(face_image)
+        self.assertEqual(len(landmarks), 0)
+
+    def test_raises_error_for_invalid_model_argument(self):
+        # test that the function raises a ValueError when an invalid model argument is provided
+        face_image = ... # provide input image
+        with self.assertRaises(ValueError):
+            face_landmarks(face_image, model="invalid")
+
+    def test_returns_expected_output_for_given_input(self):
+        # test that the function returns the expected output for a given input image and face locations, and model
+        face_image = ... # provide input image
+        face_locations = ... # provide face locations
+        expected_output = ... # provide expected output
+        landmarks = face_landmarks(face_image, face_locations, model="large")
+        self.assertListEqual(landmarks, expected_output)
+
+if __name__ == '__main__':
+    unittest.main()
+
+
+-----------------------------------------
+ Prompt: can you implement unit tests for the given function
+Code:
+def face_landmarks(face_image, face_locations=None, model="large"):
+    """
+    Given an image, returns a dict of face feature locations (eyes, nose, etc) for each face in the image
+
+    :param face_image: image to search
+    :param face_locations: Optionally provide a list of face locations to check.
+    :param model: Optional - which model to use. "large" (default) or "small" which only returns 5 points but is faster.
+    :return: A list of dicts of face feature locations (eyes, nose, etc)
+    """
+    landmarks = _raw_face_landmarks(face_image, face_locations, model)
+    landmarks_as_tuples = [[(p.x, p.y) for p in landmark.parts()] for landmark in landmarks]
+
+    # For a definition of each point index, see https://cdn-images-1.medium.com/max/1600/1*AbEg31EgkbXSQehuNJBlWg.png
+    if model == 'large':
+        return [{
+            "chin": points[0:17],
+            "left_eyebrow": points[17:22],
+            "right_eyebrow": points[22:27],
+            "nose_bridge": points[27:31],
+            "nose_tip": points[31:36],
+            "left_eye": points[36:42],
+            "right_eye": points[42:48],
+            "top_lip": points[48:55] + [points[64]] + [points[63]] + [points[62]] + [points[61]] + [points[60]],
+            "bottom_lip": points[54:60] + [points[48]] + [points[60]] + [points[67]] + [points[66]] + [points[65]] + [points[64]]
+        } for points in landmarks_as_tuples]
+    elif model == 'small':
+        return [{
+            "nose_tip": [points[4]],
+            "left_eye": points[2:4],
+            "right_eye": points[0:2],
+        } for points in landmarks_as_tuples]
+    else:
+        raise ValueError("Invalid landmarks model type. Supported models are ['small', 'large'].")
+-----------------------------------------
+ChatGPT response: import unittest
+from face_landmarks import face_landmarks
+
+class TestFaceLandmarks(unittest.TestCase):
+
+    def test_returns_list_of_dicts(self):
+        # test that the function returns a list of dictionaries
+        face_image = "test_image.jpg"
+        landmarks = face_landmarks(face_image)
+        self.assertIsInstance(landmarks, list)
+        for landmark in landmarks:
+            self.assertIsInstance(landmark, dict)
+
+    def test_returns_expected_number_of_dicts(self):
+        # test that the function returns the expected number of dictionaries
+        face_image = "test_image.jpg"
+        landmarks = face_landmarks(face_image)
+        self.assertEqual(len(landmarks), 2)
+
+    def test_dictionary_keys_match_expected(self):
+        # test that the keys of the dictionaries match the expected keys
+        face_image = "test_image.jpg"
+        landmarks = face_landmarks(face_image)
+        expected_keys = ["chin", "left_eyebrow", "right_eyebrow", "nose_bridge", "nose_tip", "left_eye", "right_eye", "top_lip", "bottom_lip"]
+        for landmark in landmarks:
+            self.assertListEqual(sorted(landmark.keys()), sorted(expected_keys))
+
+    def test_dictionary_values_are_tuples(self):
+        # test that the values of the dictionaries are tuples of (x,y) coordinates
+        face_image = "test_image.jpg"
+        landmarks = face_landmarks(face_image)
+        for landmark in landmarks:
+            for key, value in landmark.items():
+                for point in value:
+                    self.assertIsInstance(point, tuple)
+                    self.assertEqual(len(point), 2)
+
+    def test_handles_input_with_no_faces_detected(self):
+        # test that the function can handle an input image with no faces detected
+        face_image = "test_image_no_face.jpg"
+        landmarks = face_landmarks(face_image)
+        self.assertEqual(len(landmarks), 0)
+
+    def test_raises_error_for_invalid_model_argument(self):
+        # test that the function raises a ValueError when an invalid model argument is provided
+        face_image = "test_image.jpg"
+        with self.assertRaises(ValueError):
+            face_landmarks(face_image, model="invalid")
+
+if __name__ == '__main__':
+    unittest.main()
+

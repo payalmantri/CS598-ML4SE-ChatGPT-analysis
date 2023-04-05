@@ -1,0 +1,53 @@
+
+-----------------------------------------
+ Prompt: can you write unit tests for the given code
+Code:
+def _apply_perspective(coords:FlowField, coeffs:Points)->FlowField:
+    "Transform `coords` with `coeffs`."
+    size = coords.flow.size()
+    #compress all the dims expect the last one ang adds ones, coords become N * 3
+    coords.flow = coords.flow.view(-1,2)
+    #Transform the coeffs in a 3*3 matrix with a 1 at the bottom left
+    coeffs = torch.cat([coeffs, FloatTensor([1])]).view(3,3)
+    coords.flow = torch.addmm(coeffs[:,2], coords.flow, coeffs[:,:2].t())
+    coords.flow.mul_(1/coords.flow[:,2].unsqueeze(1))
+    coords.flow = coords.flow[:,:2].view(size)
+    return coords
+-----------------------------------------
+ChatGPT response: import torch
+import unittest
+
+class TestApplyPerspective(unittest.TestCase):
+    def setUp(self):
+        self.flow_field = torch.randn(10, 2)  # Example flow field with 10 points
+        self.coeffs = torch.randn(8)  # Example perspective transformation coefficients
+        
+    def test_apply_perspective_output_shape(self):
+        # Test that the output flow field has the correct shape
+        from my_module import _apply_perspective, FlowField, Points
+        coords = FlowField(self.flow_field)
+        coeffs = Points(self.coeffs)
+        result = _apply_perspective(coords, coeffs)
+        self.assertEqual(result.flow.shape, self.flow_field.shape)
+        
+    def test_apply_perspective_commutative(self):
+        # Test that applying the inverse of the transformation undoes the transformation
+        from my_module import _apply_perspective, FlowField, Points
+        coords = FlowField(self.flow_field)
+        coeffs = Points(self.coeffs)
+        result = _apply_perspective(coords, coeffs)
+        inverse_coeffs = torch.inverse(torch.cat([coeffs, torch.tensor([1.0])]).view(3, 3))
+        result_inv = _apply_perspective(result, inverse_coeffs)
+        self.assertTrue(torch.allclose(coords.flow, result_inv.flow))
+        
+    def test_apply_perspective_invalid_input(self):
+        # Test that the function raises an error when passed invalid input
+        from my_module import _apply_perspective, FlowField, Points
+        coords = [1, 2, 3]  # Invalid input type
+        coeffs = Points(self.coeffs)
+        with self.assertRaises(AttributeError):
+            _apply_perspective(coords, coeffs)
+        
+if __name__ == '__main__':
+    unittest.main()
+

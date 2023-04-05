@@ -1,0 +1,52 @@
+
+-----------------------------------------
+ Prompt: can you write unit tests for the given code
+Code:
+def _perspective_warp(c, magnitude:partial(uniform,size=8)=0, invert=False):
+    "Apply warp of `magnitude` to `c`."
+    magnitude = magnitude.view(4,2)
+    targ_pts = [[x+m for x,m in zip(xs, ms)] for xs, ms in zip(_orig_pts, magnitude)]
+    return _do_perspective_warp(c, targ_pts, invert)
+-----------------------------------------
+ChatGPT response: import torch
+import unittest
+from functools import partial
+
+class TestPerspectiveWarp(unittest.TestCase):
+
+    def setUp(self):
+        self.c = torch.randn(3, 5, 5)  # Example input image
+        self.magnitude = torch.tensor([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8])  # Example magnitude tensor
+
+    def test_output_shape(self):
+        output = _perspective_warp(self.c, self.magnitude)
+        expected_shape = self.c.shape
+        self.assertEqual(output.shape, expected_shape)
+
+    def test_output_type(self):
+        output = _perspective_warp(self.c, self.magnitude)
+        self.assertIsInstance(output, torch.Tensor)
+
+    def test_magnitude_default(self):
+        output1 = _perspective_warp(self.c)  # Test with default magnitude
+        output2 = _perspective_warp(self.c, magnitude=torch.zeros(8))  # Test with zero magnitude
+        self.assertTrue(torch.equal(output1, output2))
+
+    def test_invert(self):
+        output1 = _perspective_warp(self.c, self.magnitude, invert=False)
+        output2 = _perspective_warp(self.c, self.magnitude, invert=True)
+        self.assertFalse(torch.equal(output1, output2))
+
+    def test_boundary_conditions(self):
+        # Test that the output is identical if the magnitude is zero
+        output1 = _perspective_warp(self.c, torch.zeros(8))
+        output2 = self.c.clone()
+        self.assertTrue(torch.equal(output1, output2))
+
+        # Test that the output is different if the magnitude is non-zero
+        output3 = _perspective_warp(self.c, torch.ones(8))
+        self.assertFalse(torch.equal(output1, output3))
+
+if __name__ == '__main__':
+    unittest.main()
+

@@ -1,0 +1,58 @@
+
+----------------------------------------
+ Prompt: can you write semantically equivalent code to the given function
+Code:
+def construct_1d_object_array_from_listlike(values):
+    """
+    Transform any list-like object in a 1-dimensional numpy array of object
+    dtype.
+
+    Parameters
+    ----------
+    values : any iterable which has a len()
+
+    Raises
+    ------
+    TypeError
+        * If `values` does not have a len()
+
+    Returns
+    -------
+    1-dimensional numpy array of dtype object
+    """
+    # numpy will try to interpret nested lists as further dimensions, hence
+    # making a 1D array that contains list-likes is a bit tricky:
+    result = np.empty(len(values), dtype='object')
+    result[:] = values
+    return result
+-----------------------------------------
+ChatGPT response: def construct_1d_object_array_from_listlike(values):
+    """
+    Transform any list-like object in a 1-dimensional numpy array of object
+    dtype.
+
+    Parameters
+    ----------
+    values : any iterable which has a len()
+
+    Raises
+    ------
+    TypeError
+        * If `values` does not have a len()
+
+    Returns
+    -------
+    1-dimensional numpy array of dtype object
+    """
+    # Create an empty list
+    result_list = []
+    
+    # Append each element of values to the list
+    for value in values:
+        result_list.append(value)
+    
+    # Convert the list to a numpy array of object dtype
+    result = np.array(result_list, dtype='object')
+    
+    return result
+

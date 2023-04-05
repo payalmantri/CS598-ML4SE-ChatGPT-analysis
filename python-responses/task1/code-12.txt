@@ -1,0 +1,112 @@
+
+-----------------------------------------
+ Prompt: what does the folllowing code do?
+Code:
+def _parse_datatype_string(s):
+    """
+    Parses the given data type string to a :class:`DataType`. The data type string format equals
+    to :class:`DataType.simpleString`, except that top level struct type can omit
+    the ``struct<>`` and atomic types use ``typeName()`` as their format, e.g. use ``byte`` instead
+    of ``tinyint`` for :class:`ByteType`. We can also use ``int`` as a short name
+    for :class:`IntegerType`. Since Spark 2.3, this also supports a schema in a DDL-formatted
+    string and case-insensitive strings.
+
+    >>> _parse_datatype_string("int ")
+    IntegerType
+    >>> _parse_datatype_string("INT ")
+    IntegerType
+    >>> _parse_datatype_string("a: byte, b: decimal(  16 , 8   ) ")
+    StructType(List(StructField(a,ByteType,true),StructField(b,DecimalType(16,8),true)))
+    >>> _parse_datatype_string("a DOUBLE, b STRING")
+    StructType(List(StructField(a,DoubleType,true),StructField(b,StringType,true)))
+    >>> _parse_datatype_string("a: array< short>")
+    StructType(List(StructField(a,ArrayType(ShortType,true),true)))
+    >>> _parse_datatype_string(" map<string , string > ")
+    MapType(StringType,StringType,true)
+
+    >>> # Error cases
+    >>> _parse_datatype_string("blabla") # doctest: +IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+        ...
+    ParseException:...
+    >>> _parse_datatype_string("a: int,") # doctest: +IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+        ...
+    ParseException:...
+    >>> _parse_datatype_string("array<int") # doctest: +IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+        ...
+    ParseException:...
+    >>> _parse_datatype_string("map<int, boolean>>") # doctest: +IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+        ...
+    ParseException:...
+    """
+    sc = SparkContext._active_spark_context
+
+    def from_ddl_schema(type_str):
+        return _parse_datatype_json_string(
+            sc._jvm.org.apache.spark.sql.types.StructType.fromDDL(type_str).json())
+
+    def from_ddl_datatype(type_str):
+        return _parse_datatype_json_string(
+            sc._jvm.org.apache.spark.sql.api.python.PythonSQLUtils.parseDataType(type_str).json())
+
+    try:
+        # DDL format, "fieldname datatype, fieldname datatype".
+        return from_ddl_schema(s)
+    except Exception as e:
+        try:
+            # For backwards compatibility, "integer", "struct<fieldname: datatype>" and etc.
+            return from_ddl_datatype(s)
+        except:
+            try:
+                # For backwards compatibility, "fieldname: datatype, fieldname: datatype" case.
+                return from_ddl_datatype("struct<%s>" % s.strip())
+            except:
+                raise e
+
+-----------------------------------------
+ChatGPT response: The code defines a function named _parse_datatype_string that parses a string representation of a data type and returns the corresponding data type object in the Spark SQL library.
+
+The function handles several cases, such as parsing atomic data types with simple names like "int" or "byte", parsing struct types with fields specified as "fieldname: datatype, fieldname: datatype", parsing array and map types, and parsing a schema in a DDL-formatted string.
+
+The function first tries to parse the string as a DDL-formatted schema, and if that fails, it tries to parse it as a data type in the old format (e.g., "struct<fieldname: datatype>"). If that fails, it tries to parse it as a struct with fields specified as "fieldname: datatype, fieldname: datatype". If all attempts fail, the function raises a ParseException.
+
+The function uses a SparkContext object to access Java methods for parsing data types. The examples provided in the docstring demonstrate how the function can be used to parse various data type strings and return the corresponding data type objects.
+
+-----------------------------------------
+ Prompt: what do the _ddl_schema and _ddl_datatype functions do?
+
+-----------------------------------------
+ChatGPT response: The _ddl_schema and _ddl_datatype functions are nested helper functions defined within the _parse_datatype_string function.
+
+The _ddl_schema function takes a string parameter type_str, which represents a schema in DDL (Data Definition Language) format, and returns a corresponding DataType object in Spark SQL. The function does this by converting the DDL-formatted schema to a JSON string using the fromDDL method in the org.apache.spark.sql.types.StructType class in the Java API. The resulting JSON string is then passed to the _parse_datatype_json_string function, which returns the DataType object.
+
+The _ddl_datatype function takes a string parameter type_str, which represents a data type string in the old format used prior to Spark 2.3, and returns a corresponding DataType object in Spark SQL. The function does this by calling the parseDataType method in the org.apache.spark.sql.api.python.PythonSQLUtils class in the Java API, passing type_str as the argument. The resulting DataType object is then returned.
+
+Both of these helper functions are called within the _parse_datatype_string function as part of the error handling process to attempt to parse the input string as either a DDL-formatted schema or a data type in the old format if the initial parsing attempt fails.
+
+-----------------------------------------
+ Prompt: does the nesting matter for the try catch blocks?
+
+-----------------------------------------
+ChatGPT response: Yes, the nesting of the try-except blocks in the _parse_datatype_string function is important because each block tries to parse the input string in a different format, and if one of the attempts succeeds, the subsequent attempts can be skipped.
+
+If the try block succeeds in parsing the input string as a DDL-formatted schema, then the except blocks will not be executed, and the function will return the resulting DataType object. Similarly, if the try block fails but the first except block succeeds in parsing the input string as a data type in the old format, then the second except block will not be executed, and the function will return the resulting DataType object.
+
+If the try and both except blocks all fail to parse the input string, then the raise statement in the last except block will be executed, raising a ParseException with an error message.
+
+If the try and the first except blocks are not nested, and both blocks execute regardless of whether the preceding block succeeded or failed, the function would not be able to correctly handle input strings that can be parsed in multiple formats, and would always return the DataType object corresponding to the first successful parsing attempt.
+
+-----------------------------------------
+ Prompt: why does the order of the ddl calls matter?
+
+-----------------------------------------
+ChatGPT response: The order of the DDL calls in the _parse_datatype_string function matters because the function first tries to parse the input string as a DDL-formatted schema using the from_ddl_schema function, and if that fails, it tries to parse the input string as a data type using the from_ddl_datatype function.
+
+If the input string can be parsed as both a DDL-formatted schema and a data type, the from_ddl_schema function will return a StructType object, while the from_ddl_datatype function will return a different DataType object. Therefore, the order of the DDL calls determines the preferred format for the input string.
+
+For example, consider the input string "a: int, b: string". If the from_ddl_schema call is made first, the input string will be parsed as a DDL-formatted schema, resulting in a StructType object with two fields: "a" of type IntegerType and "b" of type StringType. If the from_ddl_datatype call is made first, the input string will be parsed as a data type, resulting in a StructType object with two fields: "a" of type StructType and "b" of type StringType.
+
+Therefore, the order of the DDL calls matters in determining the preferred format for the input string and the resulting DataType object.
