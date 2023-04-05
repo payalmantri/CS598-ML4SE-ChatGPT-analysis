@@ -26,31 +26,3 @@ The method then enters a while loop that reads data from the input stream into t
 If the read method returns -1, the loop is exited. Otherwise, the method writes the data in the buffer array to the output stream using the write method, and increments the byteCount variable by the number of bytes that were actually read.
 
 Finally, the method returns the total number of bytes that were read from the input stream, which is equal to the total number of bytes that were written to the output stream
-
------------------------------------------
- Prompt: What does the above code do 
-Code:
-    public static int copyAllBytes(InputStream in, OutputStream out) throws IOException {
-        int byteCount = 0;
-        byte[] buffer = new byte[BUFFER_SIZE];
-        while (true) {
-            int read = in.read(buffer);
-            if (read == -1) {
-                break;
-            }
-            out.write(buffer, 0, read);
-            byteCount += read;
-        }
-        return byteCount;
-    }
-
------------------------------------------
-ChatGPT response: The above code defines a static method named copyAllBytes that takes two parameters: an InputStream object named in and an OutputStream object named out. The method is designed to copy all bytes from the input stream in to the output stream out, and returns the total number of bytes that were copied.
-
-The method creates a byte array named buffer with a fixed size of BUFFER_SIZE. The BUFFER_SIZE constant is not shown in the code snippet, but it is assumed to be defined elsewhere in the program. This byte array is used to read data from the input stream in chunks.
-
-The method then enters a while loop that reads data from the input stream into the buffer array using the read method. The read method returns the number of bytes read, or -1 if the end of the stream has been reached.
-
-If the read method returns -1, the loop is exited. Otherwise, the method writes the data in the buffer array to the output stream using the write method, and increments the byteCount variable by the number of bytes that were actually read.
-
-Finally, the method returns the total number of bytes that were read from the input stream, which is equal to the total number of bytes that were written to the output stream

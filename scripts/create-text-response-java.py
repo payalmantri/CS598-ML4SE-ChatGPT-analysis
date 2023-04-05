@@ -87,7 +87,7 @@ def generate_responses(df):
                 f.close()
         elif(task3 == True):
             # check if the file exists, if it does, append to it
-            if os.path.exists('java-responses/task1/code-' + str(codeindex) + '.txt'):
+            if os.path.exists('java-responses/task3/code-' + str(codeindex) + '.txt'):
                 mode = 'a'
             else:
                 mode = 'w'
