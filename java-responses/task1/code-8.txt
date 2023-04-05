@@ -1,0 +1,87 @@
+
+-----------------------------------------
+ Prompt: What does the following code do
+        boolean queryLineConnector(int vertex, Line line) {
+                int next = getNextVertex(vertex);
+                if (next == -1)
+                        return false;
+
+                if (!m_b_has_attributes) {
+                        Point2D pt = new Point2D();
+                        getXY(vertex, pt);
+                        line.setStartXY(pt);
+                        getXY(next, pt);
+                        line.setEndXY(pt);
+                } else {
+                        Point pt = new Point();
+                        queryPoint(vertex, pt);
+                        line.setStart(pt);
+                        queryPoint(next, pt);
+                        line.setEnd(pt);
+                }
+
+                return true;
+        }
+Code:
+
+
+-----------------------------------------
+ChatGPT response: nan
+
+-----------------------------------------
+ Prompt: What does the following code do
+        boolean queryLineConnector(int vertex, Line line) {
+                int next = getNextVertex(vertex);
+                if (next == -1)
+                        return false;
+
+                if (!m_b_has_attributes) {
+                        Point2D pt = new Point2D();
+                        getXY(vertex, pt);
+                        line.setStartXY(pt);
+                        getXY(next, pt);
+                        line.setEndXY(pt);
+                } else {
+                        Point pt = new Point();
+                        queryPoint(vertex, pt);
+                        line.setStart(pt);
+                        queryPoint(next, pt);
+                        line.setEnd(pt);
+                }
+
+                return true;
+        }
+Code:
+
+
+-----------------------------------------
+ChatGPT response: nan
+
+-----------------------------------------
+ Prompt: What does the following code do
+        boolean queryLineConnector(int vertex, Line line) {
+                int next = getNextVertex(vertex);
+                if (next == -1)
+                        return false;
+
+                if (!m_b_has_attributes) {
+                        Point2D pt = new Point2D();
+                        getXY(vertex, pt);
+                        line.setStartXY(pt);
+                        getXY(next, pt);
+                        line.setEndXY(pt);
+                } else {
+                        Point pt = new Point();
+                        queryPoint(vertex, pt);
+                        line.setStart(pt);
+                        queryPoint(next, pt);
+                        line.setEnd(pt);
+                }
+
+                return true;
+        }
+Code:
+
+
+-----------------------------------------
+ChatGPT response: nan

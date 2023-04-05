@@ -1,0 +1,38 @@
+
+-----------------------------------------
+ Prompt: What does the code do 
+
+Code:
+ public static int getDayAsReadableInt(Calendar calendar) {
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        return year * 10000 + month * 100 + day;
+    }
+
+-----------------------------------------
+ChatGPT response: The code defines a static method called getDayAsReadableInt that takes a Calendar object as input and returns an integer representing the date in the format of YYYYMMDD.
+
+The method extracts the day of the month, month, and year from the Calendar object using the get method and then concatenates them together to form a single integer representation of the date. Specifically, it multiplies the year by 10000 and the month by 100, and then adds the day of the month to the resulting value.
+
+For example, if the Calendar object represents the date "May 25, 2022", the method would return the integer value 20220525.
+
+
+-----------------------------------------
+ Prompt: What does the code do 
+
+Code:
+ public static int getDayAsReadableInt(Calendar calendar) {
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        return year * 10000 + month * 100 + day;
+    }
+
+-----------------------------------------
+ChatGPT response: The code defines a static method called getDayAsReadableInt that takes a Calendar object as input and returns an integer representing the date in the format of YYYYMMDD.
+
+The method extracts the day of the month, month, and year from the Calendar object using the get method and then concatenates them together to form a single integer representation of the date. Specifically, it multiplies the year by 10000 and the month by 100, and then adds the day of the month to the resulting value.
+
+For example, if the Calendar object represents the date "May 25, 2022", the method would return the integer value 20220525.
+

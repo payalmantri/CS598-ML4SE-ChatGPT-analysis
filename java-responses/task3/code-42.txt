@@ -1,0 +1,44 @@
+
+----------------------------------------
+ Prompt: Write different implementation for this code
+Code:
+  public boolean addAll(int index, FloatArray items) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + items.size);
+    if (index < size) {
+      for (int i = size - 1; i >= index; i--) {
+        elements[i + items.size] = elements[i];
+      }
+    }
+    for (int i = 0; i < items.size; i++) {
+      elements[index++] = items.elements[i];
+    }
+    size += items.size;
+    return items.size > 0;
+  }
+-----------------------------------------
+ChatGPT response: Here's an alternative implementation of the addAll function using a temporary array to store the shifted elements:
+
+arduino
+Copy code
+public boolean addAll(int index, FloatArray items) {
+  if (index < 0 || index > size) {
+    throw new IndexOutOfBoundsException();
+  }
+  ensureCapacity(size + items.size);
+  float[] temp = new float[size - index];
+  if (index < size) {
+    System.arraycopy(elements, index, temp, 0, size - index);
+    System.arraycopy(items.elements, 0, elements, index, items.size);
+    System.arraycopy(temp, 0, elements, index + items.size, size - index);
+  } else {
+    System.arraycopy(items.elements, 0, elements, size, items.size);
+  }
+  size += items.size;
+  return items.size > 0;
+}
+In this implementation, we first check if we need to shift elements to make room for the new items. We do this by copying the elements starting from the index to a temporary array. Then we copy the new items to the correct index in the elements array. Finally, we copy the shifted elements back to the elements array after the new items.
+
+This implementation uses the System.arraycopy method to efficiently copy arrays. It also avoids using a loop to shift the elements, which can improve performance.

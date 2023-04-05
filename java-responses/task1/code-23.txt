@@ -1,0 +1,156 @@
+
+-----------------------------------------
+ Prompt: What does the code below do 
+"	public final void startAddingEdges() {
+		if (numEdges_ > 0) {
+			for (int i = 0; i < height_; i++) {
+				for (Edge e = ySortedEdges_[i]; e != null;) {
+					Edge p = e;
+					e = e.next;
+					p.next = null;
+				}
+				
+				ySortedEdges_[i] = null;
+			}
+
+			activeEdgesTable_ = null;
+		}
+		
+		minY_ = height_;
+		maxY_ = -1;
+		numEdges_ = 0;	
+	}"
+Code:
+        public final void startAddingEdges() {
+                if (numEdges_ > 0) {
+                        for (int i = 0; i < height_; i++) {
+                                for (Edge e = ySortedEdges_[i]; e != null;) {
+                                        Edge p = e;
+                                        e = e.next;
+                                        p.next = null;
+                                }
+                                
+                                ySortedEdges_[i] = null;
+                        }
+
+                        activeEdgesTable_ = null;
+                }
+                
+                minY_ = height_;
+                maxY_ = -1;
+                numEdges_ = 0;        
+        }
+
+-----------------------------------------
+ChatGPT response: he startAddingEdges() method appears to be part of a graph or computational geometry algorithm that involves adding edges to a data structure. Here's what the code does:
+
+It first checks if there are any edges in the data structure by checking if the numEdges_ variable is greater than 0. If there are no edges, the method does nothing.
+If there are edges, the method loops through each y-coordinate (i.e., height) of the edges in the ySortedEdges_ array.
+For each y-coordinate, it sets the next field of each edge in the linked list to null, effectively removing the edges from the linked list.
+It then sets the ySortedEdges_ array for that y-coordinate to null, effectively removing all the edges from the data structure for that y-coordinate.
+Finally, it sets activeEdgesTable_ to null and resets minY_, maxY_, and numEdges_ variables to their initial values.
+In summary, this method appears to clear the edges that have been added to the data structure, resetting it to its initial state so that new edges can be added again.
+
+-----------------------------------------
+ Prompt: What does the code below do 
+"	public final void startAddingEdges() {
+		if (numEdges_ > 0) {
+			for (int i = 0; i < height_; i++) {
+				for (Edge e = ySortedEdges_[i]; e != null;) {
+					Edge p = e;
+					e = e.next;
+					p.next = null;
+				}
+				
+				ySortedEdges_[i] = null;
+			}
+
+			activeEdgesTable_ = null;
+		}
+		
+		minY_ = height_;
+		maxY_ = -1;
+		numEdges_ = 0;	
+	}"
+Code:
+        public final void startAddingEdges() {
+                if (numEdges_ > 0) {
+                        for (int i = 0; i < height_; i++) {
+                                for (Edge e = ySortedEdges_[i]; e != null;) {
+                                        Edge p = e;
+                                        e = e.next;
+                                        p.next = null;
+                                }
+                                
+                                ySortedEdges_[i] = null;
+                        }
+
+                        activeEdgesTable_ = null;
+                }
+                
+                minY_ = height_;
+                maxY_ = -1;
+                numEdges_ = 0;        
+        }
+
+-----------------------------------------
+ChatGPT response: he startAddingEdges() method appears to be part of a graph or computational geometry algorithm that involves adding edges to a data structure. Here's what the code does:
+
+It first checks if there are any edges in the data structure by checking if the numEdges_ variable is greater than 0. If there are no edges, the method does nothing.
+If there are edges, the method loops through each y-coordinate (i.e., height) of the edges in the ySortedEdges_ array.
+For each y-coordinate, it sets the next field of each edge in the linked list to null, effectively removing the edges from the linked list.
+It then sets the ySortedEdges_ array for that y-coordinate to null, effectively removing all the edges from the data structure for that y-coordinate.
+Finally, it sets activeEdgesTable_ to null and resets minY_, maxY_, and numEdges_ variables to their initial values.
+In summary, this method appears to clear the edges that have been added to the data structure, resetting it to its initial state so that new edges can be added again.
+
+-----------------------------------------
+ Prompt: What does the code below do 
+"	public final void startAddingEdges() {
+		if (numEdges_ > 0) {
+			for (int i = 0; i < height_; i++) {
+				for (Edge e = ySortedEdges_[i]; e != null;) {
+					Edge p = e;
+					e = e.next;
+					p.next = null;
+				}
+				
+				ySortedEdges_[i] = null;
+			}
+
+			activeEdgesTable_ = null;
+		}
+		
+		minY_ = height_;
+		maxY_ = -1;
+		numEdges_ = 0;	
+	}"
+Code:
+        public final void startAddingEdges() {
+                if (numEdges_ > 0) {
+                        for (int i = 0; i < height_; i++) {
+                                for (Edge e = ySortedEdges_[i]; e != null;) {
+                                        Edge p = e;
+                                        e = e.next;
+                                        p.next = null;
+                                }
+                                
+                                ySortedEdges_[i] = null;
+                        }
+
+                        activeEdgesTable_ = null;
+                }
+                
+                minY_ = height_;
+                maxY_ = -1;
+                numEdges_ = 0;        
+        }
+
+-----------------------------------------
+ChatGPT response: he startAddingEdges() method appears to be part of a graph or computational geometry algorithm that involves adding edges to a data structure. Here's what the code does:
+
+It first checks if there are any edges in the data structure by checking if the numEdges_ variable is greater than 0. If there are no edges, the method does nothing.
+If there are edges, the method loops through each y-coordinate (i.e., height) of the edges in the ySortedEdges_ array.
+For each y-coordinate, it sets the next field of each edge in the linked list to null, effectively removing the edges from the linked list.
+It then sets the ySortedEdges_ array for that y-coordinate to null, effectively removing all the edges from the data structure for that y-coordinate.
+Finally, it sets activeEdgesTable_ to null and resets minY_, maxY_, and numEdges_ variables to their initial values.
+In summary, this method appears to clear the edges that have been added to the data structure, resetting it to its initial state so that new edges can be added again.

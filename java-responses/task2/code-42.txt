@@ -1,0 +1,99 @@
+
+-----------------------------------------
+ Prompt: Write unit tests for the function
+"  public boolean addAll(int index, FloatArray items) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + items.size);
+    if (index < size) {
+      for (int i = size - 1; i >= index; i--) {
+        elements[i + items.size] = elements[i];
+      }
+    }
+    for (int i = 0; i < items.size; i++) {
+      elements[index++] = items.elements[i];
+    }
+    size += items.size;
+    return items.size > 0;
+  }"
+Code:
+
+-----------------------------------------
+ChatGPT response: Here are some example unit tests for the addAll function:
+
+scss
+Copy code
+import org.junit.Assert;
+import org.junit.Test;
+
+public class FloatArrayTest {
+
+  @Test
+  public void testAddAllAtBeginning() {
+    FloatArray arr = new FloatArray();
+    arr.add(1.0f);
+    arr.add(2.0f);
+    FloatArray items = new FloatArray();
+    items.add(3.0f);
+    items.add(4.0f);
+    boolean result = arr.addAll(0, items);
+    Assert.assertTrue(result);
+    Assert.assertEquals(4, arr.size());
+    Assert.assertEquals(3.0f, arr.get(0), 0.0f);
+    Assert.assertEquals(4.0f, arr.get(1), 0.0f);
+    Assert.assertEquals(1.0f, arr.get(2), 0.0f);
+    Assert.assertEquals(2.0f, arr.get(3), 0.0f);
+  }
+
+  @Test
+  public void testAddAllInMiddle() {
+    FloatArray arr = new FloatArray();
+    arr.add(1.0f);
+    arr.add(2.0f);
+    FloatArray items = new FloatArray();
+    items.add(3.0f);
+    items.add(4.0f);
+    boolean result = arr.addAll(1, items);
+    Assert.assertTrue(result);
+    Assert.assertEquals(4, arr.size());
+    Assert.assertEquals(1.0f, arr.get(0), 0.0f);
+    Assert.assertEquals(3.0f, arr.get(1), 0.0f);
+    Assert.assertEquals(4.0f, arr.get(2), 0.0f);
+    Assert.assertEquals(2.0f, arr.get(3), 0.0f);
+  }
+
+  @Test
+  public void testAddAllAtEnd() {
+    FloatArray arr = new FloatArray();
+    arr.add(1.0f);
+    arr.add(2.0f);
+    FloatArray items = new FloatArray();
+    items.add(3.0f);
+    items.add(4.0f);
+    boolean result = arr.addAll(2, items);
+    Assert.assertTrue(result);
+    Assert.assertEquals(4, arr.size());
+    Assert.assertEquals(1.0f, arr.get(0), 0.0f);
+    Assert.assertEquals(2.0f, arr.get(1), 0.0f);
+    Assert.assertEquals(3.0f, arr.get(2), 0.0f);
+    Assert.assertEquals(4.0f, arr.get(3), 0.0f);
+  }
+
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void testAddAllIndexOutOfBounds() {
+    FloatArray arr = new FloatArray();
+    arr.add(1.0f);
+    arr.add(2.0f);
+    FloatArray items = new FloatArray();
+    items.add(3.0f);
+    items.add(4.0f);
+    arr.addAll(3, items);
+  }
+}
+The above test cases should test the following scenarios:
+
+Adding items to the beginning of the array
+Adding items to the middle of the array
+Adding items to the end of the array
+Testing that an exception is thrown when the index is out of bounds.

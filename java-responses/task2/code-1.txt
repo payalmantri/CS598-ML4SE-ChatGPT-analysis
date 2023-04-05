@@ -50,3 +50,315 @@ public class Point2DTest {
 
 }
 These tests cover various scenarios including scaling with and without shifting, using a negative scalar value, and using a scalar value of zero. The tests verify that the scaleAdd method produces the expected result for each input.
+
+-----------------------------------------
+ Prompt: Can you write unit tests for this method
+Code:
+public void scaleAdd(double f, Point2D shift) {
+                x = x * f + shift.x;
+                y = y * f + shift.y;
+        }
+-----------------------------------------
+ChatGPT response: import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class Point2DTest {
+
+    @Test
+    public void testScaleAddNoShift() {
+        // Test scaling without shifting
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0.1, new Point2D(0, 0));
+        assertEquals(0.2, p.getX(), 0.0001);
+        assertEquals(0.3, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddWithShift() {
+        // Test scaling with shifting
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0.1, new Point2D(1, 1));
+        assertEquals(1.2, p.getX(), 0.0001);
+        assertEquals(1.3, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddNegative() {
+        // Test scaling with a negative scalar
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(-0.1, new Point2D(1, 1));
+        assertEquals(0.8, p.getX(), 0.0001);
+        assertEquals(0.9, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddZero() {
+        // Test scaling with a scalar of zero
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0, new Point2D(1, 1));
+        assertEquals(1, p.getX(), 0.0001);
+        assertEquals(1, p.getY(), 0.0001);
+    }
+
+}
+These tests cover various scenarios including scaling with and without shifting, using a negative scalar value, and using a scalar value of zero. The tests verify that the scaleAdd method produces the expected result for each input.
+
+-----------------------------------------
+ Prompt: Can you write unit tests for this method
+Code:
+public void scaleAdd(double f, Point2D shift) {
+                x = x * f + shift.x;
+                y = y * f + shift.y;
+        }
+-----------------------------------------
+ChatGPT response: import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class Point2DTest {
+
+    @Test
+    public void testScaleAddNoShift() {
+        // Test scaling without shifting
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0.1, new Point2D(0, 0));
+        assertEquals(0.2, p.getX(), 0.0001);
+        assertEquals(0.3, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddWithShift() {
+        // Test scaling with shifting
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0.1, new Point2D(1, 1));
+        assertEquals(1.2, p.getX(), 0.0001);
+        assertEquals(1.3, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddNegative() {
+        // Test scaling with a negative scalar
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(-0.1, new Point2D(1, 1));
+        assertEquals(0.8, p.getX(), 0.0001);
+        assertEquals(0.9, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddZero() {
+        // Test scaling with a scalar of zero
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0, new Point2D(1, 1));
+        assertEquals(1, p.getX(), 0.0001);
+        assertEquals(1, p.getY(), 0.0001);
+    }
+
+}
+These tests cover various scenarios including scaling with and without shifting, using a negative scalar value, and using a scalar value of zero. The tests verify that the scaleAdd method produces the expected result for each input.
+
+-----------------------------------------
+ Prompt: Can you write unit tests for this method
+Code:
+public void scaleAdd(double f, Point2D shift) {
+                x = x * f + shift.x;
+                y = y * f + shift.y;
+        }
+-----------------------------------------
+ChatGPT response: import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class Point2DTest {
+
+    @Test
+    public void testScaleAddNoShift() {
+        // Test scaling without shifting
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0.1, new Point2D(0, 0));
+        assertEquals(0.2, p.getX(), 0.0001);
+        assertEquals(0.3, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddWithShift() {
+        // Test scaling with shifting
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0.1, new Point2D(1, 1));
+        assertEquals(1.2, p.getX(), 0.0001);
+        assertEquals(1.3, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddNegative() {
+        // Test scaling with a negative scalar
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(-0.1, new Point2D(1, 1));
+        assertEquals(0.8, p.getX(), 0.0001);
+        assertEquals(0.9, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddZero() {
+        // Test scaling with a scalar of zero
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0, new Point2D(1, 1));
+        assertEquals(1, p.getX(), 0.0001);
+        assertEquals(1, p.getY(), 0.0001);
+    }
+
+}
+These tests cover various scenarios including scaling with and without shifting, using a negative scalar value, and using a scalar value of zero. The tests verify that the scaleAdd method produces the expected result for each input.
+
+-----------------------------------------
+ Prompt: Can you write unit tests for this method
+Code:
+public void scaleAdd(double f, Point2D shift) {
+                x = x * f + shift.x;
+                y = y * f + shift.y;
+        }
+-----------------------------------------
+ChatGPT response: import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class Point2DTest {
+
+    @Test
+    public void testScaleAddNoShift() {
+        // Test scaling without shifting
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0.1, new Point2D(0, 0));
+        assertEquals(0.2, p.getX(), 0.0001);
+        assertEquals(0.3, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddWithShift() {
+        // Test scaling with shifting
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0.1, new Point2D(1, 1));
+        assertEquals(1.2, p.getX(), 0.0001);
+        assertEquals(1.3, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddNegative() {
+        // Test scaling with a negative scalar
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(-0.1, new Point2D(1, 1));
+        assertEquals(0.8, p.getX(), 0.0001);
+        assertEquals(0.9, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddZero() {
+        // Test scaling with a scalar of zero
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0, new Point2D(1, 1));
+        assertEquals(1, p.getX(), 0.0001);
+        assertEquals(1, p.getY(), 0.0001);
+    }
+
+}
+These tests cover various scenarios including scaling with and without shifting, using a negative scalar value, and using a scalar value of zero. The tests verify that the scaleAdd method produces the expected result for each input.
+
+-----------------------------------------
+ Prompt: Can you write unit tests for this method
+Code:
+public void scaleAdd(double f, Point2D shift) {
+                x = x * f + shift.x;
+                y = y * f + shift.y;
+        }
+-----------------------------------------
+ChatGPT response: import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class Point2DTest {
+
+    @Test
+    public void testScaleAddNoShift() {
+        // Test scaling without shifting
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0.1, new Point2D(0, 0));
+        assertEquals(0.2, p.getX(), 0.0001);
+        assertEquals(0.3, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddWithShift() {
+        // Test scaling with shifting
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0.1, new Point2D(1, 1));
+        assertEquals(1.2, p.getX(), 0.0001);
+        assertEquals(1.3, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddNegative() {
+        // Test scaling with a negative scalar
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(-0.1, new Point2D(1, 1));
+        assertEquals(0.8, p.getX(), 0.0001);
+        assertEquals(0.9, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddZero() {
+        // Test scaling with a scalar of zero
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0, new Point2D(1, 1));
+        assertEquals(1, p.getX(), 0.0001);
+        assertEquals(1, p.getY(), 0.0001);
+    }
+
+}
+These tests cover various scenarios including scaling with and without shifting, using a negative scalar value, and using a scalar value of zero. The tests verify that the scaleAdd method produces the expected result for each input.
+
+-----------------------------------------
+ Prompt: Can you write unit tests for this method
+Code:
+public void scaleAdd(double f, Point2D shift) {
+                x = x * f + shift.x;
+                y = y * f + shift.y;
+        }
+-----------------------------------------
+ChatGPT response: import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class Point2DTest {
+
+    @Test
+    public void testScaleAddNoShift() {
+        // Test scaling without shifting
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0.1, new Point2D(0, 0));
+        assertEquals(0.2, p.getX(), 0.0001);
+        assertEquals(0.3, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddWithShift() {
+        // Test scaling with shifting
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0.1, new Point2D(1, 1));
+        assertEquals(1.2, p.getX(), 0.0001);
+        assertEquals(1.3, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddNegative() {
+        // Test scaling with a negative scalar
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(-0.1, new Point2D(1, 1));
+        assertEquals(0.8, p.getX(), 0.0001);
+        assertEquals(0.9, p.getY(), 0.0001);
+    }
+
+    @Test
+    public void testScaleAddZero() {
+        // Test scaling with a scalar of zero
+        Point2D p = new Point2D(2, 3);
+        p.scaleAdd(0, new Point2D(1, 1));
+        assertEquals(1, p.getX(), 0.0001);
+        assertEquals(1, p.getY(), 0.0001);
+    }
+
+}
+These tests cover various scenarios including scaling with and without shifting, using a negative scalar value, and using a scalar value of zero. The tests verify that the scaleAdd method produces the expected result for each input.

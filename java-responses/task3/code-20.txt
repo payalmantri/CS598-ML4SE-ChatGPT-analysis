@@ -1,0 +1,243 @@
+
+----------------------------------------
+ Prompt: Write semantically equivalent code 
+Code:
+        private static boolean polylineContainsPolyline_(Polyline polyline_a,
+                        Polyline polyline_b, double tolerance,
+                        ProgressTracker progress_tracker) {
+                Envelope2D env_a = new Envelope2D(), env_b = new Envelope2D();
+                polyline_a.queryEnvelope2D(env_a);
+                polyline_b.queryEnvelope2D(env_b);
+
+                // Quick envelope rejection test for false equality.
+                if (!envelopeInfContainsEnvelope_(env_a, env_b, tolerance))
+                        return false;
+
+                // Quick rasterize test to see whether the the geometries are disjoint.
+                if (tryRasterizedContainsOrDisjoint_(polyline_a, polyline_b, tolerance,
+                                false) == Relation.disjoint)
+                        return false;
+
+                return linearPathWithinLinearPath_(polyline_b, polyline_a, tolerance, false);
+        }
+-----------------------------------------
+ChatGPT response: Here is a possible refactored version of the code, which is semantically equivalent to the original code:
+private static boolean polylineContainsPolyline(Polyline polyline1,
+                                                 Polyline polyline2,
+                                                 double tolerance) {
+    Envelope2D env1 = getEnvelope(polyline1);
+    Envelope2D env2 = getEnvelope(polyline2);
+
+    if (!envelopeContains(env1, env2, tolerance)) {
+        return false;
+    }
+
+    if (arePolylinesDisjoint(polyline1, polyline2, tolerance)) {
+        return false;
+    }
+
+    return isPathWithinPath(polyline2, polyline1, tolerance);
+}
+
+private static Envelope2D getEnvelope(Polyline polyline) {
+    Envelope2D env = new Envelope2D();
+    polyline.queryEnvelope2D(env);
+    return env;
+}
+
+private static boolean envelopeContains(Envelope2D env1, Envelope2D env2,
+                                         double tolerance) {
+    Envelope2D infEnv1 = getInfiniteEnvelope(env1);
+    Envelope2D infEnv2 = getInfiniteEnvelope(env2);
+    return infEnv1.contains(infEnv2, tolerance);
+}
+
+private static Envelope2D getInfiniteEnvelope(Envelope2D env) {
+    return new Envelope2D(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY,
+                          Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+}
+
+private static boolean arePolylinesDisjoint(Polyline polyline1,
+                                            Polyline polyline2,
+                                            double tolerance) {
+    Relation relation = tryRasterizedContainsOrDisjoint(polyline1, polyline2,
+                                                        tolerance, false);
+    return relation == Relation.disjoint;
+}
+
+private static Relation tryRasterizedContainsOrDisjoint(Polyline polyline1,
+                                                        Polyline polyline2,
+                                                        double tolerance,
+                                                        boolean b) {
+    // implementation not shown
+    return null;
+}
+
+private static boolean isPathWithinPath(Polyline inner, Polyline outer,
+                                         double tolerance) {
+    // implementation not shown
+    return false;
+}
+
+
+----------------------------------------
+ Prompt: Write semantically equivalent code 
+Code:
+        private static boolean polylineContainsPolyline_(Polyline polyline_a,
+                        Polyline polyline_b, double tolerance,
+                        ProgressTracker progress_tracker) {
+                Envelope2D env_a = new Envelope2D(), env_b = new Envelope2D();
+                polyline_a.queryEnvelope2D(env_a);
+                polyline_b.queryEnvelope2D(env_b);
+
+                // Quick envelope rejection test for false equality.
+                if (!envelopeInfContainsEnvelope_(env_a, env_b, tolerance))
+                        return false;
+
+                // Quick rasterize test to see whether the the geometries are disjoint.
+                if (tryRasterizedContainsOrDisjoint_(polyline_a, polyline_b, tolerance,
+                                false) == Relation.disjoint)
+                        return false;
+
+                return linearPathWithinLinearPath_(polyline_b, polyline_a, tolerance, false);
+        }
+-----------------------------------------
+ChatGPT response: Here is a possible refactored version of the code, which is semantically equivalent to the original code:
+private static boolean polylineContainsPolyline(Polyline polyline1,
+                                                 Polyline polyline2,
+                                                 double tolerance) {
+    Envelope2D env1 = getEnvelope(polyline1);
+    Envelope2D env2 = getEnvelope(polyline2);
+
+    if (!envelopeContains(env1, env2, tolerance)) {
+        return false;
+    }
+
+    if (arePolylinesDisjoint(polyline1, polyline2, tolerance)) {
+        return false;
+    }
+
+    return isPathWithinPath(polyline2, polyline1, tolerance);
+}
+
+private static Envelope2D getEnvelope(Polyline polyline) {
+    Envelope2D env = new Envelope2D();
+    polyline.queryEnvelope2D(env);
+    return env;
+}
+
+private static boolean envelopeContains(Envelope2D env1, Envelope2D env2,
+                                         double tolerance) {
+    Envelope2D infEnv1 = getInfiniteEnvelope(env1);
+    Envelope2D infEnv2 = getInfiniteEnvelope(env2);
+    return infEnv1.contains(infEnv2, tolerance);
+}
+
+private static Envelope2D getInfiniteEnvelope(Envelope2D env) {
+    return new Envelope2D(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY,
+                          Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+}
+
+private static boolean arePolylinesDisjoint(Polyline polyline1,
+                                            Polyline polyline2,
+                                            double tolerance) {
+    Relation relation = tryRasterizedContainsOrDisjoint(polyline1, polyline2,
+                                                        tolerance, false);
+    return relation == Relation.disjoint;
+}
+
+private static Relation tryRasterizedContainsOrDisjoint(Polyline polyline1,
+                                                        Polyline polyline2,
+                                                        double tolerance,
+                                                        boolean b) {
+    // implementation not shown
+    return null;
+}
+
+private static boolean isPathWithinPath(Polyline inner, Polyline outer,
+                                         double tolerance) {
+    // implementation not shown
+    return false;
+}
+
+
+----------------------------------------
+ Prompt: Write semantically equivalent code 
+Code:
+        private static boolean polylineContainsPolyline_(Polyline polyline_a,
+                        Polyline polyline_b, double tolerance,
+                        ProgressTracker progress_tracker) {
+                Envelope2D env_a = new Envelope2D(), env_b = new Envelope2D();
+                polyline_a.queryEnvelope2D(env_a);
+                polyline_b.queryEnvelope2D(env_b);
+
+                // Quick envelope rejection test for false equality.
+                if (!envelopeInfContainsEnvelope_(env_a, env_b, tolerance))
+                        return false;
+
+                // Quick rasterize test to see whether the the geometries are disjoint.
+                if (tryRasterizedContainsOrDisjoint_(polyline_a, polyline_b, tolerance,
+                                false) == Relation.disjoint)
+                        return false;
+
+                return linearPathWithinLinearPath_(polyline_b, polyline_a, tolerance, false);
+        }
+-----------------------------------------
+ChatGPT response: Here is a possible refactored version of the code, which is semantically equivalent to the original code:
+private static boolean polylineContainsPolyline(Polyline polyline1,
+                                                 Polyline polyline2,
+                                                 double tolerance) {
+    Envelope2D env1 = getEnvelope(polyline1);
+    Envelope2D env2 = getEnvelope(polyline2);
+
+    if (!envelopeContains(env1, env2, tolerance)) {
+        return false;
+    }
+
+    if (arePolylinesDisjoint(polyline1, polyline2, tolerance)) {
+        return false;
+    }
+
+    return isPathWithinPath(polyline2, polyline1, tolerance);
+}
+
+private static Envelope2D getEnvelope(Polyline polyline) {
+    Envelope2D env = new Envelope2D();
+    polyline.queryEnvelope2D(env);
+    return env;
+}
+
+private static boolean envelopeContains(Envelope2D env1, Envelope2D env2,
+                                         double tolerance) {
+    Envelope2D infEnv1 = getInfiniteEnvelope(env1);
+    Envelope2D infEnv2 = getInfiniteEnvelope(env2);
+    return infEnv1.contains(infEnv2, tolerance);
+}
+
+private static Envelope2D getInfiniteEnvelope(Envelope2D env) {
+    return new Envelope2D(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY,
+                          Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+}
+
+private static boolean arePolylinesDisjoint(Polyline polyline1,
+                                            Polyline polyline2,
+                                            double tolerance) {
+    Relation relation = tryRasterizedContainsOrDisjoint(polyline1, polyline2,
+                                                        tolerance, false);
+    return relation == Relation.disjoint;
+}
+
+private static Relation tryRasterizedContainsOrDisjoint(Polyline polyline1,
+                                                        Polyline polyline2,
+                                                        double tolerance,
+                                                        boolean b) {
+    // implementation not shown
+    return null;
+}
+
+private static boolean isPathWithinPath(Polyline inner, Polyline outer,
+                                         double tolerance) {
+    // implementation not shown
+    return false;
+}
+

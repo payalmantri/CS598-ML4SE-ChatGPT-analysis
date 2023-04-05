@@ -1,0 +1,50 @@
+
+----------------------------------------
+ Prompt: Write a  different implementation for this code
+Code:
+  public static String queryString(Connection con, String def, String query, Object... param) throws SQLException {
+    PreparedStatement stmt = null;
+    try {
+      stmt = con.prepareStatement(query);
+      stmt.setMaxRows(1);
+      for (int i = 0; i < param.length; i++) {
+        stmt.setObject(i + 1, param[i]);
+      }
+      return queryString(stmt, def);
+    } finally {
+      close(stmt);
+    }
+  }
+-----------------------------------------
+ChatGPT response: Sure! Here's an implementation of the queryString method that achieves the same functionality as the original implementation:
+
+java
+Copy code
+public static String queryString(Connection con, String def, String query, Object... param) throws SQLException {
+    try (PreparedStatement stmt = con.prepareStatement(query)) {
+        stmt.setMaxRows(1);
+        for (int i = 0; i < param.length; i++) {
+            stmt.setObject(i + 1, param[i]);
+        }
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getString(1);
+            } else {
+                return def;
+            }
+        }
+    }
+}
+Let's break it down line by line:
+
+try (PreparedStatement stmt = con.prepareStatement(query)) {: This uses a try-with-resources statement to create a new PreparedStatement object using the Connection con and the SQL query string query. The resulting PreparedStatement is assigned to the stmt variable.
+stmt.setMaxRows(1);: This sets the maximum number of rows that the PreparedStatement will return to 1.
+for (int i = 0; i < param.length; i++) { stmt.setObject(i + 1, param[i]); }: This loop iterates through the Object array param and sets the values of the corresponding placeholders in the SQL query using the setObject method of the PreparedStatement.
+try (ResultSet rs = stmt.executeQuery()) {: This uses another try-with-resources statement to execute the prepared statement and create a ResultSet object to hold the result set. The resulting ResultSet is assigned to the rs variable.
+if (rs.next()) { return rs.getString(1); } else { return def; }: This checks if there is at least one row in the result set, and if so, returns the value of the first column as a string using the getString method of the ResultSet. If there are no rows in the result set, it returns the default string value.
+}: This closes the ResultSet and the PreparedStatement.
+This implementation achieves the same functionality as the original implementation, but simplifies the code by using try-with-resources statements to automatically close the resources. It also eliminates the need for a separate method call to close the PreparedStatement.
+
+
+
+

@@ -1,0 +1,126 @@
+
+----------------------------------------
+ Prompt: Write Semantically equivalent code for this method
+Code:
+   public static String[] split(String string, char delimiter) {
+        int delimeterCount = 0;
+        int start = 0;
+        int end;
+        String[] strings = new String[32];
+        while ((end = string.indexOf(delimiter, start)) != -1) {
+            if (delimeterCount == strings.length) {
+                strings = Arrays.copyOf(strings, strings.length * 2);
+            }
+            strings[delimeterCount++] = string.substring(start, end);
+            start = end + 1;
+        }
+        strings = Arrays.copyOf(strings, delimeterCount + 1);
+        strings[delimeterCount] = string.substring(start);
+        return strings;
+    }
+-----------------------------------------
+ChatGPT response: Here is semantically equivalent code for the "split" method:
+
+typescript
+Copy code
+public static String[] split(String string, char delimiter) {
+    List<String> stringsList = new ArrayList<>();
+    StringBuilder sb = new StringBuilder();
+    for (char c : string.toCharArray()) {
+        if (c == delimiter) {
+            stringsList.add(sb.toString());
+            sb.setLength(0);
+        } else {
+            sb.append(c);
+        }
+    }
+    stringsList.add(sb.toString());
+    return stringsList.toArray(new String[0]);
+}
+This new implementation achieves the same result as the original implementation. The method creates an empty ArrayList called "stringsList" and a StringBuilder called "sb". It iterates over each character in the "string" using a for-each loop. If the current character is the "delimiter", it adds the contents of "sb" to "stringsList", clears "sb" using setLength(0), and continues to the next character. Otherwise, it appends the current character to "sb".
+
+After the loop finishes, the method adds the remaining contents of "sb" to "stringsList" and returns an array version of "stringsList" using the toArray method.
+
+----------------------------------------
+ Prompt: Write Semantically equivalent code for this method
+Code:
+   public static String[] split(String string, char delimiter) {
+        int delimeterCount = 0;
+        int start = 0;
+        int end;
+        String[] strings = new String[32];
+        while ((end = string.indexOf(delimiter, start)) != -1) {
+            if (delimeterCount == strings.length) {
+                strings = Arrays.copyOf(strings, strings.length * 2);
+            }
+            strings[delimeterCount++] = string.substring(start, end);
+            start = end + 1;
+        }
+        strings = Arrays.copyOf(strings, delimeterCount + 1);
+        strings[delimeterCount] = string.substring(start);
+        return strings;
+    }
+-----------------------------------------
+ChatGPT response: Here is semantically equivalent code for the "split" method:
+
+typescript
+Copy code
+public static String[] split(String string, char delimiter) {
+    List<String> stringsList = new ArrayList<>();
+    StringBuilder sb = new StringBuilder();
+    for (char c : string.toCharArray()) {
+        if (c == delimiter) {
+            stringsList.add(sb.toString());
+            sb.setLength(0);
+        } else {
+            sb.append(c);
+        }
+    }
+    stringsList.add(sb.toString());
+    return stringsList.toArray(new String[0]);
+}
+This new implementation achieves the same result as the original implementation. The method creates an empty ArrayList called "stringsList" and a StringBuilder called "sb". It iterates over each character in the "string" using a for-each loop. If the current character is the "delimiter", it adds the contents of "sb" to "stringsList", clears "sb" using setLength(0), and continues to the next character. Otherwise, it appends the current character to "sb".
+
+After the loop finishes, the method adds the remaining contents of "sb" to "stringsList" and returns an array version of "stringsList" using the toArray method.
+
+----------------------------------------
+ Prompt: Write Semantically equivalent code for this method
+Code:
+   public static String[] split(String string, char delimiter) {
+        int delimeterCount = 0;
+        int start = 0;
+        int end;
+        String[] strings = new String[32];
+        while ((end = string.indexOf(delimiter, start)) != -1) {
+            if (delimeterCount == strings.length) {
+                strings = Arrays.copyOf(strings, strings.length * 2);
+            }
+            strings[delimeterCount++] = string.substring(start, end);
+            start = end + 1;
+        }
+        strings = Arrays.copyOf(strings, delimeterCount + 1);
+        strings[delimeterCount] = string.substring(start);
+        return strings;
+    }
+-----------------------------------------
+ChatGPT response: Here is semantically equivalent code for the "split" method:
+
+typescript
+Copy code
+public static String[] split(String string, char delimiter) {
+    List<String> stringsList = new ArrayList<>();
+    StringBuilder sb = new StringBuilder();
+    for (char c : string.toCharArray()) {
+        if (c == delimiter) {
+            stringsList.add(sb.toString());
+            sb.setLength(0);
+        } else {
+            sb.append(c);
+        }
+    }
+    stringsList.add(sb.toString());
+    return stringsList.toArray(new String[0]);
+}
+This new implementation achieves the same result as the original implementation. The method creates an empty ArrayList called "stringsList" and a StringBuilder called "sb". It iterates over each character in the "string" using a for-each loop. If the current character is the "delimiter", it adds the contents of "sb" to "stringsList", clears "sb" using setLength(0), and continues to the next character. Otherwise, it appends the current character to "sb".
+
+After the loop finishes, the method adds the remaining contents of "sb" to "stringsList" and returns an array version of "stringsList" using the toArray method.

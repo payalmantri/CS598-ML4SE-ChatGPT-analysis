@@ -1,0 +1,42 @@
+
+-----------------------------------------
+ Prompt: What does this code snippet do 
+  public static String getExtension(String fileName) {
+    int pos = fileName.lastIndexOf('.');
+    if (pos < 0) {
+      return "";
+    }
+    return fileName.substring(pos + 1);
+  }
+Code:
+
+
+-----------------------------------------
+ChatGPT response: This code snippet is a Java method named "getExtension" that takes a String parameter "fileName". The purpose of this method is to extract the file extension from the given file name.
+
+Here's what the code does:
+
+First, it finds the position of the last occurrence of the '.' character in the fileName string using the "lastIndexOf" method.
+If the '.' character is not found in the fileName string, then the method returns an empty string ("").
+If the '.' character is found, then the method uses the "substring" method to return the characters that come after the '.' character. This substring represents the file extension.
+So, in summary, the method extracts the file extension from the given file name and returns it as a String. For example, if the input file name is "example.txt", the method will return "txt".
+
+-----------------------------------------
+ Prompt: if  input = abc.abco.ir.org 
+Code:
+  public static String getExtension(String fileName) {
+    int pos = fileName.lastIndexOf('.');
+    if (pos < 0) {
+      return "";
+    }
+    return fileName.substring(pos + 1);
+  }
+
+-----------------------------------------
+ChatGPT response: If the input is "abc.abco.ir.org", and we call the "getExtension" method with this input as an argument, the method will return "org".
+
+Here's how the method works:
+
+The "lastIndexOf" method will find the last occurrence of the '.' character in the input string, which is between "ir" and "org".
+The "substring" method will extract the characters that come after the '.' character, which is "org".
+The method then returns "org" as the file extension.

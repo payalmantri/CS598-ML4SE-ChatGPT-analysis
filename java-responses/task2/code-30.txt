@@ -1,0 +1,206 @@
+
+-----------------------------------------
+ Prompt: Write Junit suite for this method
+Code:
+ public static int getDayAsReadableInt(Calendar calendar) {
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        return year * 10000 + month * 100 + day;
+    }
+-----------------------------------------
+ChatGPT response: Sure, here's a JUnit test suite for the getDayAsReadableInt method:
+
+java
+Copy code
+import static org.junit.Assert.assertEquals;
+import java.util.Calendar;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+@RunWith(JUnit4.class)
+public class CalendarUtilsTest {
+
+    @Test
+    public void testGetDayAsReadableInt() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2022, 0, 1); // January 1st, 2022
+        assertEquals(20220101, CalendarUtils.getDayAsReadableInt(calendar));
+
+        calendar.set(1995, 5, 10); // June 10th, 1995
+        assertEquals(19950610, CalendarUtils.getDayAsReadableInt(calendar));
+
+        calendar.set(2023, 2, 31); // March 31st, 2023
+        assertEquals(20230331, CalendarUtils.getDayAsReadableInt(calendar));
+
+        calendar.set(2020, 11, 24); // December 24th, 2020
+        assertEquals(20201224, CalendarUtils.getDayAsReadableInt(calendar));
+    }
+}
+This test suite creates a Calendar object with a specific date and then calls the getDayAsReadableInt method to verify that it returns the expected integer representation of the date. The assertEquals method is used to compare the actual result with the expected value.
+
+
+
+
+
+-----------------------------------------
+ Prompt: Can you add excpetion cases to this suite
+Code:
+ public static int getDayAsReadableInt(Calendar calendar) {
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        return year * 10000 + month * 100 + day;
+    }
+-----------------------------------------
+ChatGPT response: Sure! Here's an updated test suite that includes exception cases:
+
+java
+Copy code
+import static org.junit.Assert.assertEquals;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+import java.util.Calendar;
+
+@RunWith(JUnit4.class)
+public class CalendarUtilsTest {
+
+    @Rule
+    public ExpectedException exceptionRule = ExpectedException.none();
+
+    @Test
+    public void testGetDayAsReadableInt() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2022, 0, 1); // January 1st, 2022
+        assertEquals(20220101, CalendarUtils.getDayAsReadableInt(calendar));
+
+        calendar.set(1995, 5, 10); // June 10th, 1995
+        assertEquals(19950610, CalendarUtils.getDayAsReadableInt(calendar));
+
+        calendar.set(2023, 2, 31); // March 31st, 2023
+        assertEquals(20230331, CalendarUtils.getDayAsReadableInt(calendar));
+
+        calendar.set(2020, 11, 24); // December 24th, 2020
+        assertEquals(20201224, CalendarUtils.getDayAsReadableInt(calendar));
+    }
+
+    @Test
+    public void testGetDayAsReadableIntWithNull() {
+        exceptionRule.expect(IllegalArgumentException.class);
+        exceptionRule.expectMessage("Calendar cannot be null");
+        CalendarUtils.getDayAsReadableInt(null);
+    }
+}
+This updated test suite includes a new test case testGetDayAsReadableIntWithNull which verifies that the method throws an IllegalArgumentException when passed a null Calendar object. The @Rule annotation is used to set up an ExpectedException object, which is then configured to expect an IllegalArgumentException with a specific error message. The expect method is called before invoking the getDayAsReadableInt method, and if the expected exception is not thrown, the test will fail.
+
+
+
+
+
+
+-----------------------------------------
+ Prompt: Write Junit suite for this method
+Code:
+ public static int getDayAsReadableInt(Calendar calendar) {
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        return year * 10000 + month * 100 + day;
+    }
+-----------------------------------------
+ChatGPT response: Sure, here's a JUnit test suite for the getDayAsReadableInt method:
+
+java
+Copy code
+import static org.junit.Assert.assertEquals;
+import java.util.Calendar;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+@RunWith(JUnit4.class)
+public class CalendarUtilsTest {
+
+    @Test
+    public void testGetDayAsReadableInt() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2022, 0, 1); // January 1st, 2022
+        assertEquals(20220101, CalendarUtils.getDayAsReadableInt(calendar));
+
+        calendar.set(1995, 5, 10); // June 10th, 1995
+        assertEquals(19950610, CalendarUtils.getDayAsReadableInt(calendar));
+
+        calendar.set(2023, 2, 31); // March 31st, 2023
+        assertEquals(20230331, CalendarUtils.getDayAsReadableInt(calendar));
+
+        calendar.set(2020, 11, 24); // December 24th, 2020
+        assertEquals(20201224, CalendarUtils.getDayAsReadableInt(calendar));
+    }
+}
+This test suite creates a Calendar object with a specific date and then calls the getDayAsReadableInt method to verify that it returns the expected integer representation of the date. The assertEquals method is used to compare the actual result with the expected value.
+
+
+
+
+
+-----------------------------------------
+ Prompt: Can you add excpetion cases to this suite
+Code:
+ public static int getDayAsReadableInt(Calendar calendar) {
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        return year * 10000 + month * 100 + day;
+    }
+-----------------------------------------
+ChatGPT response: Sure! Here's an updated test suite that includes exception cases:
+
+java
+Copy code
+import static org.junit.Assert.assertEquals;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+import java.util.Calendar;
+
+@RunWith(JUnit4.class)
+public class CalendarUtilsTest {
+
+    @Rule
+    public ExpectedException exceptionRule = ExpectedException.none();
+
+    @Test
+    public void testGetDayAsReadableInt() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2022, 0, 1); // January 1st, 2022
+        assertEquals(20220101, CalendarUtils.getDayAsReadableInt(calendar));
+
+        calendar.set(1995, 5, 10); // June 10th, 1995
+        assertEquals(19950610, CalendarUtils.getDayAsReadableInt(calendar));
+
+        calendar.set(2023, 2, 31); // March 31st, 2023
+        assertEquals(20230331, CalendarUtils.getDayAsReadableInt(calendar));
+
+        calendar.set(2020, 11, 24); // December 24th, 2020
+        assertEquals(20201224, CalendarUtils.getDayAsReadableInt(calendar));
+    }
+
+    @Test
+    public void testGetDayAsReadableIntWithNull() {
+        exceptionRule.expect(IllegalArgumentException.class);
+        exceptionRule.expectMessage("Calendar cannot be null");
+        CalendarUtils.getDayAsReadableInt(null);
+    }
+}
+This updated test suite includes a new test case testGetDayAsReadableIntWithNull which verifies that the method throws an IllegalArgumentException when passed a null Calendar object. The @Rule annotation is used to set up an ExpectedException object, which is then configured to expect an IllegalArgumentException with a specific error message. The expect method is called before invoking the getDayAsReadableInt method, and if the expected exception is not thrown, the test will fail.
+
+
+
+
+

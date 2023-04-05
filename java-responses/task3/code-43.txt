@@ -1,0 +1,34 @@
+
+----------------------------------------
+ Prompt: Write Alternate implementation of the program 
+Code:
+  public static boolean isAncestor(File file, File ancestor) throws IOException {
+    file = file.getCanonicalFile();
+    ancestor = ancestor.getCanonicalFile();
+    do {
+      if (file.equals(ancestor)) {
+        return true;
+      }
+      file = file.getParentFile();
+    } while (file != null);
+    return false;
+  }
+-----------------------------------------
+ChatGPT response: Here is an alternate implementation of the isAncestor method that uses a while loop instead of a do-while loop:
+
+arduino
+Copy code
+public static boolean isAncestor(File file, File ancestor) throws IOException {
+    file = file.getCanonicalFile();
+    ancestor = ancestor.getCanonicalFile();
+    while (file != null) {
+      if (file.equals(ancestor)) {
+        return true;
+      }
+      file = file.getParentFile();
+    }
+    return false;
+}
+This implementation checks if the file is equal to the ancestor before iterating through its parent directories. The while loop condition ensures that the loop runs until the root directory is reached (file.getParentFile() returns null).
+
+This implementation has the same time and space complexity as the original implementation

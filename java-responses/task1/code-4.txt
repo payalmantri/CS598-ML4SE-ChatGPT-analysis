@@ -1,0 +1,92 @@
+
+-----------------------------------------
+ Prompt: n geometri-api-java Repository, 
+the EDit shape class has method
+Code:
+int addGeometry(Geometry geometry) {
+                Geometry.Type gt = geometry.getType();
+                if (Geometry.isMultiPath(gt.value()))
+                        return addMultiPath_((MultiPath) geometry);
+                if (gt == Geometry.Type.MultiPoint)
+                        return addMultiPoint_((MultiPoint) geometry);
+
+                throw GeometryException.GeometryInternalError();
+        }
+
+-----------------------------------------
+ChatGPT response: The addGeometry method in the EditShape class of the geometri-api-java repository is used to add a Geometry object to an existing EditShape instance. The Geometry object can be of any type, such as Point, Line, Polygon, or MultiPoint.
+
+The method first gets the type of the Geometry object using the getType method. If the type is a MultiPath, the addMultiPath_ method is called with the MultiPath object as a parameter. Similarly, if the type is MultiPoint, the addMultiPoint_ method is called with the MultiPoint object as a parameter.
+
+If the type is not a MultiPath or a MultiPoint, the method throws a GeometryException.GeometryInternalError exception, indicating that the Geometry object is not supported by the EditShape instance.
+
+The addMultiPath_ and addMultiPoint_ methods are private methods in the EditShape class that are used to add MultiPath and MultiPoint objects, respectively, to the EditShape instance. These methods implement the specific logic for adding these types of objects to the shape.
+
+-----------------------------------------
+ Prompt: n geometri-api-java Repository, 
+the EDit shape class has method
+Code:
+int addGeometry(Geometry geometry) {
+                Geometry.Type gt = geometry.getType();
+                if (Geometry.isMultiPath(gt.value()))
+                        return addMultiPath_((MultiPath) geometry);
+                if (gt == Geometry.Type.MultiPoint)
+                        return addMultiPoint_((MultiPoint) geometry);
+
+                throw GeometryException.GeometryInternalError();
+        }
+
+-----------------------------------------
+ChatGPT response: The addGeometry method in the EditShape class of the geometri-api-java repository is used to add a Geometry object to an existing EditShape instance. The Geometry object can be of any type, such as Point, Line, Polygon, or MultiPoint.
+
+The method first gets the type of the Geometry object using the getType method. If the type is a MultiPath, the addMultiPath_ method is called with the MultiPath object as a parameter. Similarly, if the type is MultiPoint, the addMultiPoint_ method is called with the MultiPoint object as a parameter.
+
+If the type is not a MultiPath or a MultiPoint, the method throws a GeometryException.GeometryInternalError exception, indicating that the Geometry object is not supported by the EditShape instance.
+
+The addMultiPath_ and addMultiPoint_ methods are private methods in the EditShape class that are used to add MultiPath and MultiPoint objects, respectively, to the EditShape instance. These methods implement the specific logic for adding these types of objects to the shape.
+
+-----------------------------------------
+ Prompt: n geometri-api-java Repository, 
+the EDit shape class has method
+Code:
+int addGeometry(Geometry geometry) {
+                Geometry.Type gt = geometry.getType();
+                if (Geometry.isMultiPath(gt.value()))
+                        return addMultiPath_((MultiPath) geometry);
+                if (gt == Geometry.Type.MultiPoint)
+                        return addMultiPoint_((MultiPoint) geometry);
+
+                throw GeometryException.GeometryInternalError();
+        }
+
+-----------------------------------------
+ChatGPT response: The addGeometry method in the EditShape class of the geometri-api-java repository is used to add a Geometry object to an existing EditShape instance. The Geometry object can be of any type, such as Point, Line, Polygon, or MultiPoint.
+
+The method first gets the type of the Geometry object using the getType method. If the type is a MultiPath, the addMultiPath_ method is called with the MultiPath object as a parameter. Similarly, if the type is MultiPoint, the addMultiPoint_ method is called with the MultiPoint object as a parameter.
+
+If the type is not a MultiPath or a MultiPoint, the method throws a GeometryException.GeometryInternalError exception, indicating that the Geometry object is not supported by the EditShape instance.
+
+The addMultiPath_ and addMultiPoint_ methods are private methods in the EditShape class that are used to add MultiPath and MultiPoint objects, respectively, to the EditShape instance. These methods implement the specific logic for adding these types of objects to the shape.
+
+-----------------------------------------
+ Prompt: n geometri-api-java Repository, 
+the EDit shape class has method
+Code:
+int addGeometry(Geometry geometry) {
+                Geometry.Type gt = geometry.getType();
+                if (Geometry.isMultiPath(gt.value()))
+                        return addMultiPath_((MultiPath) geometry);
+                if (gt == Geometry.Type.MultiPoint)
+                        return addMultiPoint_((MultiPoint) geometry);
+
+                throw GeometryException.GeometryInternalError();
+        }
+
+-----------------------------------------
+ChatGPT response: The addGeometry method in the EditShape class of the geometri-api-java repository is used to add a Geometry object to an existing EditShape instance. The Geometry object can be of any type, such as Point, Line, Polygon, or MultiPoint.
+
+The method first gets the type of the Geometry object using the getType method. If the type is a MultiPath, the addMultiPath_ method is called with the MultiPath object as a parameter. Similarly, if the type is MultiPoint, the addMultiPoint_ method is called with the MultiPoint object as a parameter.
+
+If the type is not a MultiPath or a MultiPoint, the method throws a GeometryException.GeometryInternalError exception, indicating that the Geometry object is not supported by the EditShape instance.
+
+The addMultiPath_ and addMultiPoint_ methods are private methods in the EditShape class that are used to add MultiPath and MultiPoint objects, respectively, to the EditShape instance. These methods implement the specific logic for adding these types of objects to the shape.

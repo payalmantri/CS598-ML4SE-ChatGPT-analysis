@@ -1,0 +1,126 @@
+
+-----------------------------------------
+ Prompt: What does the code below do 
+"	public final void startAddingEdges() {
+		if (numEdges_ > 0) {
+			for (int i = 0; i < height_; i++) {
+				for (Edge e = ySortedEdges_[i]; e != null;) {
+					Edge p = e;
+					e = e.next;
+					p.next = null;
+				}
+				
+				ySortedEdges_[i] = null;
+			}
+
+			activeEdgesTable_ = null;
+		}
+		
+		minY_ = height_;
+		maxY_ = -1;
+		numEdges_ = 0;	
+	}"
+Code:
+        public final void renderEdges(int fillMode) {
+                evenOdd_ = fillMode == EVEN_ODD;
+                for (int line = minY_; line <= maxY_; line++) {
+                        advanceAET_();
+                        addNewEdgesToAET_(line);
+                        emitScans_();
+                }
+                
+                startAddingEdges();//reset for new edges
+        }
+
+-----------------------------------------
+ChatGPT response: The provided code appears to be a Java method that renders edges with a specified fill mode. The method takes an integer parameter fillMode, which is used to determine whether the fill rule is even-odd or non-zero winding.
+
+The method then iterates over each line from minY_ to maxY_, where each line represents a scanline in the rendering. During each iteration, the method calls several other methods to advance and add new edges to the active edge table (AET) for that scanline, and then emits the resulting scans for that line.
+
+After each scanline is processed, the startAddingEdges() method is called to reset the active edge table for the next scanline.
+
+The FALSE FALSE FALSE at the end of the provided code is not related to the method and is likely unrelated data or context.
+
+-----------------------------------------
+ Prompt: What does the code below do 
+"	public final void startAddingEdges() {
+		if (numEdges_ > 0) {
+			for (int i = 0; i < height_; i++) {
+				for (Edge e = ySortedEdges_[i]; e != null;) {
+					Edge p = e;
+					e = e.next;
+					p.next = null;
+				}
+				
+				ySortedEdges_[i] = null;
+			}
+
+			activeEdgesTable_ = null;
+		}
+		
+		minY_ = height_;
+		maxY_ = -1;
+		numEdges_ = 0;	
+	}"
+Code:
+        public final void renderEdges(int fillMode) {
+                evenOdd_ = fillMode == EVEN_ODD;
+                for (int line = minY_; line <= maxY_; line++) {
+                        advanceAET_();
+                        addNewEdgesToAET_(line);
+                        emitScans_();
+                }
+                
+                startAddingEdges();//reset for new edges
+        }
+
+-----------------------------------------
+ChatGPT response: The provided code appears to be a Java method that renders edges with a specified fill mode. The method takes an integer parameter fillMode, which is used to determine whether the fill rule is even-odd or non-zero winding.
+
+The method then iterates over each line from minY_ to maxY_, where each line represents a scanline in the rendering. During each iteration, the method calls several other methods to advance and add new edges to the active edge table (AET) for that scanline, and then emits the resulting scans for that line.
+
+After each scanline is processed, the startAddingEdges() method is called to reset the active edge table for the next scanline.
+
+The FALSE FALSE FALSE at the end of the provided code is not related to the method and is likely unrelated data or context.
+
+-----------------------------------------
+ Prompt: What does the code below do 
+"	public final void startAddingEdges() {
+		if (numEdges_ > 0) {
+			for (int i = 0; i < height_; i++) {
+				for (Edge e = ySortedEdges_[i]; e != null;) {
+					Edge p = e;
+					e = e.next;
+					p.next = null;
+				}
+				
+				ySortedEdges_[i] = null;
+			}
+
+			activeEdgesTable_ = null;
+		}
+		
+		minY_ = height_;
+		maxY_ = -1;
+		numEdges_ = 0;	
+	}"
+Code:
+        public final void renderEdges(int fillMode) {
+                evenOdd_ = fillMode == EVEN_ODD;
+                for (int line = minY_; line <= maxY_; line++) {
+                        advanceAET_();
+                        addNewEdgesToAET_(line);
+                        emitScans_();
+                }
+                
+                startAddingEdges();//reset for new edges
+        }
+
+-----------------------------------------
+ChatGPT response: The provided code appears to be a Java method that renders edges with a specified fill mode. The method takes an integer parameter fillMode, which is used to determine whether the fill rule is even-odd or non-zero winding.
+
+The method then iterates over each line from minY_ to maxY_, where each line represents a scanline in the rendering. During each iteration, the method calls several other methods to advance and add new edges to the active edge table (AET) for that scanline, and then emits the resulting scans for that line.
+
+After each scanline is processed, the startAddingEdges() method is called to reset the active edge table for the next scanline.
+
+The FALSE FALSE FALSE at the end of the provided code is not related to the method and is likely unrelated data or context.

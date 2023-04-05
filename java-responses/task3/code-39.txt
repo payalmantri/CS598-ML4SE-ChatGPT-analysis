@@ -1,0 +1,70 @@
+
+----------------------------------------
+ Prompt: Write Alternate implementation for the program 
+"  @CommandArgument
+  public void adduser(
+      @OptionArgument(""username"") String username,
+      @OptionArgument(""password"") String password,
+      @OptionArgument(""roles"") String roles) {
+
+    if (users.containsKey(username)) {
+      System.err.println(String.format(""User '%s' already exists"", username));
+    } else {
+
+      User user = new User(username);
+      user.salt = passwd.generateSalt();
+      user.hash = passwd.getEncryptedPassword(password, user.salt);
+      user.roles.addAll(Arrays.asList(roles.split("","")));
+      users.put(username, user);
+
+    }
+  }"
+Code:
+  @CommandArgument
+  public void adduser(
+      @OptionArgument("username") String username,
+      @OptionArgument("password") String password,
+      @OptionArgument("roles") String roles) {
+
+    if (users.containsKey(username)) {
+      System.err.println(String.format("User '%s' already exists", username));
+    } else {
+
+      User user = new User(username);
+      user.salt = passwd.generateSalt();
+      user.hash = passwd.getEncryptedPassword(password, user.salt);
+      user.roles.addAll(Arrays.asList(roles.split(",")));
+      users.put(username, user);
+
+    }
+  }
+-----------------------------------------
+ChatGPT response: Here's an alternate implementation of the adduser method using the Java Stream API:
+
+less
+Copy code
+@CommandArgument
+public void adduser(
+    @OptionArgument("username") String username,
+    @OptionArgument("password") String password,
+    @OptionArgument("roles") String roles) {
+
+  if (users.containsKey(username)) {
+    System.err.println(String.format("User '%s' already exists", username));
+    return;
+  }
+
+  User user = new User(username);
+  user.salt = passwd.generateSalt();
+  user.hash = passwd.getEncryptedPassword(password, user.salt);
+  user.roles.addAll(Arrays.stream(roles.split(","))
+                            .map(String::trim)
+                            .collect(Collectors.toList()));
+  users.put(username, user);
+}
+In this implementation, we use Arrays.stream to create a stream of roles split by comma, and then use map to remove any leading or trailing whitespaces from each role. We then use collect to collect the resulting stream of roles into a list, which we then add to the user's roles. Additionally, we use an early return statement if the user already exists in the users map to avoid unnecessary processing.
+
+
+
+
+

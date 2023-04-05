@@ -1,0 +1,40 @@
+
+----------------------------------------
+ Prompt: Write different implementation for this code
+Code:
+  @CommandArgument
+  public void addroles(
+      @OptionArgument("username") String username,
+      @OptionArgument("roles") String roles) {
+
+    User user = users.get(username);
+
+    if (user != null) {
+      user.roles.addAll(Arrays.asList(roles.split(",")));
+    } else {
+      System.err.println(String.format("User '%s' does not exist", username));
+    }
+
+  }
+-----------------------------------------
+ChatGPT response: Sure, here is an alternative implementation for the addroles method:
+
+less
+Copy code
+@CommandArgument
+public void addroles(@OptionArgument("username") String username,
+                      @OptionArgument("roles") String roles) {
+
+    Optional<User> optionalUser = users.stream().filter(u -> u.getUsername().equals(username)).findFirst();
+
+    if (optionalUser.isPresent()) {
+        User user = optionalUser.get();
+        user.addRoles(Arrays.asList(roles.split(",")));
+    } else {
+        System.err.println(String.format("User '%s' does not exist", username));
+    }
+
+}
+In this implementation, instead of using a Map to store users, we assume that the users field is a List of User objects. We use Java 8 Stream API to search for a user with the given username. If a matching user is found, we call the addRoles method on the user object to add the new roles. If no user is found, we print an error message to the console.
+
+Note that in this implementation, we assume that the User class has a getUsername method and an addRoles method that accepts a list of strings representing new roles to be added. You may need to adjust the code to match the actual implementation of your system.

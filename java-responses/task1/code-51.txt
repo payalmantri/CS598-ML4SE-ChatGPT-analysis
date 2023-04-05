@@ -1,0 +1,33 @@
+
+-----------------------------------------
+ Prompt: What does the code below do 
+Code:
+   protected static List<SoftLabReportDto> findRelevantLabReports(final Drug pgxDrug, List<EntityModel<SoftReportRecord>> patientSoftLabReports) {
+        List<SoftLabReportDto> relevantLabReports = new ArrayList<>();
+        if(pgxDrug.getTests() == null || patientSoftLabReports == null){
+            return relevantLabReports;
+        }
+        Map<String, Test> testsForThisDrug = pgxDrug.getTests().stream()
+                .collect(Collectors.toMap(Test::getMayoTestID, Function.identity()));;
+        for (EntityModel<SoftReportRecord> reportResource: patientSoftLabReports) {
+            SoftReportRecord reportRecord = reportResource.getContent();
+            if(testsForThisDrug.containsKey(reportRecord.getTestCode())){
+                SoftLabReportDto labReportDto = SoftLabReportDto.fromSoftReportResource(reportResource, testsForThisDrug);
+                relevantLabReports.add(labReportDto);
+            }
+        }
+        return relevantLabReports;
+    }
+
+-----------------------------------------
+ChatGPT response: This code is a static method that finds relevant lab reports for a given drug and list of patient soft lab reports.
+
+The method takes two parameters: pgxDrug, which is an object representing the drug, and patientSoftLabReports, which is a list of EntityModel<SoftReportRecord> objects representing the patient's lab reports.
+
+The method first checks if pgxDrug.getTests() or patientSoftLabReports is null. If either of them is null, the method returns an empty list.
+
+If both pgxDrug.getTests() and patientSoftLabReports are not null, the method creates a map testsForThisDrug using the Stream.collect() method. This map has Test objects from the pgxDrug.getTests() list as values and their mayoTestID field as keys.
+
+Then, the method iterates through each EntityModel<SoftReportRecord> object in patientSoftLabReports using a for-each loop. It extracts the SoftReportRecord object from the EntityModel object and checks if the testsForThisDrug map contains a key matching the testCode field of the SoftReportRecord. If it does, the method creates a SoftLabReportDto object using the SoftLabReportDto.fromSoftReportResource() method and adds it to the relevantLabReports list.
+
+Finally, the method returns the relevantLabReports list, which contains all the relevant lab reports for the given drug and patient soft lab reports.

@@ -1,0 +1,70 @@
+
+-----------------------------------------
+ Prompt: an you write some tests for this method 
+Code:
+  public static String queryString(Connection con, String def, String query, Object... param) throws SQLException {
+    PreparedStatement stmt = null;
+    try {
+      stmt = con.prepareStatement(query);
+      stmt.setMaxRows(1);
+      for (int i = 0; i < param.length; i++) {
+        stmt.setObject(i + 1, param[i]);
+      }
+      return queryString(stmt, def);
+    } finally {
+      close(stmt);
+    }
+  }
+-----------------------------------------
+ChatGPT response: Sure! Here are some test cases you could use to test this method:
+
+java
+Copy code
+import org.junit.Test;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import static org.junit.Assert.assertEquals;
+
+public class QueryStringTest {
+
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/mydatabase";
+    private static final String DB_USER = "myuser";
+    private static final String DB_PASSWORD = "mypassword";
+
+    @Test
+    public void testQueryStringWithNoParams() throws SQLException {
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+            String query = "SELECT COUNT(*) FROM mytable";
+            String result = QueryString.queryString(con, "0", query);
+            assertEquals("Expected result not returned.", "10", result);
+        }
+    }
+
+    @Test
+    public void testQueryStringWithParams() throws SQLException {
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+            String query = "SELECT name FROM mytable WHERE id = ?";
+            String result = QueryString.queryString(con, "Unknown", query, 1);
+            assertEquals("Expected result not returned.", "John", result);
+        }
+    }
+
+    @Test(expected = SQLException.class)
+    public void testQueryStringWithInvalidQuery() throws SQLException {
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+            String query = "SELECT * FROM non_existent_table";
+            QueryString.queryString(con, "", query);
+        }
+    }
+
+}
+These test cases assume that there is a MySQL database running on localhost:3306, with a database called mydatabase, a user called myuser, and a password called mypassword. You'll need to modify these values to match your own setup.
+
+The first test case (testQueryStringWithNoParams) tests the method with a simple SQL query that doesn't have any parameters. It expects the query to return a count of 10.
+
+The second test case (testQueryStringWithParams) tests the method with a SQL query that has a single parameter (id). It expects the query to return the name "John" for id = 1.
+
+The third test case (testQueryStringWithInvalidQuery) tests the method with an invalid SQL query that should result in an exception being thrown. The test expects the method to throw a SQLException.
+
+

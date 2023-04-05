@@ -1,0 +1,189 @@
+
+-----------------------------------------
+ Prompt: Write Junit for this method
+Code:
+	public final void addRing(double xy[]) {
+		for (int i = 2; i < xy.length; i += 2) {
+			addEdge(xy[i-2], xy[i - 1], xy[i], xy[i + 1]);
+		}
+	}
+	
+-----------------------------------------
+ChatGPT response: To write JUnit tests for this code, you will need to create an instance of the class that contains the addRing method and then call the method with different input arrays to ensure that the method works as expected. Here's an example of how you can write JUnit tests for this code:
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class GraphTest {
+
+    // Test that an empty array does not add any edges
+    @Test
+    public void testAddRingEmpty() {
+        Graph graph = new Graph();
+        double[] xy = new double[0];
+        graph.addRing(xy);
+        assertEquals(0, graph.getNumEdges());
+    }
+
+    // Test that an array with a single point does not add any edges
+    @Test
+    public void testAddRingSinglePoint() {
+        Graph graph = new Graph();
+        double[] xy = new double[]{0.0, 0.0};
+        graph.addRing(xy);
+        assertEquals(0, graph.getNumEdges());
+    }
+
+    // Test that an array with two points does not add any edges
+    @Test
+    public void testAddRingTwoPoints() {
+        Graph graph = new Graph();
+        double[] xy = new double[]{0.0, 0.0, 1.0, 1.0};
+        graph.addRing(xy);
+        assertEquals(0, graph.getNumEdges());
+    }
+
+    // Test that an array with three points adds one edge
+    @Test
+    public void testAddRingThreePoints() {
+        Graph graph = new Graph();
+        double[] xy = new double[]{0.0, 0.0, 1.0, 1.0, 2.0, 2.0};
+        graph.addRing(xy);
+        assertEquals(1, graph.getNumEdges());
+    }
+
+    // Test that an array with four points adds two edges
+    @Test
+    public void testAddRingFourPoints() {
+        Graph graph = new Graph();
+        double[] xy = new double[]{0.0, 0.0, 1.0, 1.0, 2.0, 2.0, 3.0, 3.0};
+        graph.addRing(xy);
+        assertEquals(2, graph.getNumEdges());
+    }
+}
+
+
+-----------------------------------------
+ Prompt: Write Junit for this method
+Code:
+	public final void addRing(double xy[]) {
+		for (int i = 2; i < xy.length; i += 2) {
+			addEdge(xy[i-2], xy[i - 1], xy[i], xy[i + 1]);
+		}
+	}
+	
+-----------------------------------------
+ChatGPT response: To write JUnit tests for this code, you will need to create an instance of the class that contains the addRing method and then call the method with different input arrays to ensure that the method works as expected. Here's an example of how you can write JUnit tests for this code:
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class GraphTest {
+
+    // Test that an empty array does not add any edges
+    @Test
+    public void testAddRingEmpty() {
+        Graph graph = new Graph();
+        double[] xy = new double[0];
+        graph.addRing(xy);
+        assertEquals(0, graph.getNumEdges());
+    }
+
+    // Test that an array with a single point does not add any edges
+    @Test
+    public void testAddRingSinglePoint() {
+        Graph graph = new Graph();
+        double[] xy = new double[]{0.0, 0.0};
+        graph.addRing(xy);
+        assertEquals(0, graph.getNumEdges());
+    }
+
+    // Test that an array with two points does not add any edges
+    @Test
+    public void testAddRingTwoPoints() {
+        Graph graph = new Graph();
+        double[] xy = new double[]{0.0, 0.0, 1.0, 1.0};
+        graph.addRing(xy);
+        assertEquals(0, graph.getNumEdges());
+    }
+
+    // Test that an array with three points adds one edge
+    @Test
+    public void testAddRingThreePoints() {
+        Graph graph = new Graph();
+        double[] xy = new double[]{0.0, 0.0, 1.0, 1.0, 2.0, 2.0};
+        graph.addRing(xy);
+        assertEquals(1, graph.getNumEdges());
+    }
+
+    // Test that an array with four points adds two edges
+    @Test
+    public void testAddRingFourPoints() {
+        Graph graph = new Graph();
+        double[] xy = new double[]{0.0, 0.0, 1.0, 1.0, 2.0, 2.0, 3.0, 3.0};
+        graph.addRing(xy);
+        assertEquals(2, graph.getNumEdges());
+    }
+}
+
+
+-----------------------------------------
+ Prompt: Write Junit for this method
+Code:
+	public final void addRing(double xy[]) {
+		for (int i = 2; i < xy.length; i += 2) {
+			addEdge(xy[i-2], xy[i - 1], xy[i], xy[i + 1]);
+		}
+	}
+	
+-----------------------------------------
+ChatGPT response: To write JUnit tests for this code, you will need to create an instance of the class that contains the addRing method and then call the method with different input arrays to ensure that the method works as expected. Here's an example of how you can write JUnit tests for this code:
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class GraphTest {
+
+    // Test that an empty array does not add any edges
+    @Test
+    public void testAddRingEmpty() {
+        Graph graph = new Graph();
+        double[] xy = new double[0];
+        graph.addRing(xy);
+        assertEquals(0, graph.getNumEdges());
+    }
+
+    // Test that an array with a single point does not add any edges
+    @Test
+    public void testAddRingSinglePoint() {
+        Graph graph = new Graph();
+        double[] xy = new double[]{0.0, 0.0};
+        graph.addRing(xy);
+        assertEquals(0, graph.getNumEdges());
+    }
+
+    // Test that an array with two points does not add any edges
+    @Test
+    public void testAddRingTwoPoints() {
+        Graph graph = new Graph();
+        double[] xy = new double[]{0.0, 0.0, 1.0, 1.0};
+        graph.addRing(xy);
+        assertEquals(0, graph.getNumEdges());
+    }
+
+    // Test that an array with three points adds one edge
+    @Test
+    public void testAddRingThreePoints() {
+        Graph graph = new Graph();
+        double[] xy = new double[]{0.0, 0.0, 1.0, 1.0, 2.0, 2.0};
+        graph.addRing(xy);
+        assertEquals(1, graph.getNumEdges());
+    }
+
+    // Test that an array with four points adds two edges
+    @Test
+    public void testAddRingFourPoints() {
+        Graph graph = new Graph();
+        double[] xy = new double[]{0.0, 0.0, 1.0, 1.0, 2.0, 2.0, 3.0, 3.0};
+        graph.addRing(xy);
+        assertEquals(2, graph.getNumEdges());
+    }
+}
+

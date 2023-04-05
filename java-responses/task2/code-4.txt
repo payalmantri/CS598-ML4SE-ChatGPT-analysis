@@ -1,0 +1,356 @@
+
+-----------------------------------------
+ Prompt: Generate some testcases for this 
+Code:
+int addGeometry(Geometry geometry) {
+                Geometry.Type gt = geometry.getType();
+                if (Geometry.isMultiPath(gt.value()))
+                        return addMultiPath_((MultiPath) geometry);
+                if (gt == Geometry.Type.MultiPoint)
+                        return addMultiPoint_((MultiPoint) geometry);
+
+                throw GeometryException.GeometryInternalError();
+        }
+-----------------------------------------
+ChatGPT response: Sure, here are some test cases you can use to test the addGeometry method:
+
+Test adding a Point object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Point point = new Point(0, 0);
+int result = shape.addGeometry(point);
+assertEquals(1, result);
+Test adding a Line object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Line line = new Line(new Point(0, 0), new Point(1, 1));
+int result = shape.addGeometry(line);
+assertEquals(2, result);
+Test adding a Polygon object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Polygon polygon = new Polygon();
+polygon.startPath(0, 0);
+polygon.lineTo(0, 1);
+polygon.lineTo(1, 1);
+polygon.closePath();
+int result = shape.addGeometry(polygon);
+assertEquals(1, result);
+Test adding a MultiPoint object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+MultiPoint multiPoint = new MultiPoint();
+multiPoint.add(0, 0);
+multiPoint.add(1, 1);
+int result = shape.addGeometry(multiPoint);
+assertEquals(2, result);
+Test adding a Polyline object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Polyline polyline = new Polyline();
+polyline.startPath(0, 0);
+polyline.lineTo(0, 1);
+polyline.lineTo(1, 1);
+int result = shape.addGeometry(polyline);
+assertEquals(3, result);
+Test adding a MultiPath object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Polyline polyline1 = new Polyline();
+polyline1.startPath(0, 0);
+polyline1.lineTo(0, 1);
+polyline1.lineTo(1, 1);
+
+Polyline polyline2 = new Polyline();
+polyline2.startPath(2, 2);
+polyline2.lineTo(3, 3);
+polyline2.lineTo(4, 4);
+
+MultiPath multiPath = new MultiPath();
+multiPath.add(polyline1);
+multiPath.add(polyline2);
+
+int result = shape.addGeometry(multiPath);
+assertEquals(5, result);
+Test adding an unsupported Geometry object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Geometry unsupportedGeometry = new Envelope(0, 0, 1, 1);
+assertThrows(GeometryException.GeometryInternalError.class, () -> {
+    shape.addGeometry(unsupportedGeometry);
+});
+Note that these are just a few examples, and you may need to add more test cases to thoroughly test the addGeometry method and the EditShape class.
+
+-----------------------------------------
+ Prompt: Generate some testcases for this 
+Code:
+int addGeometry(Geometry geometry) {
+                Geometry.Type gt = geometry.getType();
+                if (Geometry.isMultiPath(gt.value()))
+                        return addMultiPath_((MultiPath) geometry);
+                if (gt == Geometry.Type.MultiPoint)
+                        return addMultiPoint_((MultiPoint) geometry);
+
+                throw GeometryException.GeometryInternalError();
+        }
+-----------------------------------------
+ChatGPT response: Sure, here are some test cases you can use to test the addGeometry method:
+
+Test adding a Point object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Point point = new Point(0, 0);
+int result = shape.addGeometry(point);
+assertEquals(1, result);
+Test adding a Line object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Line line = new Line(new Point(0, 0), new Point(1, 1));
+int result = shape.addGeometry(line);
+assertEquals(2, result);
+Test adding a Polygon object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Polygon polygon = new Polygon();
+polygon.startPath(0, 0);
+polygon.lineTo(0, 1);
+polygon.lineTo(1, 1);
+polygon.closePath();
+int result = shape.addGeometry(polygon);
+assertEquals(1, result);
+Test adding a MultiPoint object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+MultiPoint multiPoint = new MultiPoint();
+multiPoint.add(0, 0);
+multiPoint.add(1, 1);
+int result = shape.addGeometry(multiPoint);
+assertEquals(2, result);
+Test adding a Polyline object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Polyline polyline = new Polyline();
+polyline.startPath(0, 0);
+polyline.lineTo(0, 1);
+polyline.lineTo(1, 1);
+int result = shape.addGeometry(polyline);
+assertEquals(3, result);
+Test adding a MultiPath object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Polyline polyline1 = new Polyline();
+polyline1.startPath(0, 0);
+polyline1.lineTo(0, 1);
+polyline1.lineTo(1, 1);
+
+Polyline polyline2 = new Polyline();
+polyline2.startPath(2, 2);
+polyline2.lineTo(3, 3);
+polyline2.lineTo(4, 4);
+
+MultiPath multiPath = new MultiPath();
+multiPath.add(polyline1);
+multiPath.add(polyline2);
+
+int result = shape.addGeometry(multiPath);
+assertEquals(5, result);
+Test adding an unsupported Geometry object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Geometry unsupportedGeometry = new Envelope(0, 0, 1, 1);
+assertThrows(GeometryException.GeometryInternalError.class, () -> {
+    shape.addGeometry(unsupportedGeometry);
+});
+Note that these are just a few examples, and you may need to add more test cases to thoroughly test the addGeometry method and the EditShape class.
+
+-----------------------------------------
+ Prompt: Generate some testcases for this 
+Code:
+int addGeometry(Geometry geometry) {
+                Geometry.Type gt = geometry.getType();
+                if (Geometry.isMultiPath(gt.value()))
+                        return addMultiPath_((MultiPath) geometry);
+                if (gt == Geometry.Type.MultiPoint)
+                        return addMultiPoint_((MultiPoint) geometry);
+
+                throw GeometryException.GeometryInternalError();
+        }
+-----------------------------------------
+ChatGPT response: Sure, here are some test cases you can use to test the addGeometry method:
+
+Test adding a Point object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Point point = new Point(0, 0);
+int result = shape.addGeometry(point);
+assertEquals(1, result);
+Test adding a Line object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Line line = new Line(new Point(0, 0), new Point(1, 1));
+int result = shape.addGeometry(line);
+assertEquals(2, result);
+Test adding a Polygon object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Polygon polygon = new Polygon();
+polygon.startPath(0, 0);
+polygon.lineTo(0, 1);
+polygon.lineTo(1, 1);
+polygon.closePath();
+int result = shape.addGeometry(polygon);
+assertEquals(1, result);
+Test adding a MultiPoint object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+MultiPoint multiPoint = new MultiPoint();
+multiPoint.add(0, 0);
+multiPoint.add(1, 1);
+int result = shape.addGeometry(multiPoint);
+assertEquals(2, result);
+Test adding a Polyline object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Polyline polyline = new Polyline();
+polyline.startPath(0, 0);
+polyline.lineTo(0, 1);
+polyline.lineTo(1, 1);
+int result = shape.addGeometry(polyline);
+assertEquals(3, result);
+Test adding a MultiPath object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Polyline polyline1 = new Polyline();
+polyline1.startPath(0, 0);
+polyline1.lineTo(0, 1);
+polyline1.lineTo(1, 1);
+
+Polyline polyline2 = new Polyline();
+polyline2.startPath(2, 2);
+polyline2.lineTo(3, 3);
+polyline2.lineTo(4, 4);
+
+MultiPath multiPath = new MultiPath();
+multiPath.add(polyline1);
+multiPath.add(polyline2);
+
+int result = shape.addGeometry(multiPath);
+assertEquals(5, result);
+Test adding an unsupported Geometry object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Geometry unsupportedGeometry = new Envelope(0, 0, 1, 1);
+assertThrows(GeometryException.GeometryInternalError.class, () -> {
+    shape.addGeometry(unsupportedGeometry);
+});
+Note that these are just a few examples, and you may need to add more test cases to thoroughly test the addGeometry method and the EditShape class.
+
+-----------------------------------------
+ Prompt: Generate some testcases for this 
+Code:
+int addGeometry(Geometry geometry) {
+                Geometry.Type gt = geometry.getType();
+                if (Geometry.isMultiPath(gt.value()))
+                        return addMultiPath_((MultiPath) geometry);
+                if (gt == Geometry.Type.MultiPoint)
+                        return addMultiPoint_((MultiPoint) geometry);
+
+                throw GeometryException.GeometryInternalError();
+        }
+-----------------------------------------
+ChatGPT response: Sure, here are some test cases you can use to test the addGeometry method:
+
+Test adding a Point object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Point point = new Point(0, 0);
+int result = shape.addGeometry(point);
+assertEquals(1, result);
+Test adding a Line object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Line line = new Line(new Point(0, 0), new Point(1, 1));
+int result = shape.addGeometry(line);
+assertEquals(2, result);
+Test adding a Polygon object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Polygon polygon = new Polygon();
+polygon.startPath(0, 0);
+polygon.lineTo(0, 1);
+polygon.lineTo(1, 1);
+polygon.closePath();
+int result = shape.addGeometry(polygon);
+assertEquals(1, result);
+Test adding a MultiPoint object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+MultiPoint multiPoint = new MultiPoint();
+multiPoint.add(0, 0);
+multiPoint.add(1, 1);
+int result = shape.addGeometry(multiPoint);
+assertEquals(2, result);
+Test adding a Polyline object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Polyline polyline = new Polyline();
+polyline.startPath(0, 0);
+polyline.lineTo(0, 1);
+polyline.lineTo(1, 1);
+int result = shape.addGeometry(polyline);
+assertEquals(3, result);
+Test adding a MultiPath object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Polyline polyline1 = new Polyline();
+polyline1.startPath(0, 0);
+polyline1.lineTo(0, 1);
+polyline1.lineTo(1, 1);
+
+Polyline polyline2 = new Polyline();
+polyline2.startPath(2, 2);
+polyline2.lineTo(3, 3);
+polyline2.lineTo(4, 4);
+
+MultiPath multiPath = new MultiPath();
+multiPath.add(polyline1);
+multiPath.add(polyline2);
+
+int result = shape.addGeometry(multiPath);
+assertEquals(5, result);
+Test adding an unsupported Geometry object to an empty EditShape instance:
+scss
+Copy code
+EditShape shape = new EditShape();
+Geometry unsupportedGeometry = new Envelope(0, 0, 1, 1);
+assertThrows(GeometryException.GeometryInternalError.class, () -> {
+    shape.addGeometry(unsupportedGeometry);
+});
+Note that these are just a few examples, and you may need to add more test cases to thoroughly test the addGeometry method and the EditShape class.

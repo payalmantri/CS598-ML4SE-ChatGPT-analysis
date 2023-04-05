@@ -1,0 +1,29 @@
+
+-----------------------------------------
+ Prompt: What does the code do 
+Code:
+  @CommandArgument
+  public void adduser(
+      @OptionArgument("username") String username,
+      @OptionArgument("password") String password,
+      @OptionArgument("roles") String roles) {
+
+    if (users.containsKey(username)) {
+      System.err.println(String.format("User '%s' already exists", username));
+    } else {
+
+      User user = new User(username);
+      user.salt = passwd.generateSalt();
+      user.hash = passwd.getEncryptedPassword(password, user.salt);
+      user.roles.addAll(Arrays.asList(roles.split(",")));
+      users.put(username, user);
+
+    }
+  }
+
+-----------------------------------------
+ChatGPT response: The code defines a method named adduser which takes three arguments - username, password and roles. The method first checks if the users map already contains a user with the given username. If a user with the same username already exists in the map, it prints an error message and returns without making any changes.
+
+If a user with the given username does not exist in the map, the method creates a new User object with the given username and generates a random salt for the user's password. It then generates an encrypted hash of the password using the getEncryptedPassword method of an object named passwd, which presumably provides password encryption functionality.
+
+The method then splits the roles argument into a list of individual roles using the split method and adds them to the user's roles list. Finally, it adds the new user to the users map with the username as the key and the newly created User object as the value.

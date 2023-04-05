@@ -1,0 +1,63 @@
+
+-----------------------------------------
+ Prompt: Write Junit test cases for the code
+Code:
+  public static int update(Connection con, String query, Object... param) throws SQLException {
+    PreparedStatement stmt = null;
+    try {
+      stmt = con.prepareStatement(query);
+      for (int i = 0; i < param.length; i++) {
+        stmt.setObject(i + 1, param[i]);
+      }
+      return stmt.executeUpdate();
+    } finally {
+      close(stmt);
+    }
+  }
+-----------------------------------------
+ChatGPT response: To write JUnit test cases for the update method, we need to test that it correctly executes the given SQL query with the provided parameters and returns the expected result. Here is an example of a JUnit test case for the update method:
+
+java
+Copy code
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import org.junit.Test;
+
+public class UpdateTest {
+
+  @Test
+  public void testUpdate() throws SQLException {
+    // create a mock connection and statement
+    Connection con = mock(Connection.class);
+    PreparedStatement stmt = mock(PreparedStatement.class);
+
+    // set expectations for the statement and connection
+    String query = "UPDATE my_table SET value = ? WHERE id = ?";
+    Object[] params = new Object[] { "new value", 123 };
+    when(con.prepareStatement(query)).thenReturn(stmt);
+    when(stmt.executeUpdate()).thenReturn(1);
+
+    // call the update method and verify the result
+    int result = Update.update(con, query, params);
+    assertEquals(1, result);
+
+    // verify that the statement and connection were closed
+    verify(stmt).close();
+  }
+}
+In this test case, we use the Mockito framework to create a mock Connection and PreparedStatement object. We then set expectations for the prepareStatement and executeUpdate methods of these objects, to simulate the execution of an SQL query.
+
+Next, we call the update method with the mock Connection, the SQL query string, and the parameter values, and verify that it returns the expected result.
+
+Finally, we use the verify method of Mockito to check that the close method of the PreparedStatement object was called, indicating that the resources associated with the statement were properly released.
+
+
+
+
+

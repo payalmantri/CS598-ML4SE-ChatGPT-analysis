@@ -1,0 +1,190 @@
+
+-----------------------------------------
+ Prompt: Write JUNit cases for this code 
+Code:
+public static String resolveEntity(String entity) {
+        if (entity.length() > 1 && entity.charAt(0) == '#') {
+            if (entity.charAt(1) == 'x') {
+                return String.valueOf((char) Integer.parseInt(entity.substring(2), 16));
+            } else {
+                return String.valueOf((char) Integer.parseInt(entity.substring(1)));
+            }
+        } else if (entity.equals("apos")) {
+            return "'";
+        } else if (entity.equals("quot")) {
+            return "\"";
+        } else if (entity.equals("gt")) {
+            return ">";
+        } else if (entity.equals("lt")) {
+            return "<";
+        } else if (entity.equals("amp")) {
+            return "&";
+        } else {
+            return entity;
+        }
+    }
+-----------------------------------------
+
+-----------------------------------------
+ Prompt: Write JUNit cases for this code 
+Code:
+public static String resolveEntity(String entity) {
+        if (entity.length() > 1 && entity.charAt(0) == '#') {
+            if (entity.charAt(1) == 'x') {
+                return String.valueOf((char) Integer.parseInt(entity.substring(2), 16));
+            } else {
+                return String.valueOf((char) Integer.parseInt(entity.substring(1)));
+            }
+        } else if (entity.equals("apos")) {
+            return "'";
+        } else if (entity.equals("quot")) {
+            return "\"";
+        } else if (entity.equals("gt")) {
+            return ">";
+        } else if (entity.equals("lt")) {
+            return "<";
+        } else if (entity.equals("amp")) {
+            return "&";
+        } else {
+            return entity;
+        }
+    }
+-----------------------------------------
+ChatGPT response: Here are some JUnit test cases for the "resolveEntity" method:
+
+typescript
+Copy code
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+public class ResolveEntityTest {
+    
+    @Test
+    public void testNumericEntity() {
+        assertEquals("A", ResolveEntity.resolveEntity("#65"));
+        assertEquals("Ω", ResolveEntity.resolveEntity("#x3A9"));
+        assertEquals("😀", ResolveEntity.resolveEntity("#x1F600"));
+    }
+
+    @Test
+    public void testPredefinedEntity() {
+        assertEquals("'", ResolveEntity.resolveEntity("apos"));
+        assertEquals("\"", ResolveEntity.resolveEntity("quot"));
+        assertEquals(">", ResolveEntity.resolveEntity("gt"));
+        assertEquals("<", ResolveEntity.resolveEntity("lt"));
+        assertEquals("&", ResolveEntity.resolveEntity("amp"));
+    }
+
+    @Test
+    public void testNonEntity() {
+        assertEquals("Hello world!", ResolveEntity.resolveEntity("Hello world!"));
+    }
+
+    @Test
+    public void testEmptyString() {
+        assertEquals("", ResolveEntity.resolveEntity(""));
+    }
+
+    @Test
+    public void testInvalidNumericEntity() {
+        assertEquals("#65;", ResolveEntity.resolveEntity("#65;"));
+        assertEquals("#x3A9;", ResolveEntity.resolveEntity("#x3A9;"));
+        assertEquals("#", ResolveEntity.resolveEntity("#"));
+    }
+}
+In the first test case, we test the method's ability to resolve a numeric entity to its corresponding character. We test three different numeric entities: decimal 65 ("A"), hexadecimal 3A9 ("Ω"), and Unicode 1F600 (a smiling face emoji).
+
+In the second test case, we test the method's ability to resolve a predefined entity to its corresponding character. We test each of the predefined entities: "apos" (single quote), "quot" (double quote), "gt" (greater-than symbol), "lt" (less-than symbol), and "amp" (ampersand).
+
+In the third test case, we test the method's ability to leave a non-entity String unchanged.
+
+In the fourth test case, we test the method's ability to handle an empty String.
+
+In the fifth test case, we test the method's behavior when the input String is an invalid numeric entity. We test three different invalid entities: "65;", "x3A9;", and "#".
+
+
+
+
+
+
+-----------------------------------------
+ Prompt: Write JUNit cases for this code 
+Code:
+public static String resolveEntity(String entity) {
+        if (entity.length() > 1 && entity.charAt(0) == '#') {
+            if (entity.charAt(1) == 'x') {
+                return String.valueOf((char) Integer.parseInt(entity.substring(2), 16));
+            } else {
+                return String.valueOf((char) Integer.parseInt(entity.substring(1)));
+            }
+        } else if (entity.equals("apos")) {
+            return "'";
+        } else if (entity.equals("quot")) {
+            return "\"";
+        } else if (entity.equals("gt")) {
+            return ">";
+        } else if (entity.equals("lt")) {
+            return "<";
+        } else if (entity.equals("amp")) {
+            return "&";
+        } else {
+            return entity;
+        }
+    }
+-----------------------------------------
+ChatGPT response: Here are some JUnit test cases for the "resolveEntity" method:
+
+typescript
+Copy code
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+public class ResolveEntityTest {
+    
+    @Test
+    public void testNumericEntity() {
+        assertEquals("A", ResolveEntity.resolveEntity("#65"));
+        assertEquals("Ω", ResolveEntity.resolveEntity("#x3A9"));
+        assertEquals("😀", ResolveEntity.resolveEntity("#x1F600"));
+    }
+
+    @Test
+    public void testPredefinedEntity() {
+        assertEquals("'", ResolveEntity.resolveEntity("apos"));
+        assertEquals("\"", ResolveEntity.resolveEntity("quot"));
+        assertEquals(">", ResolveEntity.resolveEntity("gt"));
+        assertEquals("<", ResolveEntity.resolveEntity("lt"));
+        assertEquals("&", ResolveEntity.resolveEntity("amp"));
+    }
+
+    @Test
+    public void testNonEntity() {
+        assertEquals("Hello world!", ResolveEntity.resolveEntity("Hello world!"));
+    }
+
+    @Test
+    public void testEmptyString() {
+        assertEquals("", ResolveEntity.resolveEntity(""));
+    }
+
+    @Test
+    public void testInvalidNumericEntity() {
+        assertEquals("#65;", ResolveEntity.resolveEntity("#65;"));
+        assertEquals("#x3A9;", ResolveEntity.resolveEntity("#x3A9;"));
+        assertEquals("#", ResolveEntity.resolveEntity("#"));
+    }
+}
+In the first test case, we test the method's ability to resolve a numeric entity to its corresponding character. We test three different numeric entities: decimal 65 ("A"), hexadecimal 3A9 ("Ω"), and Unicode 1F600 (a smiling face emoji).
+
+In the second test case, we test the method's ability to resolve a predefined entity to its corresponding character. We test each of the predefined entities: "apos" (single quote), "quot" (double quote), "gt" (greater-than symbol), "lt" (less-than symbol), and "amp" (ampersand).
+
+In the third test case, we test the method's ability to leave a non-entity String unchanged.
+
+In the fourth test case, we test the method's ability to handle an empty String.
+
+In the fifth test case, we test the method's behavior when the input String is an invalid numeric entity. We test three different invalid entities: "65;", "x3A9;", and "#".
+
+
+
+
+

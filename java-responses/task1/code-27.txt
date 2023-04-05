@@ -1,0 +1,102 @@
+
+-----------------------------------------
+ Prompt: What does this code do
+"   public static String[] split(String string, char delimiter) {
+        int delimeterCount = 0;
+        int start = 0;
+        int end;
+        String[] strings = new String[32];
+        while ((end = string.indexOf(delimiter, start)) != -1) {
+            if (delimeterCount == strings.length) {
+                strings = Arrays.copyOf(strings, strings.length * 2);
+            }
+            strings[delimeterCount++] = string.substring(start, end);
+            start = end + 1;
+        }
+        strings = Arrays.copyOf(strings, delimeterCount + 1);
+        strings[delimeterCount] = string.substring(start);
+        return strings;
+    }"
+Code:
+
+
+-----------------------------------------
+ChatGPT response: This is a Java method called "split" that takes two parameters: a String "string" and a character "delimiter". The method returns an array of Strings that are the substrings of "string" that are separated by the "delimiter" character.
+
+The method initializes an integer "delimiterCount" to 0, an integer "start" to 0, and an integer "end" to be used later. It also creates an array of 32 Strings called "strings".
+
+The method then enters a while loop that continues as long as the "delimiter" character is found in the "string". Inside the loop, the method checks whether the "delimiterCount" is equal to the length of the "strings" array. If it is, the method doubles the size of the "strings" array using the Arrays.copyOf method.
+
+Next, the method adds a substring of "string" to the "strings" array between the "start" index and the "end" index (not inclusive) using the String.substring method. It increments the "delimiterCount" and sets the "start" index to the next character after the current delimiter.
+
+After the while loop finishes, the method creates a new array called "strings" that is the size of the "delimiterCount" plus 1 (to account for the final substring after the last delimiter). The method then sets the final element of the "strings" array to be the substring from the last delimiter to the end of the "string".
+
+Finally, the method returns the "strings" array with all the substrings that were separated by the "delimiter" character in the original "string".
+
+-----------------------------------------
+ Prompt: What does this code do
+"   public static String[] split(String string, char delimiter) {
+        int delimeterCount = 0;
+        int start = 0;
+        int end;
+        String[] strings = new String[32];
+        while ((end = string.indexOf(delimiter, start)) != -1) {
+            if (delimeterCount == strings.length) {
+                strings = Arrays.copyOf(strings, strings.length * 2);
+            }
+            strings[delimeterCount++] = string.substring(start, end);
+            start = end + 1;
+        }
+        strings = Arrays.copyOf(strings, delimeterCount + 1);
+        strings[delimeterCount] = string.substring(start);
+        return strings;
+    }"
+Code:
+
+
+-----------------------------------------
+ChatGPT response: This is a Java method called "split" that takes two parameters: a String "string" and a character "delimiter". The method returns an array of Strings that are the substrings of "string" that are separated by the "delimiter" character.
+
+The method initializes an integer "delimiterCount" to 0, an integer "start" to 0, and an integer "end" to be used later. It also creates an array of 32 Strings called "strings".
+
+The method then enters a while loop that continues as long as the "delimiter" character is found in the "string". Inside the loop, the method checks whether the "delimiterCount" is equal to the length of the "strings" array. If it is, the method doubles the size of the "strings" array using the Arrays.copyOf method.
+
+Next, the method adds a substring of "string" to the "strings" array between the "start" index and the "end" index (not inclusive) using the String.substring method. It increments the "delimiterCount" and sets the "start" index to the next character after the current delimiter.
+
+After the while loop finishes, the method creates a new array called "strings" that is the size of the "delimiterCount" plus 1 (to account for the final substring after the last delimiter). The method then sets the final element of the "strings" array to be the substring from the last delimiter to the end of the "string".
+
+Finally, the method returns the "strings" array with all the substrings that were separated by the "delimiter" character in the original "string".
+
+-----------------------------------------
+ Prompt: What does this code do
+"   public static String[] split(String string, char delimiter) {
+        int delimeterCount = 0;
+        int start = 0;
+        int end;
+        String[] strings = new String[32];
+        while ((end = string.indexOf(delimiter, start)) != -1) {
+            if (delimeterCount == strings.length) {
+                strings = Arrays.copyOf(strings, strings.length * 2);
+            }
+            strings[delimeterCount++] = string.substring(start, end);
+            start = end + 1;
+        }
+        strings = Arrays.copyOf(strings, delimeterCount + 1);
+        strings[delimeterCount] = string.substring(start);
+        return strings;
+    }"
+Code:
+
+
+-----------------------------------------
+ChatGPT response: This is a Java method called "split" that takes two parameters: a String "string" and a character "delimiter". The method returns an array of Strings that are the substrings of "string" that are separated by the "delimiter" character.
+
+The method initializes an integer "delimiterCount" to 0, an integer "start" to 0, and an integer "end" to be used later. It also creates an array of 32 Strings called "strings".
+
+The method then enters a while loop that continues as long as the "delimiter" character is found in the "string". Inside the loop, the method checks whether the "delimiterCount" is equal to the length of the "strings" array. If it is, the method doubles the size of the "strings" array using the Arrays.copyOf method.
+
+Next, the method adds a substring of "string" to the "strings" array between the "start" index and the "end" index (not inclusive) using the String.substring method. It increments the "delimiterCount" and sets the "start" index to the next character after the current delimiter.
+
+After the while loop finishes, the method creates a new array called "strings" that is the size of the "delimiterCount" plus 1 (to account for the final substring after the last delimiter). The method then sets the final element of the "strings" array to be the substring from the last delimiter to the end of the "string".
+
+Finally, the method returns the "strings" array with all the substrings that were separated by the "delimiter" character in the original "string".

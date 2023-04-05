@@ -1,0 +1,45 @@
+
+----------------------------------------
+ Prompt: Write a different version of the code
+Code:
+  public static String getExtension(String fileName) {
+    int pos = fileName.lastIndexOf('.');
+    if (pos < 0) {
+      return "";
+    }
+    return fileName.substring(pos + 1);
+  }
+-----------------------------------------
+ChatGPT response: Here's an alternative version of the "getExtension" method that handles null input and empty strings differently:
+
+typescript
+Copy code
+public static String getExtension(String fileName) {
+  if (fileName == null) {
+    throw new IllegalArgumentException("File name cannot be null");
+  }
+  
+  if (fileName.isEmpty() || fileName.isBlank()) {
+    return "";
+  }
+  
+  int dotIndex = fileName.lastIndexOf(".");
+  
+  if (dotIndex == -1 || dotIndex == fileName.length() - 1) {
+    return "";
+  }
+  
+  return fileName.substring(dotIndex + 1);
+}
+This version of the method has the following differences:
+
+It throws an "IllegalArgumentException" with a descriptive error message if a null value is passed to the method.
+It returns an empty string if the file name is an empty string or consists only of whitespace characters (e.g., spaces or tabs).
+It checks whether the file name contains a dot (".") character and returns an empty string if it doesn't or if it appears at the end of the string.
+It returns the file extension by extracting the characters that come after the last dot (".") character in the file name.
+By handling null and empty input differently and checking for the presence and location of the dot (".") character, this version of the method can provide more robust and meaningful behavior in various scenarios.
+
+
+
+
+

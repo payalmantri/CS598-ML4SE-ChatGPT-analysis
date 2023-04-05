@@ -1,0 +1,63 @@
+
+-----------------------------------------
+ Prompt: Write unit tests for this method
+Code:
+  @CommandArgument
+  public void addroles(
+      @OptionArgument("username") String username,
+      @OptionArgument("roles") String roles) {
+
+    User user = users.get(username);
+
+    if (user != null) {
+      user.roles.addAll(Arrays.asList(roles.split(",")));
+    } else {
+      System.err.println(String.format("User '%s' does not exist", username));
+    }
+
+  }
+-----------------------------------------
+ChatGPT response: Sure, here are some unit tests for the addroles method:
+
+java
+Copy code
+import org.junit.jupiter.api.Test;
+import java.util.Arrays;
+import static org.junit.jupiter.api.Assertions.*;
+
+class AddRolesTest {
+
+    @Test
+    void testAddRolesToExistingUser() {
+        // Arrange
+        String username = "johndoe";
+        String existingRoles = "admin,moderator";
+        String newRoles = "staff";
+        User user = new User(username);
+        user.roles.addAll(Arrays.asList(existingRoles.split(",")));
+        users.put(username, user);
+
+        // Act
+        addroles(username, newRoles);
+
+        // Assert
+        User updatedUser = users.get(username);
+        assertTrue(updatedUser.roles.contains("admin"));
+        assertTrue(updatedUser.roles.contains("moderator"));
+        assertTrue(updatedUser.roles.contains("staff"));
+    }
+
+    @Test
+    void testAddRolesToNonExistingUser() {
+        // Arrange
+        String username = "janedoe";
+        String newRoles = "staff";
+
+        // Act
+        addroles(username, newRoles);
+
+        // Assert
+        assertEquals("User 'janedoe' does not exist\n", outContent.toString());
+    }
+}
+Note: The code above assumes that users is a static Map defined in the class containing the addroles method. You may need to adjust the code to match the actual implementation of your system.

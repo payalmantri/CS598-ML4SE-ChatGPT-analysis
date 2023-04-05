@@ -1,0 +1,105 @@
+
+-----------------------------------------
+ Prompt: Write Junits Test cases for this method
+Code:
+  public static String getRelativePath(File file, File base) throws IOException {
+    StringWriter path = new StringWriter();
+
+    while (!isAncestor(file, base)) {
+      path.append("../");
+    }
+
+    String fileName = file.getAbsolutePath();
+    String baseName = base.getAbsolutePath();
+    int prefixLength = baseName.length();
+
+    if (!baseName.endsWith("/")) {
+      prefixLength++;
+    }
+
+    path.append(fileName.substring(prefixLength));
+
+    return path.toString();
+  }
+-----------------------------------------
+ChatGPT response: To write JUnit test cases for the getRelativePath method, we need to test the following scenarios:
+
+When file and base are the same file, the method should return an empty string.
+When base is an ancestor of file, the method should return the relative path from base to file.
+When file and base are on different paths, the method should return the relative path from base to file.
+When file or base is null, the method should throw an IllegalArgumentException.
+When file or base does not exist, the method should throw an IOException.
+Here's an example implementation of these test cases:
+
+java
+Copy code
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.io.IOException;
+
+public class FileUtilTest {
+
+    private static final String TEST_DIR = "src/test/resources";
+
+    @Test
+    void testSameFile() throws IOException {
+        File file = new File(TEST_DIR + "/file1.txt");
+        String relativePath = FileUtil.getRelativePath(file, file);
+        Assertions.assertEquals("", relativePath);
+    }
+
+    @Test
+    void testAncestorFile() throws IOException {
+        File file = new File(TEST_DIR + "/file1.txt");
+        File base = new File(TEST_DIR);
+        String relativePath = FileUtil.getRelativePath(file, base);
+        Assertions.assertEquals("file1.txt", relativePath);
+    }
+
+    @Test
+    void testDifferentPaths() throws IOException {
+        File file = new File(TEST_DIR + "/subdir/file2.txt");
+        File base = new File(TEST_DIR + "/subdir/subsubdir");
+        String relativePath = FileUtil.getRelativePath(file, base);
+        Assertions.assertEquals("../file2.txt", relativePath);
+    }
+
+    @Test
+    void testNullFile() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            FileUtil.getRelativePath(null, new File(TEST_DIR));
+        });
+    }
+
+    @Test
+    void testNullBase() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            FileUtil.getRelativePath(new File(TEST_DIR), null);
+        });
+    }
+
+    @Test
+    void testNonExistentFile() {
+        File file = new File(TEST_DIR + "/nonexistent.txt");
+        File base = new File(TEST_DIR);
+        Assertions.assertThrows(IOException.class, () -> {
+            FileUtil.getRelativePath(file, base);
+        });
+    }
+
+    @Test
+    void testNonExistentBase() {
+        File file = new File(TEST_DIR + "/file1.txt");
+        File base = new File(TEST_DIR + "/nonexistent");
+        Assertions.assertThrows(IOException.class, () -> {
+            FileUtil.getRelativePath(file, base);
+        });
+    }
+}
+These test cases cover all the scenarios mentioned above and use the assertEquals method to check the expected and actual results of the getRelativePath method. The assertThrows method is used to verify that the method throws the expected exception in case of invalid input or file not found.
+
+
+
+

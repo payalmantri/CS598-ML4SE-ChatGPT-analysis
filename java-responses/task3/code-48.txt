@@ -1,0 +1,46 @@
+
+----------------------------------------
+ Prompt: Write an alternative implementation for the code 
+"  public static int queryInt(PreparedStatement stmt, int def) throws SQLException {
+    ResultSet rs = null;
+    try {
+      rs = stmt.executeQuery();
+      if (rs.next()) {
+        int value = rs.getInt(1);
+        if (!rs.wasNull()) {
+          return value;
+        }
+      }
+      return def;
+    } finally {
+      close(rs);
+    }
+  }"
+Code:
+
+-----------------------------------------
+ChatGPT response: Here's an alternative implementation for the provided code:
+
+java
+Copy code
+public static int queryInt(PreparedStatement stmt, int def) throws SQLException {
+    ResultSet rs = null;
+    int value = def; // set default value
+    try {
+        rs = stmt.executeQuery();
+        if (rs.next() && !rs.wasNull()) {
+            value = rs.getInt(1);
+        }
+    } finally {
+        if (rs != null) {
+            rs.close();
+        }
+    }
+    return value;
+}
+The alternative implementation improves the readability of the code by initializing the value variable with the default value and assigning the result of the query to it only if it is not null. It also closes the ResultSet in the finally block to ensure proper resource management.
+
+
+
+
+

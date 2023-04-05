@@ -1,0 +1,63 @@
+
+-----------------------------------------
+ Prompt: Write unit tests for the function
+Code:
+  public void add(int index, float e) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + 1);
+    if (index < size) {
+      for (int i = size; i > index; i--) {
+        elements[i] = elements[i - 1];
+      }
+    }
+    elements[index] = e;
+    size++;
+  }
+-----------------------------------------
+ChatGPT response: Here are some sample JUnit tests for the add method:
+
+csharp
+Copy code
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class MyArrayListTest {
+    private MyArrayList<Float> list;
+
+    @Before
+    public void setUp() throws Exception {
+        list = new MyArrayList<>();
+    }
+
+    @Test
+    public void testAddElement() {
+        list.add(1.0f);
+        assertEquals(1, list.size());
+        assertEquals(1.0f, list.get(0), 0.001f);
+    }
+
+    @Test
+    public void testAddAtIndex() {
+        list.add(0, 1.0f);
+        list.add(0, 2.0f);
+        list.add(1, 3.0f);
+        assertEquals(3, list.size());
+        assertEquals(2.0f, list.get(0), 0.001f);
+        assertEquals(3.0f, list.get(1), 0.001f);
+        assertEquals(1.0f, list.get(2), 0.001f);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testAddAtIndexOutOfBounds() {
+        list.add(-1, 1.0f);
+    }
+}
+In the first test, we add an element to an empty list and verify that the size of the list increases and the element is added at the expected index.
+
+In the second test, we add elements to the list at different indices and verify that the elements are added at the expected positions and the size of the list increases accordingly.
+
+In the third test, we attempt to add an element at an out-of-bounds index and expect an IndexOutOfBoundsException to be thrown.

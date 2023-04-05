@@ -1,0 +1,56 @@
+
+----------------------------------------
+ Prompt: Write differnt implementation for the code below
+ public static int getDayAsReadableInt(Calendar calendar) {
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        return year * 10000 + month * 100 + day;
+    }
+Code:
+
+-----------------------------------------
+ChatGPT response: Here's an alternative implementation that uses Java 8's LocalDate class to get a readable int representing the date:
+
+scss
+Copy code
+public static int getDayAsReadableInt(Calendar calendar) {
+    LocalDate localDate = LocalDate.ofInstant(calendar.toInstant(), calendar.getTimeZone().toZoneId());
+    return localDate.getYear() * 10000 + localDate.getMonthValue() * 100 + localDate.getDayOfMonth();
+}
+This implementation first converts the given Calendar object to an Instant, and then converts the Instant to a LocalDate object using the toInstant() and toZoneId() methods. The LocalDate class provides convenient methods to get the year, month, and day of the month as integers, so we can use these to calculate the readable int representation of the date.
+
+By using LocalDate, we can avoid some of the boilerplate code required to extract the year, month, and day from the Calendar object, and the resulting code is more concise and easier to read.
+
+
+
+
+
+
+----------------------------------------
+ Prompt: Write differnt implementation for the code below
+ public static int getDayAsReadableInt(Calendar calendar) {
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        return year * 10000 + month * 100 + day;
+    }
+Code:
+
+-----------------------------------------
+ChatGPT response: Here's an alternative implementation that uses Java 8's LocalDate class to get a readable int representing the date:
+
+scss
+Copy code
+public static int getDayAsReadableInt(Calendar calendar) {
+    LocalDate localDate = LocalDate.ofInstant(calendar.toInstant(), calendar.getTimeZone().toZoneId());
+    return localDate.getYear() * 10000 + localDate.getMonthValue() * 100 + localDate.getDayOfMonth();
+}
+This implementation first converts the given Calendar object to an Instant, and then converts the Instant to a LocalDate object using the toInstant() and toZoneId() methods. The LocalDate class provides convenient methods to get the year, month, and day of the month as integers, so we can use these to calculate the readable int representation of the date.
+
+By using LocalDate, we can avoid some of the boilerplate code required to extract the year, month, and day from the Calendar object, and the resulting code is more concise and easier to read.
+
+
+
+
+

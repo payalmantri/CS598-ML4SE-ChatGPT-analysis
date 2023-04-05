@@ -1,0 +1,37 @@
+
+----------------------------------------
+ Prompt: Write alternate implementation  for the following
+Code:
+    public Entry<T>[] entries() {
+        @SuppressWarnings("unchecked")
+        Entry<T>[] entries = new Entry[size];
+        int idx = 0;
+        for (Entry entry : table) {
+            while (entry != null) {
+                entries[idx++] = entry;
+                entry = entry.next;
+            }
+        }
+        return entries;
+    }
+-----------------------------------------
+ChatGPT response: Here's an alternate implementation for the entries() method that uses a LinkedList to store the entries:
+
+swift
+Copy code
+public List<Entry<T>> entries() {
+    List<Entry<T>> entryList = new LinkedList<Entry<T>>();
+    for (Entry<T> entry : table) {
+        while (entry != null) {
+            entryList.add(entry);
+            entry = entry.next;
+        }
+    }
+    return entryList;
+}
+In this implementation, instead of using an array, a LinkedList is used to store the entries. The entries are added to the list using the add() method, which adds the element to the end of the list. The method returns a List<Entry<T>> instead of an array. This implementation is more flexible as it can handle variable size inputs, and it avoids the need to create a fixed-size array.
+
+
+
+
+

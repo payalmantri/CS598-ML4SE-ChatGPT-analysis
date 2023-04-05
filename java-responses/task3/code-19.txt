@@ -1,0 +1,69 @@
+
+----------------------------------------
+ Prompt: write semantically equivalent code for this method
+Code:
+        private static boolean polygonTouchesPoint_(Polygon polygon_a,
+                        Point point_b, double tolerance, ProgressTracker progress_tracker) {
+                Point2D pt_b = point_b.getXY();
+                return polygonTouchesPointImpl_(polygon_a, pt_b, tolerance, null);
+        }
+-----------------------------------------
+ChatGPT response:     double x = point.getX();
+    double y = point.getY();
+    double[] xCoords = polygon.getXCoords();
+    double[] yCoords = polygon.getYCoords();
+    double minDist = Double.MAX_VALUE;
+    for (int i = 0; i < polygon.getNumVertices(); i++) {
+        double dist = Math.sqrt((x - xCoords[i]) * (x - xCoords[i]) + (y - yCoords[i]) * (y - yCoords[i]));
+        if (dist < minDist) {
+            minDist = dist;
+        }
+    }
+    return Math.abs(minDist - tolerance) < 0.0000001 || minDist < tolerance;
+}
+
+----------------------------------------
+ Prompt: write semantically equivalent code for this method
+Code:
+        private static boolean polygonTouchesPoint_(Polygon polygon_a,
+                        Point point_b, double tolerance, ProgressTracker progress_tracker) {
+                Point2D pt_b = point_b.getXY();
+                return polygonTouchesPointImpl_(polygon_a, pt_b, tolerance, null);
+        }
+-----------------------------------------
+ChatGPT response:     double x = point.getX();
+    double y = point.getY();
+    double[] xCoords = polygon.getXCoords();
+    double[] yCoords = polygon.getYCoords();
+    double minDist = Double.MAX_VALUE;
+    for (int i = 0; i < polygon.getNumVertices(); i++) {
+        double dist = Math.sqrt((x - xCoords[i]) * (x - xCoords[i]) + (y - yCoords[i]) * (y - yCoords[i]));
+        if (dist < minDist) {
+            minDist = dist;
+        }
+    }
+    return Math.abs(minDist - tolerance) < 0.0000001 || minDist < tolerance;
+}
+
+----------------------------------------
+ Prompt: write semantically equivalent code for this method
+Code:
+        private static boolean polygonTouchesPoint_(Polygon polygon_a,
+                        Point point_b, double tolerance, ProgressTracker progress_tracker) {
+                Point2D pt_b = point_b.getXY();
+                return polygonTouchesPointImpl_(polygon_a, pt_b, tolerance, null);
+        }
+-----------------------------------------
+ChatGPT response:     double x = point.getX();
+    double y = point.getY();
+    double[] xCoords = polygon.getXCoords();
+    double[] yCoords = polygon.getYCoords();
+    double minDist = Double.MAX_VALUE;
+    for (int i = 0; i < polygon.getNumVertices(); i++) {
+        double dist = Math.sqrt((x - xCoords[i]) * (x - xCoords[i]) + (y - yCoords[i]) * (y - yCoords[i]));
+        if (dist < minDist) {
+            minDist = dist;
+        }
+    }
+    return Math.abs(minDist - tolerance) < 0.0000001 || minDist < tolerance;
+}

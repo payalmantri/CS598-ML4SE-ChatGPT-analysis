@@ -1,0 +1,108 @@
+
+-----------------------------------------
+ Prompt: Write unit tests for this code
+Code:
+  public static int queryInt(PreparedStatement stmt, int def) throws SQLException {
+    ResultSet rs = null;
+    try {
+      rs = stmt.executeQuery();
+      if (rs.next()) {
+        int value = rs.getInt(1);
+        if (!rs.wasNull()) {
+          return value;
+        }
+      }
+      return def;
+    } finally {
+      close(rs);
+    }
+  }
+-----------------------------------------
+ChatGPT response: Sure, here are some sample JUnit test cases to test the queryInt method:
+
+java
+Copy code
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import java.sql.*;
+
+public class QueryIntTest {
+    private Connection connection;
+    private PreparedStatement statement;
+    
+    @Before
+    public void setUp() throws SQLException {
+        // set up the database connection and the prepared statement
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "user", "password");
+        statement = connection.prepareStatement("SELECT age FROM users WHERE name = ?");
+    }
+    
+    @After
+    public void tearDown() throws SQLException {
+        // close the database connection and the prepared statement
+        if (statement != null) {
+            statement.close();
+        }
+        if (connection != null) {
+            connection.close();
+        }
+    }
+    
+    @Test
+    public void testQueryIntWithValidResultSet() throws SQLException {
+        // prepare test data
+        String name = "John";
+        int expectedAge = 30;
+        statement.setString(1, name);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+        Mockito.when(resultSet.next()).thenReturn(true);
+        Mockito.when(resultSet.getInt(1)).thenReturn(expectedAge);
+        
+        // call the method under test
+        int actualAge = QueryInt.queryInt(statement, 0);
+        
+        // assert the results
+        Assert.assertEquals(expectedAge, actualAge);
+    }
+    
+    @Test
+    public void testQueryIntWithEmptyResultSet() throws SQLException {
+        // prepare test data
+        String name = "Jane";
+        int expectedAge = 0;
+        statement.setString(1, name);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+        Mockito.when(resultSet.next()).thenReturn(false);
+        
+        // call the method under test
+        int actualAge = QueryInt.queryInt(statement, expectedAge);
+        
+        // assert the results
+        Assert.assertEquals(expectedAge, actualAge);
+    }
+    
+    @Test
+    public void testQueryIntWithNullValue() throws SQLException {
+        // prepare test data
+        String name = "Alice";
+        int expectedAge = 0;
+        statement.setString(1, name);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+        Mockito.when(resultSet.next()).thenReturn(true);
+        Mockito.when(resultSet.getInt(1)).thenReturn(0);
+        Mockito.when(resultSet.wasNull()).thenReturn(true);
+        
+        // call the method under test
+        int actualAge = QueryInt.queryInt(statement, expectedAge);
+        
+        // assert the results
+        Assert.assertEquals(expectedAge, actualAge);
+    }
+}
+In the test cases, we use the Mockito framework to mock the ResultSet object and simulate different scenarios, such as a valid result set with a non-null value, an empty result set, and a result set with a null value. We then call the queryInt method with the prepared statement and the test data, and assert the results using JUnit's assertEquals method. The setUp and tearDown methods are used to set up and tear down the database connection and the prepared statement before and after each test case.
+
+
+
+

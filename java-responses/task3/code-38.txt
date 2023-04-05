@@ -1,0 +1,64 @@
+
+----------------------------------------
+ Prompt: Write Alternate implementation of the program 
+Code:
+@CommandArgument
+  public void load(
+      @OptionArgument("filename") String filename) {
+
+    users.clear();
+
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+      while (reader.ready()) {
+        User user = User.fromString(reader.readLine());
+        users.put(user.username, user);
+      }
+    } catch (FileNotFoundException e) {
+      System.err.println(String.format("File not found: '%s'", filename));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+-----------------------------------------
+ChatGPT response: Here's an alternate implementation of the program that uses the Java 8 Streams API to read and parse the input file:
+
+java
+Copy code
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class UserLoader {
+
+  private Map<String, User> users;
+
+  public UserLoader() {
+    users = Collections.emptyMap();
+  }
+
+  public void load(String filename) throws IOException {
+    try (Stream<String> lines = Files.lines(Path.of(filename))) {
+      users = lines.map(User::fromString)
+          .collect(Collectors.toMap(User::getUsername, user -> user));
+    }
+  }
+
+  public Map<String, User> getUsers() {
+    return users;
+  }
+
+}
+In this implementation, the load method reads the file using Files.lines to get a Stream of lines. It then uses the map method to convert each line to a User object using the fromString method. Finally, it uses the collect method to collect the User objects into a Map using the username as the key.
+
+The getUsers method returns the Map of users.
+
+This implementation simplifies the code and eliminates the need for a BufferedReader. It also allows for better performance, especially for large input files, since it reads and processes the file lazily using the Streams API.
+
+
+
+

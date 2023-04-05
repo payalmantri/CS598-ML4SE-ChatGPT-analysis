@@ -1,0 +1,63 @@
+
+----------------------------------------
+ Prompt: Write Alternate implementation of the program 
+Code:
+    public T remove(long key) {
+        int index = ((((int) (key >>> 32)) ^ ((int) (key))) & 0x7fffffff) % capacity;
+        Entry<T> previous = null;
+        Entry<T> entry = table[index];
+        while (entry != null) {
+            Entry<T> next = entry.next;
+            if (entry.key == key) {
+                if (previous == null) {
+                    table[index] = next;
+                } else {
+                    previous.next = next;
+                }
+                size--;
+                return entry.value;
+            }
+            previous = entry;
+            entry = next;
+        }
+        return null;
+    }
+-----------------------------------------
+ChatGPT response: Here's an alternate implementation of the remove method that accomplishes the same functionality using Java's built-in Map interface instead of a custom hash table implementation:
+
+java
+Copy code
+import java.util.Map;
+import java.util.HashMap;
+
+public class MyMap<T> {
+    private Map<Long, T> map;
+    
+    public MyMap(int capacity) {
+        this.map = new HashMap<>(capacity);
+    }
+    
+    public T remove(long key) {
+        return map.remove(key);
+    }
+    
+    public void put(long key, T value) {
+        map.put(key, value);
+    }
+    
+    public T get(long key) {
+        return map.get(key);
+    }
+    
+    public int size() {
+        return map.size();
+    }
+}
+In this implementation, the remove method simply calls the remove method of the Map interface to remove the key-value pair from the map. The put and get methods also call the respective methods of the Map interface, and the size method returns the size of the underlying Map.
+
+This implementation provides similar functionality to the original hash table implementation, but has the advantage of leveraging the built-in Map interface in Java instead of implementing a custom hash table from scratch. The built-in Map implementation provides various benefits like thread-safety, ease of use, and robustness that could be beneficial in many cases.
+
+
+
+
+

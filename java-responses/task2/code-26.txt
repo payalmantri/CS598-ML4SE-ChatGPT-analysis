@@ -1,0 +1,300 @@
+
+-----------------------------------------
+ Prompt: Write Junit for this method
+Code:
+	void initializeFromRectIsotropic(Envelope2D src, Envelope2D dest) {
+
+		if (src.isEmpty() || dest.isEmpty() || 0 == src.getWidth()
+				|| 0 == src.getHeight())
+			setZero();
+		else {
+			yx = 0;
+			xy = 0;
+			xx = dest.getWidth() / src.getWidth();
+			yy = dest.getHeight() / src.getHeight();
+			if (xx > yy)
+				xx = yy;
+			else
+				yy = xx;
+
+			Point2D destCenter = dest.getCenter();
+			Point2D srcCenter = src.getCenter();
+			xd = destCenter.x - srcCenter.x * xx;
+			yd = destCenter.y - srcCenter.y * yy;
+		}
+	}
+-----------------------------------------
+ChatGPT response: Sure! Here are some sample JUnit test cases that could be used to test the "initializeFromRectIsotropic" method:
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class Envelope2DTest {
+        
+        @Test
+        public void testInitializeFromRectIsotropic_emptyEnvelope() {
+                Envelope2D src = new Envelope2D();
+                Envelope2D dest = new Envelope2D(0, 0, 10, 10);
+                dest.initializeFromRectIsotropic(src, dest);
+                
+                assertEquals(0, dest.xx, 0);
+                assertEquals(0, dest.yy, 0);
+                assertEquals(0, dest.yx, 0);
+                assertEquals(0, dest.xy, 0);
+                assertEquals(0, dest.xd, 0);
+                assertEquals(0, dest.yd, 0);
+        }
+        
+        @Test
+        public void testInitializeFromRectIsotropic_sameSizeEnvelopes() {
+                Envelope2D src = new Envelope2D(0, 0, 10, 10);
+                Envelope2D dest = new Envelope2D(0, 0, 10, 10);
+                dest.initializeFromRectIsotropic(src, dest);
+                
+                assertEquals(1, dest.xx, 0);
+                assertEquals(1, dest.yy, 0);
+                assertEquals(0, dest.yx, 0);
+                assertEquals(0, dest.xy, 0);
+                assertEquals(0, dest.xd, 0);
+                assertEquals(0, dest.yd, 0);
+        }
+        
+        @Test
+        public void testInitializeFromRectIsotropic_differentSizeEnvelopes() {
+                Envelope2D src = new Envelope2D(0, 0, 10, 10);
+                Envelope2D dest = new Envelope2D(0, 0, 20, 20);
+                dest.initializeFromRectIsotropic(src, dest);
+                
+                assertEquals(2, dest.xx, 0);
+                assertEquals(2, dest.yy, 0);
+                assertEquals(0, dest.yx, 0);
+                assertEquals(0, dest.xy, 0);
+                assertEquals(0, dest.xd, 0);
+                assertEquals(0, dest.yd, 0);
+        }
+        
+        @Test
+        public void testInitializeFromRectIsotropic_widerDestEnvelope() {
+                Envelope2D src = new Envelope2D(0, 0, 10, 10);
+                Envelope2D dest = new Envelope2D(0, 0, 20, 10);
+                dest.initializeFromRectIsotropic(src, dest);
+                
+                assertEquals(1, dest.xx, 0);
+                assertEquals(0.5, dest.yy, 0);
+                assertEquals(0, dest.yx, 0);
+                assertEquals(0, dest.xy, 0);
+                assertEquals(5, dest.xd, 0);
+                assertEquals(0, dest.yd, 0);
+        }
+        
+        @Test
+        public void testInitializeFromRectIsotropic_tallerDestEnvelope() {
+                Envelope2D src = new Envelope2D(0, 0, 10, 10);
+                Envelope2D dest = new Envelope2D(0, 0, 10, 20);
+                dest.initializeFromRectIsotropic(src, dest);
+                
+                assertEquals(0.5, dest.xx, 0);
+                assertEquals(1, dest.yy, 0);
+                assertEquals(0, dest.yx, 0);
+                assertEquals(0, dest.xy, 0);
+                assertEquals(0, dest.xd
+
+
+-----------------------------------------
+ Prompt: Write Junit for this method
+Code:
+	void initializeFromRectIsotropic(Envelope2D src, Envelope2D dest) {
+
+		if (src.isEmpty() || dest.isEmpty() || 0 == src.getWidth()
+				|| 0 == src.getHeight())
+			setZero();
+		else {
+			yx = 0;
+			xy = 0;
+			xx = dest.getWidth() / src.getWidth();
+			yy = dest.getHeight() / src.getHeight();
+			if (xx > yy)
+				xx = yy;
+			else
+				yy = xx;
+
+			Point2D destCenter = dest.getCenter();
+			Point2D srcCenter = src.getCenter();
+			xd = destCenter.x - srcCenter.x * xx;
+			yd = destCenter.y - srcCenter.y * yy;
+		}
+	}
+-----------------------------------------
+ChatGPT response: Sure! Here are some sample JUnit test cases that could be used to test the "initializeFromRectIsotropic" method:
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class Envelope2DTest {
+        
+        @Test
+        public void testInitializeFromRectIsotropic_emptyEnvelope() {
+                Envelope2D src = new Envelope2D();
+                Envelope2D dest = new Envelope2D(0, 0, 10, 10);
+                dest.initializeFromRectIsotropic(src, dest);
+                
+                assertEquals(0, dest.xx, 0);
+                assertEquals(0, dest.yy, 0);
+                assertEquals(0, dest.yx, 0);
+                assertEquals(0, dest.xy, 0);
+                assertEquals(0, dest.xd, 0);
+                assertEquals(0, dest.yd, 0);
+        }
+        
+        @Test
+        public void testInitializeFromRectIsotropic_sameSizeEnvelopes() {
+                Envelope2D src = new Envelope2D(0, 0, 10, 10);
+                Envelope2D dest = new Envelope2D(0, 0, 10, 10);
+                dest.initializeFromRectIsotropic(src, dest);
+                
+                assertEquals(1, dest.xx, 0);
+                assertEquals(1, dest.yy, 0);
+                assertEquals(0, dest.yx, 0);
+                assertEquals(0, dest.xy, 0);
+                assertEquals(0, dest.xd, 0);
+                assertEquals(0, dest.yd, 0);
+        }
+        
+        @Test
+        public void testInitializeFromRectIsotropic_differentSizeEnvelopes() {
+                Envelope2D src = new Envelope2D(0, 0, 10, 10);
+                Envelope2D dest = new Envelope2D(0, 0, 20, 20);
+                dest.initializeFromRectIsotropic(src, dest);
+                
+                assertEquals(2, dest.xx, 0);
+                assertEquals(2, dest.yy, 0);
+                assertEquals(0, dest.yx, 0);
+                assertEquals(0, dest.xy, 0);
+                assertEquals(0, dest.xd, 0);
+                assertEquals(0, dest.yd, 0);
+        }
+        
+        @Test
+        public void testInitializeFromRectIsotropic_widerDestEnvelope() {
+                Envelope2D src = new Envelope2D(0, 0, 10, 10);
+                Envelope2D dest = new Envelope2D(0, 0, 20, 10);
+                dest.initializeFromRectIsotropic(src, dest);
+                
+                assertEquals(1, dest.xx, 0);
+                assertEquals(0.5, dest.yy, 0);
+                assertEquals(0, dest.yx, 0);
+                assertEquals(0, dest.xy, 0);
+                assertEquals(5, dest.xd, 0);
+                assertEquals(0, dest.yd, 0);
+        }
+        
+        @Test
+        public void testInitializeFromRectIsotropic_tallerDestEnvelope() {
+                Envelope2D src = new Envelope2D(0, 0, 10, 10);
+                Envelope2D dest = new Envelope2D(0, 0, 10, 20);
+                dest.initializeFromRectIsotropic(src, dest);
+                
+                assertEquals(0.5, dest.xx, 0);
+                assertEquals(1, dest.yy, 0);
+                assertEquals(0, dest.yx, 0);
+                assertEquals(0, dest.xy, 0);
+                assertEquals(0, dest.xd
+
+
+-----------------------------------------
+ Prompt: Write Junit for this method
+Code:
+	void initializeFromRectIsotropic(Envelope2D src, Envelope2D dest) {
+
+		if (src.isEmpty() || dest.isEmpty() || 0 == src.getWidth()
+				|| 0 == src.getHeight())
+			setZero();
+		else {
+			yx = 0;
+			xy = 0;
+			xx = dest.getWidth() / src.getWidth();
+			yy = dest.getHeight() / src.getHeight();
+			if (xx > yy)
+				xx = yy;
+			else
+				yy = xx;
+
+			Point2D destCenter = dest.getCenter();
+			Point2D srcCenter = src.getCenter();
+			xd = destCenter.x - srcCenter.x * xx;
+			yd = destCenter.y - srcCenter.y * yy;
+		}
+	}
+-----------------------------------------
+ChatGPT response: Sure! Here are some sample JUnit test cases that could be used to test the "initializeFromRectIsotropic" method:
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class Envelope2DTest {
+        
+        @Test
+        public void testInitializeFromRectIsotropic_emptyEnvelope() {
+                Envelope2D src = new Envelope2D();
+                Envelope2D dest = new Envelope2D(0, 0, 10, 10);
+                dest.initializeFromRectIsotropic(src, dest);
+                
+                assertEquals(0, dest.xx, 0);
+                assertEquals(0, dest.yy, 0);
+                assertEquals(0, dest.yx, 0);
+                assertEquals(0, dest.xy, 0);
+                assertEquals(0, dest.xd, 0);
+                assertEquals(0, dest.yd, 0);
+        }
+        
+        @Test
+        public void testInitializeFromRectIsotropic_sameSizeEnvelopes() {
+                Envelope2D src = new Envelope2D(0, 0, 10, 10);
+                Envelope2D dest = new Envelope2D(0, 0, 10, 10);
+                dest.initializeFromRectIsotropic(src, dest);
+                
+                assertEquals(1, dest.xx, 0);
+                assertEquals(1, dest.yy, 0);
+                assertEquals(0, dest.yx, 0);
+                assertEquals(0, dest.xy, 0);
+                assertEquals(0, dest.xd, 0);
+                assertEquals(0, dest.yd, 0);
+        }
+        
+        @Test
+        public void testInitializeFromRectIsotropic_differentSizeEnvelopes() {
+                Envelope2D src = new Envelope2D(0, 0, 10, 10);
+                Envelope2D dest = new Envelope2D(0, 0, 20, 20);
+                dest.initializeFromRectIsotropic(src, dest);
+                
+                assertEquals(2, dest.xx, 0);
+                assertEquals(2, dest.yy, 0);
+                assertEquals(0, dest.yx, 0);
+                assertEquals(0, dest.xy, 0);
+                assertEquals(0, dest.xd, 0);
+                assertEquals(0, dest.yd, 0);
+        }
+        
+        @Test
+        public void testInitializeFromRectIsotropic_widerDestEnvelope() {
+                Envelope2D src = new Envelope2D(0, 0, 10, 10);
+                Envelope2D dest = new Envelope2D(0, 0, 20, 10);
+                dest.initializeFromRectIsotropic(src, dest);
+                
+                assertEquals(1, dest.xx, 0);
+                assertEquals(0.5, dest.yy, 0);
+                assertEquals(0, dest.yx, 0);
+                assertEquals(0, dest.xy, 0);
+                assertEquals(5, dest.xd, 0);
+                assertEquals(0, dest.yd, 0);
+        }
+        
+        @Test
+        public void testInitializeFromRectIsotropic_tallerDestEnvelope() {
+                Envelope2D src = new Envelope2D(0, 0, 10, 10);
+                Envelope2D dest = new Envelope2D(0, 0, 10, 20);
+                dest.initializeFromRectIsotropic(src, dest);
+                
+                assertEquals(0.5, dest.xx, 0);
+                assertEquals(1, dest.yy, 0);
+                assertEquals(0, dest.yx, 0);
+                assertEquals(0, dest.xy, 0);
+                assertEquals(0, dest.xd
+

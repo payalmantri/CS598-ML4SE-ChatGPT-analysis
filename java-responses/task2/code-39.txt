@@ -1,0 +1,81 @@
+
+-----------------------------------------
+ Prompt: Write Junits Test cases for this method
+Code:
+  @CommandArgument
+  public void adduser(
+      @OptionArgument("username") String username,
+      @OptionArgument("password") String password,
+      @OptionArgument("roles") String roles) {
+
+    if (users.containsKey(username)) {
+      System.err.println(String.format("User '%s' already exists", username));
+    } else {
+
+      User user = new User(username);
+      user.salt = passwd.generateSalt();
+      user.hash = passwd.getEncryptedPassword(password, user.salt);
+      user.roles.addAll(Arrays.asList(roles.split(",")));
+      users.put(username, user);
+
+    }
+  }
+-----------------------------------------
+ChatGPT response: Here's an example of JUnit test cases for the adduser method:
+
+typescript
+Copy code
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class UserTest {
+  private User user;
+  private Map<String, User> users;
+  private PasswordEncryptionService passwd;
+
+  @BeforeEach
+  void setUp() {
+    user = new User("testuser");
+    users = new HashMap<>();
+    passwd = new PasswordEncryptionService();
+  }
+
+  @Test
+  void testAddUser() {
+    addTestUser("testuser", "testpassword", "admin");
+    assertTrue(users.containsKey("testuser"));
+    User user = users.get("testuser");
+    assertEquals("testuser", user.getUsername());
+    assertNotNull(user.getSalt());
+    assertNotNull(user.getHash());
+    assertEquals(1, user.getRoles().size());
+    assertTrue(user.getRoles().contains("admin"));
+  }
+
+  @Test
+  void testAddUserDuplicate() {
+    addTestUser("testuser", "testpassword", "admin");
+    addTestUser("testuser", "testpassword", "user");
+    assertFalse(users.containsKey("testuser"));
+  }
+
+  private void addTestUser(String username, String password, String roles) {
+    AddUserCommand command = new AddUserCommand(users, passwd);
+    command.adduser(username, password, roles);
+  }
+}
+In the above example, we use JUnit 5 annotations @BeforeEach to setup the required test environment before each test case, and @Test to indicate the individual test cases.
+
+We first create an instance of the User class, a HashMap of User objects, and a PasswordEncryptionService object in the setUp method. Then we define two test cases using the @Test annotation:
+
+testAddUser: This test case checks if a user can be successfully added to the users map. It calls the adduser method of an instance of AddUserCommand with the required arguments, and then asserts that the user has been added to the map with the correct values.
+
+testAddUserDuplicate: This test case checks if the method correctly handles the case where a user with the same username already exists in the users map. It first adds a user to the map with the given username, password and roles, and then attempts to add another user with the same username but different password and roles. It then asserts that the second user is not added to the map, i.e., the map size remains unchanged.
+
+Finally, we define a helper method addTestUser which calls the adduser method of an instance of AddUserCommand with the required arguments. This method is used by both test cases to avoid code duplication.
+
+
+
+
+

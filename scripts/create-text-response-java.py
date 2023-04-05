@@ -11,7 +11,7 @@ df = pd.read_excel('milestone2-responses.xlsx')
 df
 print(df.head())
 
-number_of_rows_to_process = 15
+number_of_rows_to_process = 188
 
 
 
@@ -43,7 +43,7 @@ def generate_responses(df):
             code = row['Code']
             codeindex = codeindex + 1
             print(code, codeindex)
-        prompt1 = row['Prompt'] + "\nCode:\n" 
+        prompt1 = str(row['Prompt']) + "\nCode:\n" 
         if prompt1.find(code) == -1:
             prompt1 = prompt1 + code
         response = row['Actual Response from Browser'] 
@@ -61,13 +61,13 @@ def generate_responses(df):
                 mode = 'a'
             else:
                 mode = 'w'
-            with open('java-responses/task1/code-' + str(codeindex) + '.txt', mode) as f:
+            with open('java-responses/task1/code-' + str(codeindex) + '.txt', mode, encoding="utf8") as f:
                 # write promt in heading 6
                 f.write("\n-----------------------------------------\n")
                 f.write(" Prompt: " +prompt1 + '\n\n')
                 # write resposnse as highlighted text
                 f.write("-----------------------------------------\n")
-                f.write('ChatGPT response: ' + response + '\n')
+                f.write('ChatGPT response: ' + str(response) + '\n')
 
 
                 f.close()
@@ -78,11 +78,11 @@ def generate_responses(df):
             else:
                 mode = 'w' 
 
-            with open('java-responses/task2/code-' + str(codeindex) + '.txt', mode) as f:
+            with open('java-responses/task2/code-' + str(codeindex) + '.txt', mode, encoding="utf8") as f:
                 f.write("\n-----------------------------------------")
                 f.write( "\n Prompt: " +prompt1 + '\n')
                 f.write("-----------------------------------------\n")
-                f.write('ChatGPT response: ' + response + '\n')
+                f.write('ChatGPT response: ' + str(response) + '\n')
                 
                 f.close()
         elif(task3 == True):
@@ -91,12 +91,12 @@ def generate_responses(df):
                 mode = 'a'
             else:
                 mode = 'w'
-            with open('java-responses/task3/code-' + str(codeindex) + '.txt', mode) as f:
+            with open('java-responses/task3/code-' + str(codeindex) + '.txt', mode, encoding="utf8") as f:
                 # write promt in heading 6
                 f.write("\n----------------------------------------")
                 f.write("\n Prompt: " +prompt1 + '\n')
                 f.write("-----------------------------------------\n")
-                f.write('ChatGPT response: ' + response + '\n')
+                f.write('ChatGPT response: ' + str(response) + '\n')
 
                 f.close()
         else:

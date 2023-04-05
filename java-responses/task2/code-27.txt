@@ -1,0 +1,228 @@
+
+-----------------------------------------
+ Prompt: Write Junit for this method
+Code:
+   public static String[] split(String string, char delimiter) {
+        int delimeterCount = 0;
+        int start = 0;
+        int end;
+        String[] strings = new String[32];
+        while ((end = string.indexOf(delimiter, start)) != -1) {
+            if (delimeterCount == strings.length) {
+                strings = Arrays.copyOf(strings, strings.length * 2);
+            }
+            strings[delimeterCount++] = string.substring(start, end);
+            start = end + 1;
+        }
+        strings = Arrays.copyOf(strings, delimeterCount + 1);
+        strings[delimeterCount] = string.substring(start);
+        return strings;
+    }
+-----------------------------------------
+ChatGPT response: Here are some JUnit tests that you can use to test the "split" method:
+
+typescript
+Copy code
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class SplitTest {
+    
+    @Test
+    public void testSplit() {
+        String input = "Hello,world!";
+        char delimiter = ',';
+        String[] expectedOutput = {"Hello", "world!"};
+        String[] actualOutput = Split.split(input, delimiter);
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+    
+    @Test
+    public void testSplitWithNoDelimiters() {
+        String input = "Hello world!";
+        char delimiter = ',';
+        String[] expectedOutput = {"Hello world!"};
+        String[] actualOutput = Split.split(input, delimiter);
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+    
+    @Test
+    public void testSplitWithMultipleDelimiters() {
+        String input = "1,2,3,4,5";
+        char delimiter = ',';
+        String[] expectedOutput = {"1", "2", "3", "4", "5"};
+        String[] actualOutput = Split.split(input, delimiter);
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+    
+    @Test
+    public void testSplitWithSpecialCharacters() {
+        String input = "Hello#world!";
+        char delimiter = '#';
+        String[] expectedOutput = {"Hello", "world!"};
+        String[] actualOutput = Split.split(input, delimiter);
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+    
+    @Test
+    public void testSplitWithEmptyString() {
+        String input = "";
+        char delimiter = ',';
+        String[] expectedOutput = {""};
+        String[] actualOutput = Split.split(input, delimiter);
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+}
+These tests cover a range of scenarios, including cases where there are no delimiters, multiple delimiters, special characters, and an empty input string.
+
+-----------------------------------------
+ Prompt: Write Junit for this method
+Code:
+   public static String[] split(String string, char delimiter) {
+        int delimeterCount = 0;
+        int start = 0;
+        int end;
+        String[] strings = new String[32];
+        while ((end = string.indexOf(delimiter, start)) != -1) {
+            if (delimeterCount == strings.length) {
+                strings = Arrays.copyOf(strings, strings.length * 2);
+            }
+            strings[delimeterCount++] = string.substring(start, end);
+            start = end + 1;
+        }
+        strings = Arrays.copyOf(strings, delimeterCount + 1);
+        strings[delimeterCount] = string.substring(start);
+        return strings;
+    }
+-----------------------------------------
+ChatGPT response: Here are some JUnit tests that you can use to test the "split" method:
+
+typescript
+Copy code
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class SplitTest {
+    
+    @Test
+    public void testSplit() {
+        String input = "Hello,world!";
+        char delimiter = ',';
+        String[] expectedOutput = {"Hello", "world!"};
+        String[] actualOutput = Split.split(input, delimiter);
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+    
+    @Test
+    public void testSplitWithNoDelimiters() {
+        String input = "Hello world!";
+        char delimiter = ',';
+        String[] expectedOutput = {"Hello world!"};
+        String[] actualOutput = Split.split(input, delimiter);
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+    
+    @Test
+    public void testSplitWithMultipleDelimiters() {
+        String input = "1,2,3,4,5";
+        char delimiter = ',';
+        String[] expectedOutput = {"1", "2", "3", "4", "5"};
+        String[] actualOutput = Split.split(input, delimiter);
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+    
+    @Test
+    public void testSplitWithSpecialCharacters() {
+        String input = "Hello#world!";
+        char delimiter = '#';
+        String[] expectedOutput = {"Hello", "world!"};
+        String[] actualOutput = Split.split(input, delimiter);
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+    
+    @Test
+    public void testSplitWithEmptyString() {
+        String input = "";
+        char delimiter = ',';
+        String[] expectedOutput = {""};
+        String[] actualOutput = Split.split(input, delimiter);
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+}
+These tests cover a range of scenarios, including cases where there are no delimiters, multiple delimiters, special characters, and an empty input string.
+
+-----------------------------------------
+ Prompt: Write Junit for this method
+Code:
+   public static String[] split(String string, char delimiter) {
+        int delimeterCount = 0;
+        int start = 0;
+        int end;
+        String[] strings = new String[32];
+        while ((end = string.indexOf(delimiter, start)) != -1) {
+            if (delimeterCount == strings.length) {
+                strings = Arrays.copyOf(strings, strings.length * 2);
+            }
+            strings[delimeterCount++] = string.substring(start, end);
+            start = end + 1;
+        }
+        strings = Arrays.copyOf(strings, delimeterCount + 1);
+        strings[delimeterCount] = string.substring(start);
+        return strings;
+    }
+-----------------------------------------
+ChatGPT response: Here are some JUnit tests that you can use to test the "split" method:
+
+typescript
+Copy code
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class SplitTest {
+    
+    @Test
+    public void testSplit() {
+        String input = "Hello,world!";
+        char delimiter = ',';
+        String[] expectedOutput = {"Hello", "world!"};
+        String[] actualOutput = Split.split(input, delimiter);
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+    
+    @Test
+    public void testSplitWithNoDelimiters() {
+        String input = "Hello world!";
+        char delimiter = ',';
+        String[] expectedOutput = {"Hello world!"};
+        String[] actualOutput = Split.split(input, delimiter);
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+    
+    @Test
+    public void testSplitWithMultipleDelimiters() {
+        String input = "1,2,3,4,5";
+        char delimiter = ',';
+        String[] expectedOutput = {"1", "2", "3", "4", "5"};
+        String[] actualOutput = Split.split(input, delimiter);
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+    
+    @Test
+    public void testSplitWithSpecialCharacters() {
+        String input = "Hello#world!";
+        char delimiter = '#';
+        String[] expectedOutput = {"Hello", "world!"};
+        String[] actualOutput = Split.split(input, delimiter);
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+    
+    @Test
+    public void testSplitWithEmptyString() {
+        String input = "";
+        char delimiter = ',';
+        String[] expectedOutput = {""};
+        String[] actualOutput = Split.split(input, delimiter);
+        assertArrayEquals(expectedOutput, actualOutput);
+    }
+}
+These tests cover a range of scenarios, including cases where there are no delimiters, multiple delimiters, special characters, and an empty input string.

@@ -1,0 +1,51 @@
+
+----------------------------------------
+ Prompt: Write a differnt implementation of the code 
+Code:
+  public void add(int index, float e) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + 1);
+    if (index < size) {
+      for (int i = size; i > index; i--) {
+        elements[i] = elements[i - 1];
+      }
+    }
+    elements[index] = e;
+    size++;
+  }
+-----------------------------------------
+ChatGPT response: Here is an alternative implementation of the add method:
+
+arduino
+Copy code
+public void add(int index, float e) {
+    if (index < 0 || index > size) {
+        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+    }
+    int newCapacity = elements.length;
+    if (size + 1 > newCapacity) {
+        newCapacity = newCapacity + (newCapacity >> 1);
+        float[] newElements = new float[newCapacity];
+        System.arraycopy(elements, 0, newElements, 0, size);
+        elements = newElements;
+    }
+    if (index < size) {
+        System.arraycopy(elements, index, elements, index + 1, size - index);
+    }
+    elements[index] = e;
+    size++;
+}
+Here's a brief explanation of the changes made to the original code:
+
+Added a message to the IndexOutOfBoundsException to indicate the index and size that caused the exception.
+Increased the capacity of the underlying array by 50% if necessary, using bit shifting to perform faster integer division. This is a common resizing strategy used by many dynamic array implementations.
+Used System.arraycopy instead of a loop to shift the elements to the right if the new element is to be inserted at an index other than the end of the array. This method is faster and more concise than a loop.
+Updated the variable name elements to newElements when creating a new array, to make the code clearer.
+Overall, these changes make the code more efficient and readable, while preserving the original functionality of the method.
+
+
+
+
+

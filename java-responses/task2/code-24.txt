@@ -1,0 +1,111 @@
+
+-----------------------------------------
+ Prompt: Write Junit for this method
+Code:
+        public final void renderEdges(int fillMode) {
+                evenOdd_ = fillMode == EVEN_ODD;
+                for (int line = minY_; line <= maxY_; line++) {
+                        advanceAET_();
+                        addNewEdgesToAET_(line);
+                        emitScans_();
+                }
+                
+                startAddingEdges();//reset for new edges
+        }
+-----------------------------------------
+ChatGPT response: To write JUnit test cases for the renderEdges method, we would need to create an instance of the class containing the method and then test that the method produces the expected output for different input values.
+
+Assuming that the renderEdges method is part of a class called EdgeRenderer, a sample JUnit test case for the method can be written as follows:
+
+java
+Copy code
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
+public class EdgeRendererTest {
+
+    @Test
+    public void testRenderEdges() {
+        EdgeRenderer renderer = new EdgeRenderer();
+        int fillMode = EdgeRenderer.EVEN_ODD;
+        renderer.renderEdges(fillMode);
+        //TODO: Add assertions to check the expected output of the method for the given input values.
+    }
+}
+In the above code, we first create an instance of the EdgeRenderer class and set the fillMode variable to the EVEN_ODD value. We then call the renderEdges method with the given input values. Finally, we would add assertions to the test case to check if the output produced by the method matches the expected output for the given input values.
+
+The specific assertions to use would depend on the expected behavior of the renderEdges method, and what it should output given certain inputs. We can add additional test cases with different input values and expected outputs to test the method more thoroughly.
+
+-----------------------------------------
+ Prompt: Write Junit for this method
+Code:
+        public final void renderEdges(int fillMode) {
+                evenOdd_ = fillMode == EVEN_ODD;
+                for (int line = minY_; line <= maxY_; line++) {
+                        advanceAET_();
+                        addNewEdgesToAET_(line);
+                        emitScans_();
+                }
+                
+                startAddingEdges();//reset for new edges
+        }
+-----------------------------------------
+ChatGPT response: To write JUnit test cases for the renderEdges method, we would need to create an instance of the class containing the method and then test that the method produces the expected output for different input values.
+
+Assuming that the renderEdges method is part of a class called EdgeRenderer, a sample JUnit test case for the method can be written as follows:
+
+java
+Copy code
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
+public class EdgeRendererTest {
+
+    @Test
+    public void testRenderEdges() {
+        EdgeRenderer renderer = new EdgeRenderer();
+        int fillMode = EdgeRenderer.EVEN_ODD;
+        renderer.renderEdges(fillMode);
+        //TODO: Add assertions to check the expected output of the method for the given input values.
+    }
+}
+In the above code, we first create an instance of the EdgeRenderer class and set the fillMode variable to the EVEN_ODD value. We then call the renderEdges method with the given input values. Finally, we would add assertions to the test case to check if the output produced by the method matches the expected output for the given input values.
+
+The specific assertions to use would depend on the expected behavior of the renderEdges method, and what it should output given certain inputs. We can add additional test cases with different input values and expected outputs to test the method more thoroughly.
+
+-----------------------------------------
+ Prompt: Write Junit for this method
+Code:
+        public final void renderEdges(int fillMode) {
+                evenOdd_ = fillMode == EVEN_ODD;
+                for (int line = minY_; line <= maxY_; line++) {
+                        advanceAET_();
+                        addNewEdgesToAET_(line);
+                        emitScans_();
+                }
+                
+                startAddingEdges();//reset for new edges
+        }
+-----------------------------------------
+ChatGPT response: To write JUnit test cases for the renderEdges method, we would need to create an instance of the class containing the method and then test that the method produces the expected output for different input values.
+
+Assuming that the renderEdges method is part of a class called EdgeRenderer, a sample JUnit test case for the method can be written as follows:
+
+java
+Copy code
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
+public class EdgeRendererTest {
+
+    @Test
+    public void testRenderEdges() {
+        EdgeRenderer renderer = new EdgeRenderer();
+        int fillMode = EdgeRenderer.EVEN_ODD;
+        renderer.renderEdges(fillMode);
+        //TODO: Add assertions to check the expected output of the method for the given input values.
+    }
+}
+In the above code, we first create an instance of the EdgeRenderer class and set the fillMode variable to the EVEN_ODD value. We then call the renderEdges method with the given input values. Finally, we would add assertions to the test case to check if the output produced by the method matches the expected output for the given input values.
+
+The specific assertions to use would depend on the expected behavior of the renderEdges method, and what it should output given certain inputs. We can add additional test cases with different input values and expected outputs to test the method more thoroughly.

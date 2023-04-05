@@ -50,3 +50,315 @@ In the first test case, the method is called with two points that define a verti
 In the second test case, the method is called with the same first point and a second point that is directly above it, and a third point that lies on the same vertical line. The expected offset is the distance between the third point and the first point projected onto the same line, which is 1.
 
 In the third test case, the method is called with the same first and second points, and a third point that lies off the line. The expected offset is the signed perpendicular distance between the line and the third point, which is 1 / sqrt(2) (positive since the point is to the left of the line)
+
+-----------------------------------------
+ Prompt: Generate units tests for the method
+Code:
+	double offset(/* const */Point2D pt1, /* const */Point2D pt2) {
+		double newDistance = distance(pt1, pt2);
+		Point2D p = construct(x, y);
+		if (newDistance == 0.0)
+			return distance(p, pt1);
+
+		// get vectors relative to pt_1
+		Point2D p2 = new Point2D();
+		p2.setCoords(pt2);
+		p2.sub(pt1);
+		p.sub(pt1);
+
+		double cross = p.crossProduct(p2);
+		return cross / newDistance;
+	}
+-----------------------------------------
+ChatGPT response: Sure, here are some unit tests for the offset() method:
+
+scss
+Copy code
+@Test
+public void testOffset() {
+    Point2D pt1 = new Point2D(2, 3);
+    Point2D pt2 = new Point2D(2, 5);
+    Point2D p = new Point2D(2, 0);
+
+    double expectedOffset = 3.0;
+    double actualOffset = pt1.offset(pt1, pt2);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+
+    expectedOffset = 1.0;
+    actualOffset = pt1.offset(pt1, p);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+
+    p = new Point2D(3, 4);
+
+    expectedOffset = 1 / Math.sqrt(2);
+    actualOffset = pt1.offset(pt1, pt2);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+}
+In the first test case, the method is called with two points that define a vertical line, and a third point that lies on that line. The expected offset is the distance between the third point and the first point, which is 3.
+
+In the second test case, the method is called with the same first point and a second point that is directly above it, and a third point that lies on the same vertical line. The expected offset is the distance between the third point and the first point projected onto the same line, which is 1.
+
+In the third test case, the method is called with the same first and second points, and a third point that lies off the line. The expected offset is the signed perpendicular distance between the line and the third point, which is 1 / sqrt(2) (positive since the point is to the left of the line)
+
+-----------------------------------------
+ Prompt: Generate units tests for the method
+Code:
+	double offset(/* const */Point2D pt1, /* const */Point2D pt2) {
+		double newDistance = distance(pt1, pt2);
+		Point2D p = construct(x, y);
+		if (newDistance == 0.0)
+			return distance(p, pt1);
+
+		// get vectors relative to pt_1
+		Point2D p2 = new Point2D();
+		p2.setCoords(pt2);
+		p2.sub(pt1);
+		p.sub(pt1);
+
+		double cross = p.crossProduct(p2);
+		return cross / newDistance;
+	}
+-----------------------------------------
+ChatGPT response: Sure, here are some unit tests for the offset() method:
+
+scss
+Copy code
+@Test
+public void testOffset() {
+    Point2D pt1 = new Point2D(2, 3);
+    Point2D pt2 = new Point2D(2, 5);
+    Point2D p = new Point2D(2, 0);
+
+    double expectedOffset = 3.0;
+    double actualOffset = pt1.offset(pt1, pt2);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+
+    expectedOffset = 1.0;
+    actualOffset = pt1.offset(pt1, p);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+
+    p = new Point2D(3, 4);
+
+    expectedOffset = 1 / Math.sqrt(2);
+    actualOffset = pt1.offset(pt1, pt2);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+}
+In the first test case, the method is called with two points that define a vertical line, and a third point that lies on that line. The expected offset is the distance between the third point and the first point, which is 3.
+
+In the second test case, the method is called with the same first point and a second point that is directly above it, and a third point that lies on the same vertical line. The expected offset is the distance between the third point and the first point projected onto the same line, which is 1.
+
+In the third test case, the method is called with the same first and second points, and a third point that lies off the line. The expected offset is the signed perpendicular distance between the line and the third point, which is 1 / sqrt(2) (positive since the point is to the left of the line)
+
+-----------------------------------------
+ Prompt: Generate units tests for the method
+Code:
+	double offset(/* const */Point2D pt1, /* const */Point2D pt2) {
+		double newDistance = distance(pt1, pt2);
+		Point2D p = construct(x, y);
+		if (newDistance == 0.0)
+			return distance(p, pt1);
+
+		// get vectors relative to pt_1
+		Point2D p2 = new Point2D();
+		p2.setCoords(pt2);
+		p2.sub(pt1);
+		p.sub(pt1);
+
+		double cross = p.crossProduct(p2);
+		return cross / newDistance;
+	}
+-----------------------------------------
+ChatGPT response: Sure, here are some unit tests for the offset() method:
+
+scss
+Copy code
+@Test
+public void testOffset() {
+    Point2D pt1 = new Point2D(2, 3);
+    Point2D pt2 = new Point2D(2, 5);
+    Point2D p = new Point2D(2, 0);
+
+    double expectedOffset = 3.0;
+    double actualOffset = pt1.offset(pt1, pt2);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+
+    expectedOffset = 1.0;
+    actualOffset = pt1.offset(pt1, p);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+
+    p = new Point2D(3, 4);
+
+    expectedOffset = 1 / Math.sqrt(2);
+    actualOffset = pt1.offset(pt1, pt2);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+}
+In the first test case, the method is called with two points that define a vertical line, and a third point that lies on that line. The expected offset is the distance between the third point and the first point, which is 3.
+
+In the second test case, the method is called with the same first point and a second point that is directly above it, and a third point that lies on the same vertical line. The expected offset is the distance between the third point and the first point projected onto the same line, which is 1.
+
+In the third test case, the method is called with the same first and second points, and a third point that lies off the line. The expected offset is the signed perpendicular distance between the line and the third point, which is 1 / sqrt(2) (positive since the point is to the left of the line)
+
+-----------------------------------------
+ Prompt: Generate units tests for the method
+Code:
+	double offset(/* const */Point2D pt1, /* const */Point2D pt2) {
+		double newDistance = distance(pt1, pt2);
+		Point2D p = construct(x, y);
+		if (newDistance == 0.0)
+			return distance(p, pt1);
+
+		// get vectors relative to pt_1
+		Point2D p2 = new Point2D();
+		p2.setCoords(pt2);
+		p2.sub(pt1);
+		p.sub(pt1);
+
+		double cross = p.crossProduct(p2);
+		return cross / newDistance;
+	}
+-----------------------------------------
+ChatGPT response: Sure, here are some unit tests for the offset() method:
+
+scss
+Copy code
+@Test
+public void testOffset() {
+    Point2D pt1 = new Point2D(2, 3);
+    Point2D pt2 = new Point2D(2, 5);
+    Point2D p = new Point2D(2, 0);
+
+    double expectedOffset = 3.0;
+    double actualOffset = pt1.offset(pt1, pt2);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+
+    expectedOffset = 1.0;
+    actualOffset = pt1.offset(pt1, p);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+
+    p = new Point2D(3, 4);
+
+    expectedOffset = 1 / Math.sqrt(2);
+    actualOffset = pt1.offset(pt1, pt2);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+}
+In the first test case, the method is called with two points that define a vertical line, and a third point that lies on that line. The expected offset is the distance between the third point and the first point, which is 3.
+
+In the second test case, the method is called with the same first point and a second point that is directly above it, and a third point that lies on the same vertical line. The expected offset is the distance between the third point and the first point projected onto the same line, which is 1.
+
+In the third test case, the method is called with the same first and second points, and a third point that lies off the line. The expected offset is the signed perpendicular distance between the line and the third point, which is 1 / sqrt(2) (positive since the point is to the left of the line)
+
+-----------------------------------------
+ Prompt: Generate units tests for the method
+Code:
+	double offset(/* const */Point2D pt1, /* const */Point2D pt2) {
+		double newDistance = distance(pt1, pt2);
+		Point2D p = construct(x, y);
+		if (newDistance == 0.0)
+			return distance(p, pt1);
+
+		// get vectors relative to pt_1
+		Point2D p2 = new Point2D();
+		p2.setCoords(pt2);
+		p2.sub(pt1);
+		p.sub(pt1);
+
+		double cross = p.crossProduct(p2);
+		return cross / newDistance;
+	}
+-----------------------------------------
+ChatGPT response: Sure, here are some unit tests for the offset() method:
+
+scss
+Copy code
+@Test
+public void testOffset() {
+    Point2D pt1 = new Point2D(2, 3);
+    Point2D pt2 = new Point2D(2, 5);
+    Point2D p = new Point2D(2, 0);
+
+    double expectedOffset = 3.0;
+    double actualOffset = pt1.offset(pt1, pt2);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+
+    expectedOffset = 1.0;
+    actualOffset = pt1.offset(pt1, p);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+
+    p = new Point2D(3, 4);
+
+    expectedOffset = 1 / Math.sqrt(2);
+    actualOffset = pt1.offset(pt1, pt2);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+}
+In the first test case, the method is called with two points that define a vertical line, and a third point that lies on that line. The expected offset is the distance between the third point and the first point, which is 3.
+
+In the second test case, the method is called with the same first point and a second point that is directly above it, and a third point that lies on the same vertical line. The expected offset is the distance between the third point and the first point projected onto the same line, which is 1.
+
+In the third test case, the method is called with the same first and second points, and a third point that lies off the line. The expected offset is the signed perpendicular distance between the line and the third point, which is 1 / sqrt(2) (positive since the point is to the left of the line)
+
+-----------------------------------------
+ Prompt: Generate units tests for the method
+Code:
+	double offset(/* const */Point2D pt1, /* const */Point2D pt2) {
+		double newDistance = distance(pt1, pt2);
+		Point2D p = construct(x, y);
+		if (newDistance == 0.0)
+			return distance(p, pt1);
+
+		// get vectors relative to pt_1
+		Point2D p2 = new Point2D();
+		p2.setCoords(pt2);
+		p2.sub(pt1);
+		p.sub(pt1);
+
+		double cross = p.crossProduct(p2);
+		return cross / newDistance;
+	}
+-----------------------------------------
+ChatGPT response: Sure, here are some unit tests for the offset() method:
+
+scss
+Copy code
+@Test
+public void testOffset() {
+    Point2D pt1 = new Point2D(2, 3);
+    Point2D pt2 = new Point2D(2, 5);
+    Point2D p = new Point2D(2, 0);
+
+    double expectedOffset = 3.0;
+    double actualOffset = pt1.offset(pt1, pt2);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+
+    expectedOffset = 1.0;
+    actualOffset = pt1.offset(pt1, p);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+
+    p = new Point2D(3, 4);
+
+    expectedOffset = 1 / Math.sqrt(2);
+    actualOffset = pt1.offset(pt1, pt2);
+
+    assertEquals(expectedOffset, actualOffset, 0.0001);
+}
+In the first test case, the method is called with two points that define a vertical line, and a third point that lies on that line. The expected offset is the distance between the third point and the first point, which is 3.
+
+In the second test case, the method is called with the same first point and a second point that is directly above it, and a third point that lies on the same vertical line. The expected offset is the distance between the third point and the first point projected onto the same line, which is 1.
+
+In the third test case, the method is called with the same first and second points, and a third point that lies off the line. The expected offset is the signed perpendicular distance between the line and the third point, which is 1 / sqrt(2) (positive since the point is to the left of the line)

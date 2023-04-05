@@ -1,0 +1,249 @@
+
+-----------------------------------------
+ Prompt: Write Junit tests for the following code
+        private static boolean polylineContainsPolyline_(Polyline polyline_a,
+                        Polyline polyline_b, double tolerance,
+                        ProgressTracker progress_tracker) {
+                Envelope2D env_a = new Envelope2D(), env_b = new Envelope2D();
+                polyline_a.queryEnvelope2D(env_a);
+                polyline_b.queryEnvelope2D(env_b);
+
+                // Quick envelope rejection test for false equality.
+                if (!envelopeInfContainsEnvelope_(env_a, env_b, tolerance))
+                        return false;
+
+                // Quick rasterize test to see whether the the geometries are disjoint.
+                if (tryRasterizedContainsOrDisjoint_(polyline_a, polyline_b, tolerance,
+                                false) == Relation.disjoint)
+                        return false;
+
+                return linearPathWithinLinearPath_(polyline_b, polyline_a, tolerance, false);
+        }
+Code:
+
+-----------------------------------------
+ChatGPT response: Here are some JUnit tests for the given code:
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+public class PolylineTest {
+
+    @Test
+    void testPolylineContainsPolyline_WhenPolylineAAndBIntersect_ReturnsTrue() {
+        // Arrange
+        Polyline polylineA = createPolyline(/* add vertices here */);
+        Polyline polylineB = createPolyline(/* add vertices here */);
+
+        // Act
+        boolean result = polylineContainsPolyline_(polylineA, polylineB, 0.001, null);
+
+        // Assert
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    void testPolylineContainsPolyline_WhenPolylineADoesNotIntersectPolylineB_ReturnsFalse() {
+        // Arrange
+        Polyline polylineA = createPolyline(/* add vertices here */);
+        Polyline polylineB = createPolyline(/* add vertices here */);
+
+        // Act
+        boolean result = polylineContainsPolyline_(polylineA, polylineB, 0.001, null);
+
+        // Assert
+        Assertions.assertFalse(result);
+    }
+
+    @Test
+    void testPolylineContainsPolyline_WhenPolylineBDoesNotIntersectPolylineA_ReturnsFalse() {
+        // Arrange
+        Polyline polylineA = createPolyline(/* add vertices here */);
+        Polyline polylineB = createPolyline(/* add vertices here */);
+
+        // Act
+        boolean result = polylineContainsPolyline_(polylineA, polylineB, 0.001, null);
+
+        // Assert
+        Assertions.assertFalse(result);
+    }
+
+    @Test
+    void testPolylineContainsPolyline_WhenToleranceIsTooLarge_ReturnsFalse() {
+        // Arrange
+        Polyline polylineA = createPolyline(/* add vertices here */);
+        Polyline polylineB = createPolyline(/* add vertices here */);
+
+        // Act
+        boolean result = polylineContainsPolyline_(polylineA, polylineB, 1.0, null);
+
+        // Assert
+        Assertions.assertFalse(result);
+    }
+}
+Note that you will need to replace createPolyline(/* add vertices here */) with the appropriate code to create Polyline objects with the required vertices for each test case.
+
+-----------------------------------------
+ Prompt: Write Junit tests for the following code
+        private static boolean polylineContainsPolyline_(Polyline polyline_a,
+                        Polyline polyline_b, double tolerance,
+                        ProgressTracker progress_tracker) {
+                Envelope2D env_a = new Envelope2D(), env_b = new Envelope2D();
+                polyline_a.queryEnvelope2D(env_a);
+                polyline_b.queryEnvelope2D(env_b);
+
+                // Quick envelope rejection test for false equality.
+                if (!envelopeInfContainsEnvelope_(env_a, env_b, tolerance))
+                        return false;
+
+                // Quick rasterize test to see whether the the geometries are disjoint.
+                if (tryRasterizedContainsOrDisjoint_(polyline_a, polyline_b, tolerance,
+                                false) == Relation.disjoint)
+                        return false;
+
+                return linearPathWithinLinearPath_(polyline_b, polyline_a, tolerance, false);
+        }
+Code:
+
+-----------------------------------------
+ChatGPT response: Here are some JUnit tests for the given code:
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+public class PolylineTest {
+
+    @Test
+    void testPolylineContainsPolyline_WhenPolylineAAndBIntersect_ReturnsTrue() {
+        // Arrange
+        Polyline polylineA = createPolyline(/* add vertices here */);
+        Polyline polylineB = createPolyline(/* add vertices here */);
+
+        // Act
+        boolean result = polylineContainsPolyline_(polylineA, polylineB, 0.001, null);
+
+        // Assert
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    void testPolylineContainsPolyline_WhenPolylineADoesNotIntersectPolylineB_ReturnsFalse() {
+        // Arrange
+        Polyline polylineA = createPolyline(/* add vertices here */);
+        Polyline polylineB = createPolyline(/* add vertices here */);
+
+        // Act
+        boolean result = polylineContainsPolyline_(polylineA, polylineB, 0.001, null);
+
+        // Assert
+        Assertions.assertFalse(result);
+    }
+
+    @Test
+    void testPolylineContainsPolyline_WhenPolylineBDoesNotIntersectPolylineA_ReturnsFalse() {
+        // Arrange
+        Polyline polylineA = createPolyline(/* add vertices here */);
+        Polyline polylineB = createPolyline(/* add vertices here */);
+
+        // Act
+        boolean result = polylineContainsPolyline_(polylineA, polylineB, 0.001, null);
+
+        // Assert
+        Assertions.assertFalse(result);
+    }
+
+    @Test
+    void testPolylineContainsPolyline_WhenToleranceIsTooLarge_ReturnsFalse() {
+        // Arrange
+        Polyline polylineA = createPolyline(/* add vertices here */);
+        Polyline polylineB = createPolyline(/* add vertices here */);
+
+        // Act
+        boolean result = polylineContainsPolyline_(polylineA, polylineB, 1.0, null);
+
+        // Assert
+        Assertions.assertFalse(result);
+    }
+}
+Note that you will need to replace createPolyline(/* add vertices here */) with the appropriate code to create Polyline objects with the required vertices for each test case.
+
+-----------------------------------------
+ Prompt: Write Junit tests for the following code
+        private static boolean polylineContainsPolyline_(Polyline polyline_a,
+                        Polyline polyline_b, double tolerance,
+                        ProgressTracker progress_tracker) {
+                Envelope2D env_a = new Envelope2D(), env_b = new Envelope2D();
+                polyline_a.queryEnvelope2D(env_a);
+                polyline_b.queryEnvelope2D(env_b);
+
+                // Quick envelope rejection test for false equality.
+                if (!envelopeInfContainsEnvelope_(env_a, env_b, tolerance))
+                        return false;
+
+                // Quick rasterize test to see whether the the geometries are disjoint.
+                if (tryRasterizedContainsOrDisjoint_(polyline_a, polyline_b, tolerance,
+                                false) == Relation.disjoint)
+                        return false;
+
+                return linearPathWithinLinearPath_(polyline_b, polyline_a, tolerance, false);
+        }
+Code:
+
+-----------------------------------------
+ChatGPT response: Here are some JUnit tests for the given code:
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+public class PolylineTest {
+
+    @Test
+    void testPolylineContainsPolyline_WhenPolylineAAndBIntersect_ReturnsTrue() {
+        // Arrange
+        Polyline polylineA = createPolyline(/* add vertices here */);
+        Polyline polylineB = createPolyline(/* add vertices here */);
+
+        // Act
+        boolean result = polylineContainsPolyline_(polylineA, polylineB, 0.001, null);
+
+        // Assert
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    void testPolylineContainsPolyline_WhenPolylineADoesNotIntersectPolylineB_ReturnsFalse() {
+        // Arrange
+        Polyline polylineA = createPolyline(/* add vertices here */);
+        Polyline polylineB = createPolyline(/* add vertices here */);
+
+        // Act
+        boolean result = polylineContainsPolyline_(polylineA, polylineB, 0.001, null);
+
+        // Assert
+        Assertions.assertFalse(result);
+    }
+
+    @Test
+    void testPolylineContainsPolyline_WhenPolylineBDoesNotIntersectPolylineA_ReturnsFalse() {
+        // Arrange
+        Polyline polylineA = createPolyline(/* add vertices here */);
+        Polyline polylineB = createPolyline(/* add vertices here */);
+
+        // Act
+        boolean result = polylineContainsPolyline_(polylineA, polylineB, 0.001, null);
+
+        // Assert
+        Assertions.assertFalse(result);
+    }
+
+    @Test
+    void testPolylineContainsPolyline_WhenToleranceIsTooLarge_ReturnsFalse() {
+        // Arrange
+        Polyline polylineA = createPolyline(/* add vertices here */);
+        Polyline polylineB = createPolyline(/* add vertices here */);
+
+        // Act
+        boolean result = polylineContainsPolyline_(polylineA, polylineB, 1.0, null);
+
+        // Assert
+        Assertions.assertFalse(result);
+    }
+}
+Note that you will need to replace createPolyline(/* add vertices here */) with the appropriate code to create Polyline objects with the required vertices for each test case.

@@ -1,0 +1,80 @@
+
+-----------------------------------------
+ Prompt: Write Junit Test cases for this method
+    public T remove(long key) {
+        int index = ((((int) (key >>> 32)) ^ ((int) (key))) & 0x7fffffff) % capacity;
+        Entry<T> previous = null;
+        Entry<T> entry = table[index];
+        while (entry != null) {
+            Entry<T> next = entry.next;
+            if (entry.key == key) {
+                if (previous == null) {
+                    table[index] = next;
+                } else {
+                    previous.next = next;
+                }
+                size--;
+                return entry.value;
+            }
+            previous = entry;
+            entry = next;
+        }
+        return null;
+    }
+Code:
+
+-----------------------------------------
+ChatGPT response: Sure, here are some JUnit test cases for the remove method:
+
+java
+Copy code
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class TestMyHashMap {
+    
+    @Test
+    public void testRemoveExistingKey() {
+        MyHashMap<String> map = new MyHashMap<>(10);
+        map.put(1L, "apple");
+        map.put(2L, "banana");
+        String removedValue = map.remove(2L);
+        assertEquals("banana", removedValue);
+        assertNull(map.get(2L));
+    }
+    
+    @Test
+    public void testRemoveNonExistingKey() {
+        MyHashMap<Integer> map = new MyHashMap<>(10);
+        map.put(1L, 10);
+        map.put(2L, 20);
+        Integer removedValue = map.remove(3L);
+        assertNull(removedValue);
+        assertEquals(2, map.size());
+    }
+    
+    @Test
+    public void testRemoveKeyFromEmptyMap() {
+        MyHashMap<String> map = new MyHashMap<>(10);
+        String removedValue = map.remove(1L);
+        assertNull(removedValue);
+        assertEquals(0, map.size());
+    }
+    
+    @Test
+    public void testRemoveKeyWithCollision() {
+        MyHashMap<String> map = new MyHashMap<>(10);
+        map.put(1L, "apple");
+        map.put(17L, "banana"); // this key has the same index as 1L due to collision
+        String removedValue = map.remove(1L);
+        assertEquals("apple", removedValue);
+        assertNull(map.get(1L));
+        assertEquals(1, map.size());
+    }
+}
+In these tests, we create a MyHashMap object with a specified capacity and put some key-value pairs into it. Then we call the remove method with different keys and verify that the method returns the expected value and removes the key-value pair from the map. We also check that the map size is updated correctly after each removal. Finally, we test a case where two keys collide and verify that the correct key-value pair is removed.
+
+
+
+
+

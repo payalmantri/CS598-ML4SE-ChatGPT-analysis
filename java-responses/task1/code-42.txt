@@ -1,0 +1,52 @@
+
+-----------------------------------------
+ Prompt: What does the code below do ? Explain with examples
+Code:
+  public boolean addAll(int index, FloatArray items) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + items.size);
+    if (index < size) {
+      for (int i = size - 1; i >= index; i--) {
+        elements[i + items.size] = elements[i];
+      }
+    }
+    for (int i = 0; i < items.size; i++) {
+      elements[index++] = items.elements[i];
+    }
+    size += items.size;
+    return items.size > 0;
+  }
+
+-----------------------------------------
+ChatGPT response: The given code is a method called addAll that adds all the elements of a FloatArray object to another FloatArray object at a specified index.
+
+Here's an explanation of what the code does, step by step:
+
+The method takes two arguments, an integer index and a FloatArray object named items.
+The method first checks if the index is valid, i.e., if it is within the bounds of the current array. If the index is less than 0 or greater than the size of the array, it throws an IndexOutOfBoundsException.
+The method then calls the ensureCapacity method to ensure that there is enough space in the array to add the new items.
+If the index is less than the size of the array, the method shifts the elements to the right to make space for the new items. This is done using a loop that starts from the last element and moves towards the specified index, shifting each element to the right by the size of the new items.
+The method then copies the elements of the items array to the specified index in the elements array, using a loop that increments the index for each item in the items array.
+Finally, the method updates the size of the array and returns true if the size of the items array is greater than 0.
+Here's an example of how the method works. Let's say we have an existing FloatArray object called array with the following elements:
+
+csharp
+Copy code
+[1.0, 2.0, 3.0]
+And we want to add the following elements to array at index 1:
+
+csharp
+Copy code
+[4.0, 5.0]
+When we call addAll(1, items) on array, the method will first check if the index is valid (which it is). It will then shift the elements to the right to make space for the new items:
+
+csharp
+Copy code
+[1.0, _, 2.0, 3.0]
+Next, it will copy the elements of the items array to the specified index:
+
+csharp
+Copy code
+[1.0, 4.0, 5.0, 2.0, 3.0]

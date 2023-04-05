@@ -1,0 +1,53 @@
+
+-----------------------------------------
+ Prompt: What does below code do
+"@CommandArgument
+  public void load(
+      @OptionArgument(""filename"") String filename) {
+
+    users.clear();
+
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+      while (reader.ready()) {
+        User user = User.fromString(reader.readLine());
+        users.put(user.username, user);
+      }
+    } catch (FileNotFoundException e) {
+      System.err.println(String.format(""File not found: '%s'"", filename));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }"
+Code:
+@CommandArgument
+  public void load(
+      @OptionArgument("filename") String filename) {
+
+    users.clear();
+
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+      while (reader.ready()) {
+        User user = User.fromString(reader.readLine());
+        users.put(user.username, user);
+      }
+    } catch (FileNotFoundException e) {
+      System.err.println(String.format("File not found: '%s'", filename));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+-----------------------------------------
+ChatGPT response: This code defines a method named "load" that takes a single argument "filename". The method is annotated with "@CommandArgument", which suggests that this method is part of a command-line tool and can be called using command-line arguments.
+
+The argument "filename" is annotated with "@OptionArgument", which means that it is an optional argument that can be passed using a command-line option. The option is expected to have a name "filename".
+
+The method first clears a collection named "users". It then tries to read a file with the given filename using a BufferedReader. The method reads each line of the file and converts it into a User object using the static method "fromString" of the User class. The User object is then added to the "users" collection using the username as the key.
+
+If the file is not found, the method prints an error message. If an IOException occurs during reading the file, it is printed to the console using the "printStackTrace" method.
+
+In summary, this method reads a file containing User objects and populates a collection with the parsed User objects. The method can be called using a command-line option "filename" to specify the name of the input file.
