@@ -1,0 +1,19 @@
+
+----------------------------------------
+ Prompt: Can you generate another code that is different
+from original method scaleAdd  but produces the same output given the same input?
+Code:
+public void scaleAdd(double f, Point2D shift) {
+                x = x * f + shift.x;
+                y = y * f + shift.y;
+        }
+-----------------------------------------
+ChatGPT response: Sure, here's an alternative implementation of the scaleAdd method in the Point2D class that produces the same output given the same input:
+
+java
+Copy code
+public void scaleAdd(double f, Point2D shift) {
+    double newX = x * f + shift.x;
+    double newY = y * f + shift.y;
+    setLocation(newX, newY);
+}

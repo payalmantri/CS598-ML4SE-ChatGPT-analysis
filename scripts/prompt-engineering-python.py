@@ -52,7 +52,6 @@ def generate_responses(df):
         # get the code from the file
         code_file = open("sample-python-data/" + filename, "r")
         code = code_file.read()
-        print(code)
         # close the file
         code_file.close()
 

@@ -48,7 +48,7 @@ def generate_responses(df):
         #   if code column is not empty  and not Nan * prompt column does not contain the code
         if row['Code'] != "" and not pd.isnull(row['Code']) and row['Prompt'].find(row['Code']) == -1:
             code = row['Code']
-            print(code)
+            
         prompt1 = row['Prompt'] + "\nCode:\n" + code
         response = bot.ask(prompt1)
         
