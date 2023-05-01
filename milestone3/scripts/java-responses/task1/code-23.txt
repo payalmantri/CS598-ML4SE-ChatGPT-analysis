@@ -1,0 +1,80 @@
+Prompt:
+ What do you know abou the following code? 
+        public final void renderEdges(int fillMode) {
+                evenOdd_ = fillMode == EVEN_ODD;
+                for (int line = minY_; line <= maxY_; line++) {
+                        advanceAET_();
+                        addNewEdgesToAET_(line);
+                        emitScans_();
+                }
+                
+                startAddingEdges();//reset for new edges
+        }
+Response:
+This code defines a method named "renderEdges" that takes an integer argument named "fillMode". The method is marked final meaning it cannot be overridden in subclasses. 
+
+Within the method, a boolean variable "evenOdd_" is set based on whether the argument "fillMode" is equal to the constant "EVEN_ODD". The method then iterates through a loop from "minY_" to "maxY_", calling some helper methods to advance, add new edges, and emit scans on each iteration. Finally, the "startAddingEdges" method is called to reset for new edges. 
+
+Without seeing the rest of the code or context, it's difficult to say more specifically what this method is doing.
+-----------------------------------------
+Prompt:
+ What do you know abou the following code? 
+public final void renderEdges(int fillMode) {
+    if (fillMode == EVEN_ODD) {
+        evenOdd_ = true;
+    } else {
+        evenOdd_ = false;
+    }
+    
+    int line = minY_;
+    while (line <= maxY_) {
+        advanceAET_();
+        addNewEdgesToAET_(line);
+        emitScans_();
+        line++;
+    }
+    
+    startAddingEdges();//reset for new edges
+}
+Response:
+This is a method named `renderEdges` which takes an integer parameter `fillMode`. If `fillMode` equals `EVEN_ODD`, the variable `evenOdd_` is set to `true`, otherwise it is set to `false`. 
+
+The method initializes a variable called `line` to `minY_` and then enters a loop that runs until `line` is greater than `maxY_`. Within the loop, three other methods are called: 
+
+1. `advanceAET_()`: This method moves edges from the active edge table (AET) to the scan line edge table (SLET) if they end at the current scan line.
+2. `addNewEdgesToAET_(line)`: This method adds new edges to the AET that cross the current scan line.
+3. `emitScans_()`: This method fills the pixels between pairs of edges in the AET.
+
+After these methods have been executed, `line` is incremented and the loop repeats until all lines have been rendered.
+
+Finally, the method calls `startAddingEdges()` to reset the state for any new edges that need to be rendered.
+-----------------------------------------
+Prompt:
+ What do you know abou the following code? 
+public final void renderEdges(int fillMode, int minY, int maxY) {
+    boolean evenOdd = fillMode == EVEN_ODD;
+    
+    for (int line = minY; line <= maxY; line++) {
+        advanceAET_();
+        addNewEdgesToAET_(line, ySortedEdges_);
+        emitScans_(evenOdd);
+    }
+    
+    startAddingEdges(ySortedEdges_, numEdges_, height_);
+}
+Response:
+This code appears to be a method called `renderEdges` that takes in three parameters: `fillMode`, `minY`, and `maxY`. 
+
+The first line creates a boolean variable called `evenOdd`, which is set to `true` if `fillMode` is equal to the constant `EVEN_ODD`.
+
+The `for` loop iterates through all of the lines between `minY` and `maxY`. For each line, the method calls the `advanceAET_` method (which likely advances some sort of edge table), adds new edges to the edge table based on the `ySortedEdges_` parameter and the current `line`, and then emits scans using `emitScans_`, which probably renders pixels or shapes on the screen. 
+
+Finally, the method calls `startAddingEdges` with the `ySortedEdges_`, `numEdges_`, and `height_` parameters, which starts the process of adding additional edges. 
+
+Without additional context or information about what `advanceAET_`, `addNewEdgesToAET_`, `emitScans_`, and `startAddingEdges` do, it's difficult to say more about what this code accomplishes.
+-----------------------------------------
+Prompt:
+Are the 3 code sninnepts discussed above semantically equivalent? 
+
+Response:
+It depends on the specific code snippets being referred to. Can you please specify which 3 code snippets you are referring to?

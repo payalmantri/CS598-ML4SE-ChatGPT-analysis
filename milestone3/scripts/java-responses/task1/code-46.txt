@@ -1,0 +1,52 @@
+Prompt:
+ What do you know abou the following code? 
+  public static String getExtension(String fileName) {
+    int pos = fileName.lastIndexOf('.');
+    if (pos < 0) {
+      return "";
+    }
+    return fileName.substring(pos + 1);
+  }
+Response:
+This code is a Java method that takes a file name as a String input and returns the extension of the file. The file extension is everything after the last period in the file name. 
+
+The method first finds the position of the last occurrence of the "." character in the file name using the `lastIndexOf()` method. If no "." exists in the file name, the method returns an empty string. Otherwise, it uses the `substring()` method to return the part of the file name after the ".", which represents the file extension. 
+
+For example, if the input is "example.txt", the method will return "txt".
+-----------------------------------------
+Prompt:
+ What do you know abou the following code? 
+public static String getExtension(String fileName) {
+String extension = "";
+int i = fileName.length() - 1;
+while (i >= 0 && fileName.charAt(i) != '.') {
+extension = fileName.charAt(i) + extension;
+i--;
+}
+return extension;
+}
+Response:
+This code is a Java method that takes a file name as input and returns its extension. It works by iterating over each character of the file name from the end to the beginning, until it finds the first period (.) character or reaches the beginning. It then returns the substring after the period as the file extension. If there is no period in the file name, it will return an empty string.
+-----------------------------------------
+Prompt:
+ What do you know abou the following code? 
+public static String getExtension(String fileName) {
+    int pos = -1;
+    for (int i = 0; i < fileName.length(); i++) {
+        if (fileName.charAt(i) == '.') {
+            pos = i;
+        }
+    }
+    if (pos < 0) {
+        return """";
+    }
+    return fileName.substring(pos + 1);
+}
+Response:
+This code is a static method "getExtension" that takes a string input "fileName" and returns the extension of that file. It searches for the last occurrence of "." in the fileName using a for loop, sets its position in "pos" variable and returns the substring after the last dot position which represents the extension. If the filename does not have any extension, it returns an empty string.
+-----------------------------------------
+Prompt:
+Are the 3 code sninnepts discussed above semantically equivalent? 
+
+Response:
+The three code snippets were not provided, so I cannot answer the question. Can you please provide me with the code snippets for me to evaluate their semantic equivalence?
