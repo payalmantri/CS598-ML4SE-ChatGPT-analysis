@@ -1,0 +1,20 @@
+What does the following code do? 
+The above code defines a function `_infer_schema` that infers the schema of a dataset based on a sample row of the dataset. 
+The function takes a single argument `row`, which can be either a dictionary, 
+    a list or tuple, a named tuple or a regular object. 
+If `row` is a dictionary, the function returns a `StructType` object whose fields correspond to the keys of the dictionary, 
+    and the data types of the fields are inferred using `_infer_type`. 
+If `row` is a list or tuple, the function attempts to determine the names of the fields based on the type of the input. 
+If `row` is a named tuple, the function uses the field names defined in the named tuple. If `row` is an object, 
+    the function returns a `StructType` object whose fields correspond to the attributes of the object, 
+    and the data types of the fields are inferred using `_infer_type`. 
+If the type of the input is not one of the types supported by the function, a `TypeError` is raised.
+Is the above code equivalent to the following code? 
+No, the two codes are not equivalent. 
+The difference is in the placement of the `fields` variable.
+In the original code, `fields` is defined inside each if-else statement and returned at the end. 
+In the modified code, `fields` is defined after the if-else statements and is always returned. 
+This means that in the modified code, `fields` will always be created regardless of the type of `row`. 
+In the original code, `fields` will only be created if `row` is a dict, 
+    tuple/list with known fields, or an object with a `__dict__` attribute. 
+If `row` is of any other type, a `TypeError` is raised without creating the `fields` variable.

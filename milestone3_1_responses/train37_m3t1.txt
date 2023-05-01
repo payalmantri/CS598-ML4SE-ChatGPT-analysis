@@ -1,0 +1,8 @@
+What does the following code do? 
+The `_perspective_warp` function applies a perspective warp to the input `c` tensor by warping its coordinates based on a given magnitude. 
+
+The function first reshapes the `magnitude` tensor to a 4x2 matrix, assuming that it has a size of 8. It then calculates the target points `targ_pts` by adding the magnitude values to the original points `_orig_pts` for each of the eight coordinates. 
+
+Finally, the `_do_perspective_warp` function is called with `c`, `targ_pts`, and `invert` as arguments to apply the actual perspective warp to `c`.
+Is the above code equivalent to the following code? 
+Yes, the code is equivalent.

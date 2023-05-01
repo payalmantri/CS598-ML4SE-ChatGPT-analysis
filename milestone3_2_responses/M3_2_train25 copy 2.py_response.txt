@@ -1,0 +1,65 @@
+Given that the following code should do the following task, is the code buggy or not?
+
+Task:
+This function checks whether an object is "list-like", meaning it is a list or an object that can be treated like a list (e.g. a tuple). It also checks that all elements of the list (if it is a list) are themselves "list-like".
+
+The function first checks whether the object is list-like using the is_list_like() function, which is not defined in the code snippet provided, but likely checks whether the object is a list, tuple, or other sequence type. If the object is list-like, the function then checks whether it has a length (using the hasattr() function) and whether that length is greater than 0. Finally, the function uses a generator expression and the all() function to check whether all elements of the object (if it is a list) are also list-like.
+
+The function returns True if the object is list-like and all of its elements (if it is a list) are also list-like, and False otherwise.
+
+The function also includes some additional notes and examples in its docstring, as well as a reference to another related function (is_list_like()).
+Code:
+def is_nested_list_like(obj):
+    """
+    Check if the object is list-like, and that all of its elements
+    are also list-like.
+
+    .. versionadded:: 0.20.0
+
+    Parameters
+    ----------
+    obj : The object to check
+
+    Returns
+    -------
+    is_list_like : bool
+        Whether `obj` has list-like properties.
+
+    Examples
+    --------
+    >>> is_nested_list_like([[1, 2, 3]])
+    True
+    >>> is_nested_list_like([{1, 2, 3}, {1, 2, 3}])
+    True
+    >>> is_nested_list_like(["foo"])
+    False
+    >>> is_nested_list_like([])
+    False
+    >>> is_nested_list_like([[1, 2, 3], 1])
+    False
+
+    Notes
+    -----
+    This won't reliably detect whether a consumable iterator (e. g.
+    a generator) is a nested-list-like without consuming the iterator.
+    To avoid consuming it, we always return False if the outer container
+    doesn't define `__len__`.
+
+    See Also
+    --------
+    is_list_like
+    """
+    return (not is_list_like(obj) and hasattr(obj, '__len__') and
+            len(obj) > 0 and all(is_list_like(item) for item in obj))
+The code is buggy. 
+
+The return statement is using a logical NOT operator, which will cause the function to return True when the object is *not* list-like, rather than when it *is* list-like and all of its elements (if it is a list) are also list-like. The correct statement should be:
+
+```
+return (is_list_like(obj) and hasattr(obj, '__len__') and
+        len(obj) > 0 and all(is_list_like(item) for item in obj))
+```
+
+Additionally, the docstring describes the correct behavior, but the code itself is checking whether the object is *not* list-like using the `not` operator. The correct behavior should be to check whether the object *is* list-like, so the `not` operator should be removed from the `is_list_like` function call.
+The code I provided above is buggy. Where is the bug?
+I apologize, but you have not provided any code for me to review. Please provide the code in question so I can assist you with identifying any bugs.

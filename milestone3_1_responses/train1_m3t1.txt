@@ -1,0 +1,20 @@
+What does the following code do? 
+The code defines a function called `predict` that recognizes faces in a given image using a pre-trained KNN classifier. 
+
+The function takes in the following parameters:
+- `X_img_path`: path to image to be recognized
+- `knn_clf`: (optional) a KNN classifier object. If not specified, `model_path` must be specified.
+- `model_path`: (optional) path to a pickled KNN classifier. If not specified, `knn_clf` must be specified.
+- `distance_threshold`: (optional) distance threshold for face classification. The larger it is, the more chance of misclassifying an unknown person as a known one.
+
+The function first checks if the `X_img_path` is a valid image file path. If not, it raises an exception.
+
+Next, the function loads the KNN model either from the `knn_clf` parameter or from a file specified in the `model_path` parameter. If neither is specified, an exception is raised.
+
+Then, the function loads the image file and finds face locations in the image using the `face_recognition` module.
+
+If no faces are found in the image, an empty result is returned.
+
+Next, the function finds encodings for faces in the test image and uses the KNN model to find the best matches for the test faces. The function returns a list of names and face locations for the recognized faces in the image. For faces of unrecognized persons, the name 'unknown' will be returned.
+Is the above code equivalent to the following code? 
+Yes, the second code is equivalent to the first one. It just replaces the use of a variable `model` with `knn_clf` and replaces the loop for creating the `recognized_faces` list with a list comprehension. The functionality of both codes is the same.

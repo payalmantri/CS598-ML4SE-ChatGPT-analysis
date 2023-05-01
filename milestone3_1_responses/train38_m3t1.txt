@@ -1,0 +1,4 @@
+What does the following code do? 
+The function `_symmetric_warp` applies a symmetric warp of `magnitude` to a given image represented by a flow field `c`. It first converts the `magnitude` parameter into a list of 4 elements using the `listify` function. Then it defines the target points `targ_pts` which represents the new positions of the four corners of the input image after applying the warp. These target points are defined as follows: the first point is shifted to the left by `m[3]` and down by `m[1]`, the second point is shifted to the left by `m[2]` and up by `m[1]`, the third point is shifted to the right by `m[3]` and down by `m[0]`, and the fourth point is shifted to the right by `m[2]` and up by `m[0]`. Finally, the function applies the perspective warp using the `_do_perspective_warp` function with the computed target points and the `invert` flag.
+Is the above code equivalent to the following code? 
+Yes, the two code snippets are exactly the same.

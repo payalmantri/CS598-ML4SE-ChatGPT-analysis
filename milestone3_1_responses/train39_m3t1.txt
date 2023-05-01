@@ -1,0 +1,8 @@
+What does the following code do? 
+The `_tilt` function takes a `c` FlowField and applies a tilt transformation to it based on a random `direction` and `magnitude`. 
+
+The `orig_pts` variable represents the four corners of the original image. Depending on the `direction` parameter, the function computes a new set of four target points `targ_pts`. The magnitude of the tilt depends on the `magnitude` parameter. The computed target points and the original points are then used to compute the coefficients required for the perspective warp using the `_find_coeffs` function.
+
+Finally, the `_apply_perspective` function is used to apply the computed coefficients to the `c` FlowField, resulting in a tilted image.
+Is the above code equivalent to the following code? 
+No, the above code is not equivalent to the following code. In the above code, the variable `orig_pts` is not defined, while in the below code, it is defined as `_orig_pts`.

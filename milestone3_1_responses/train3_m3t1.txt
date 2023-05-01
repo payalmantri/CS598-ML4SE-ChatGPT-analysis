@@ -1,0 +1,8 @@
+What does the following code do? 
+The above code defines a function `_rect_to_css` that takes a `rect` object from the dlib library as input and returns a tuple in the order of `(top, right, bottom, left)` that represents the rectangle's position in a CSS coordinate system. 
+
+The `rect` object from dlib library represents a rectangle with integer coordinates. It has several attributes such as `top()`, `right()`, `bottom()`, and `left()` that can be used to obtain the coordinates of the top, right, bottom, and left sides of the rectangle, respectively.
+
+The function `_rect_to_css` takes a `rect` object as input, extracts the coordinates of the rectangle, and returns them as a tuple in the order of `(top, right, bottom, left)`. This is done to convert the `rect` object to a format that is more easily usable in a CSS coordinate system, where coordinates are typically represented in the order of `(top, right, bottom, left)`.
+Is the above code equivalent to the following code? 
+Yes, the above code is equivalent to the following code. Both functions return a plain tuple representation of a dlib `rect` object in the order `(top, right, bottom, left)`.

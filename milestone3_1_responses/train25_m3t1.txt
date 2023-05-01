@@ -1,0 +1,4 @@
+What does the following code do? 
+The above code defines a function `is_nested_list_like` that checks whether an object is list-like, and that all of its elements are also list-like. It first checks whether the input object has a `__len__` attribute and its length is greater than zero. If the input object does not satisfy this condition, it returns False. Then, it checks each item in the input object and if any item is not list-like, it returns False. Otherwise, it returns True. Note that this function relies on the `is_list_like` function, which is assumed to be defined elsewhere.
+Is the above code equivalent to the following code? 
+Yes, the code is equivalent.

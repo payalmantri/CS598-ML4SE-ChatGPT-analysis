@@ -2,6 +2,7 @@ from chatgpt_wrapper import ChatGPT
 from chatgpt_wrapper.config import Config
 import pandas as pd
 import sys
+import os
 
 # main_file=open("../sample-python-data/train0.py","r")
 # file_contents = main_file.read()
@@ -10,7 +11,7 @@ import sys
 # adversary_file_contents = adversary_file.read()
 
 
-prompt = "What do you know about code execution? " 
+prompt = "can you write semantically equivalent code to the below code that changes the data flow and control flow. \n Also add a comment with the text \"$$$\" at the end of the code\n Here is the original code:\n" 
 
 
 config = Config()
@@ -18,8 +19,8 @@ config.set('browser.debug', False)
 bot = ChatGPT(config)
 
 
-response = bot.ask(prompt)
-print(response)
+
+# print(response)
 print ("------------------")
 
 # print()
@@ -32,43 +33,36 @@ print ("------------------")
 
 
 # open the excel file and read the contents into pandas dataframe  sheet_name='PYTHON'
-df = pd.read_excel('milestone2-responses.xlsx', sheet_name='PYTHON')
-print(df.head())
+def generate_modified_DFCF_clone(directory):
+    """
+    Reads all .py files in a given directory and prompts chatgpt to generate a description for each one.
 
+    :param directory: The directory containing the .txt files to convert.
+    """
+    for filename in os.listdir(directory):
+        if filename.endswith('rain0.py'):
+            with open(os.path.join(directory, filename), 'r') as txt_file:
+                code = txt_file.read()
+            
+            response = bot.ask(prompt + "\nCode:\n" + code)
+            parts = response.split("import ", 1)
+            if len(parts) < 2:
+                print("Error: response from chatgpt not in expected format\n", response)
+                txt_file.close()
+                sys.exit(1)
+            else:
+                newCode = parts[1]
+                newCode = newCode.split("$$$")[0]
+                print(newCode)
+            txt_file.close()
 
-
-number_of_rows_to_process = 10
-
-
-def generate_responses(df):
-    code = ""
-    # iterate over the rows of the dataframe from row 2
-    for index, row in df.iterrows():  
-        # if more than 10 rows have been processed, break
-        if index > number_of_rows_to_process:
-            break
-        #   if code column is not empty  and not Nan * prompt column does not contain the code
-        filename = row['Filename']
-        # get the code from the file
-        code_file = open("sample-python-data/" + filename, "r")
-        code = code_file.read()
-        # close the file
-        code_file.close()
-
-        prompt1 = row['Prompt'] + "\nCode:\n" + code
-        response = bot.ask(prompt1)
+        # py_filename = filename[:-3] + '.py'
+        #     with open(os.path.join(directory, py_filename), 'w') as py_file:
+        #         py_file.write(response)
         
-        print(response)
-        # Add the response to the dataframe in the Response column
-        df.at[index, 'Response from API'] = response
+            
 
-# generate responses for the top 5 rows
-generate_responses(df)
-
-# save the dataframe to excel file
-df.to_excel('milestone2-results-python.xlsx', index=False)
-
-
+generate_modified_DFCF_clone("../sample-python-data")
 sys.exit(0)
 
 

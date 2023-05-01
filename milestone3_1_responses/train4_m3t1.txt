@@ -1,0 +1,9 @@
+What does the following code do? 
+The function `_trim_css_to_bounds` takes in two arguments: 
+
+1. `css`: A tuple of integers in the order `(top, right, bottom, left)` representing the CSS box of a rectangular region.
+2. `image_shape`: A tuple of integers representing the shape of an image in the form `(height, width)`.
+
+The function ensures that the CSS box represented by the input `css` is within the bounds of the image represented by `image_shape`. To do this, it first unpacks the `css` tuple into separate variables for `top`, `right`, `bottom`, and `left`. It then sets the maximum value of `top` to be the minimum of `top` and the height of the image (`image_shape[0]`), ensuring that `top` is within the bounds of the image's height. Similarly, it sets the maximum value of `right` to be the minimum of `right` and the width of the image (`image_shape[1]`), ensuring that `right` is within the bounds of the image's width. It sets the maximum value of `bottom` to be the maximum of `bottom` and 0, ensuring that `bottom` is within the bounds of the image's height from below. It sets the maximum value of `left` to be the maximum of `left` and 0, ensuring that `left` is within the bounds of the image's width from the left. Finally, it returns a new tuple of `(max_top, max_right, max_bottom, max_left)`, representing the trimmed CSS box within the bounds of the image.
+Is the above code equivalent to the following code? 
+Yes, the above code is equivalent to the previous code. It performs the same task of ensuring that a rectangle represented by a tuple in (top, right, bottom, left) order is within the bounds of the image. The new code just uses the values from the input `css` tuple directly instead of assigning them to separate variables first.
