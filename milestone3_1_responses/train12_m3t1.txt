@@ -1,0 +1,12 @@
+What does the following code do? 
+The above code defines a private function `_parse_datatype_string` that takes a string `s` as input and returns a Spark data type object. The function tries to parse the input string in three different formats and returns the parsed data type object if it succeeds. 
+
+The first format is a DDL (Data Definition Language) format in the form of "fieldname datatype, fieldname datatype". The function tries to parse this format by passing the string to the `org.apache.spark.sql.types.StructType.fromDDL` method of the active Spark context, converting the resulting `StructType` object to JSON format, and passing the JSON string to `_parse_datatype_json_string`. 
+
+The second format is a backward compatibility format that allows for atomic types such as "integer" or complex types such as "struct<fieldname: datatype>". The function tries to parse this format by passing the string to the `parseDataType` method of `PythonSQLUtils`, which is part of the Java API of Spark. The resulting data type is also converted to JSON format and passed to `_parse_datatype_json_string`.
+
+The third format is another backward compatibility format in the form of "fieldname: datatype, fieldname: datatype". The function tries to parse this format by wrapping the input string with "struct<" and ">" and passing it to the `parseDataType` method of `PythonSQLUtils`. The resulting data type is also converted to JSON format and passed to `_parse_datatype_json_string`.
+
+If all three attempts fail, the function raises an exception.
+Is the above code equivalent to the following code? 
+Yes, the two code snippets are equivalent. The second code snippet provides an implementation of the `_parse_datatype_string` function with a more detailed description and additional doctests.

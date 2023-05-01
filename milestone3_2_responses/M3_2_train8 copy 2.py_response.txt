@@ -1,0 +1,32 @@
+Given that the following code should do the following task, is the code buggy or not?
+
+Task:
+This is a Python function that takes an image (as a NumPy array) and finds the locations of human faces in the image. The function has three parameters:
+
+img: The input image.
+number_of_times_to_upsample: How many times to upsample the image to look for smaller faces.
+model: Which face detection model to use. The default is "hog", which is less accurate but faster on CPUs. If set to "cnn", a more accurate deep-learning model will be used, which requires GPU/CUDA acceleration.
+The function first checks the value of model. If it is "cnn", the _raw_face_locations() function is called with the img, number_of_times_to_upsample, and "cnn" parameters to find the face locations in the image. For each detected face, the _rect_to_css() function is called to convert the face location from rectangle format to css format. Then, the _trim_css_to_bounds() function is called to trim the face location to be within the bounds of the input image. Finally, the trimmed face location is appended to a list and the list is returned.
+
+If model is not "cnn", the same process is followed, except that the _rect_to_css() function is called with the face location directly instead of calling .rect attribute.
+Code:
+def face_locations(img, number_of_times_to_upsample=1, model="hog"):
+    """
+    Returns an array of bounding boxes of human faces in a image
+
+    :param img: An image (as a numpy array)
+    :param number_of_times_to_upsample: How many times to upsample the image looking for faces. Higher numbers find smaller faces.
+    :param model: Which face detection model to use. "hog" is less accurate but faster on CPUs. "cnn" is a more accurate
+                  deep-learning model which is GPU/CUDA accelerated (if available). The default is "hog".
+    :return: A list of tuples of found face locations in css (top, right, bottom, left) order
+    """
+    if model != "cnn":
+        return [_trim_css_to_bounds(_rect_to_css(face.rect), img.shape) for face in _raw_face_locations(img, number_of_times_to_upsample, "cnn")]
+    else:
+        return [_trim_css_to_bounds(_rect_to_css(face), img.shape) for face in _raw_face_locations(img, number_of_times_to_upsample, model)]The code is buggy. When model is not "cnn", the code should call _raw_face_locations() function with model parameter set to "hog" instead of "cnn". The current code has it set to "cnn" all the time.
+The code above is buggy. Where is the bug?
+There seems to be a typo in the function. In the first return statement, the `_raw_face_locations` function is called with the third parameter set to `"cnn"`, regardless of the value of the `model` parameter. It should be `model` instead of `"cnn"`. The correct code should be:
+
+```
+return [_trim_css_to_bounds(_rect_to_css(face.rect), img.shape) for face in _raw_face_locations(img, number_of_times_to_upsample, model)]
+```

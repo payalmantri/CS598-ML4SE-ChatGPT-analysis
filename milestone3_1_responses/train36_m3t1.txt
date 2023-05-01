@@ -1,0 +1,6 @@
+What does the following code do? 
+The function `_do_perspective_warp` applies a perspective warp to a set of target points (`targ_pts`) using a flow field (`c`). The warp is applied using the function `_apply_perspective`, which takes a flow field (`coords`) and a set of coefficients (`coeffs`) and transforms the flow field according to the coefficients. 
+
+If the `invert` parameter is set to True, the function `_find_coeffs` is used to calculate the coefficients required to invert the warp from `targ_pts` to `_orig_pts`. If `invert` is False, the coefficients required to warp from `_orig_pts` to `targ_pts` are calculated using `_find_coeffs`. The resulting coefficients are then passed to `_apply_perspective` to apply the perspective warp to `c`.
+Is the above code equivalent to the following code? 
+Yes, the two code snippets are exactly the same.

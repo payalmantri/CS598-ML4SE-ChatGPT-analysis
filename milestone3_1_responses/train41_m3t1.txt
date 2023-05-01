@@ -1,0 +1,8 @@
+What does the following code do? 
+The `_compute_zs_mat` function computes a zoom/squish matrix for an image. It takes as input the size of the image, a scale factor, a squish factor, a flag indicating whether to invert the aspect ratio of the image, and two percentages (row_pct and col_pct) indicating where to place the zoomed/squished image in the original image. 
+
+The function first calculates the original aspect ratio of the image, which is the ratio of its width to its height. It then iterates through each pair of scale and squish factors and calculates the resulting width and height of the transformed image. If the transformed image is completely inside the original image, the function calculates the coordinates of the center of the transformed image and returns the corresponding zoom/squish matrix. 
+
+If none of the transformations fit completely inside the original image, the function returns a zoom matrix that zooms in on the center of the original image such that the resulting image has the same aspect ratio as the original image.
+Is the above code equivalent to the following code? 
+Yes, the above code is equivalent to the following code.

@@ -1,0 +1,82 @@
+Given that the following code should do the following task, is the code buggy or not?
+
+Task:
+The function is_dict_like() takes an object as input and checks whether the object has properties of a dictionary or not.
+
+It does so by checking if the object has the following dictionary-like attributes:
+
+__getitem__: method used for getting an item with a specific key.
+keys: method used for returning a list of keys in the dictionary.
+__contains__: method used for checking if a key exists in the dictionary.
+If the object has all these attributes, the function returns True, indicating that the object is dictionary-like. Otherwise, the function returns False.
+
+The function also excludes classes from being considered as dictionary-like by checking if the object is an instance of type.
+
+The function includes examples of how to use it and test cases for some common objects.
+Code:
+def is_dict_like(obj):
+    """
+    Check if the object is dict-like.
+
+    Parameters
+    ----------
+    obj : The object to check
+
+    Returns
+    -------
+    is_dict_like : bool
+        Whether `obj` has dict-like properties.
+
+    Examples
+    --------
+    >>> is_dict_like({1: 2})
+    True
+    >>> is_dict_like([1, 2, 3])
+    False
+    >>> is_dict_like(dict)
+    False
+    >>> is_dict_like(dict())
+    True
+    """
+    dict_like_attrs = ("__getitem__", "keys", "__contains__")
+    return (not all(hasattr(obj, attr) for attr in dict_like_attrs)
+            # [GH 25196] exclude classes
+            and not isinstance(obj, type))
+The code is buggy. 
+
+The return statement in the code is using a negation (not) operator on the condition that checks if all attributes in dict_like_attrs are present in the object. This should actually be the opposite: if all the attributes are present, then the object is dictionary-like, so the return statement should be `return all(hasattr(obj, attr) for attr in dict_like_attrs)`. 
+
+Additionally, the comment in the return statement states that classes are being excluded, but the actual code is checking if the object is an instance of a class (i.e. `not isinstance(obj, type)`), which means that instances of classes will be considered dictionary-like, but not the classes themselves. 
+
+So, the code needs to be fixed to correctly identify dictionary-like objects and exclude classes. Here is the corrected code:
+
+```
+def is_dict_like(obj):
+    """
+    Check if the object is dict-like.
+
+    Parameters
+    ----------
+    obj : The object to check
+
+    Returns
+    -------
+    is_dict_like : bool
+        Whether `obj` has dict-like properties.
+
+    Examples
+    --------
+    >>> is_dict_like({1: 2})
+    True
+    >>> is_dict_like([1, 2, 3])
+    False
+    >>> is_dict_like(dict)
+    False
+    >>> is_dict_like(dict())
+    True
+    """
+    dict_like_attrs = ("__getitem__", "keys", "__contains__")
+    return all(hasattr(obj, attr) for attr in dict_like_attrs) and not isinstance(obj, type)
+```
+The code I provided above is buggy. Where is the bug?
+I apologize, but I cannot see any obvious bug in the code provided for `is_dict_like()`.

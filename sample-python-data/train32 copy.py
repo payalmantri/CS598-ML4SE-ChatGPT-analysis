@@ -1,0 +1,63 @@
+def maybe_cast_to_integer_array(arr, dtype, copy=False):
+    """
+    Takes any dtype and returns the casted version, raising for when data is
+    incompatible with integer/unsigned integer dtypes.
+
+    .. versionadded:: 0.24.0
+
+    Parameters
+    ----------
+    arr : array-like
+        The array to cast.
+    dtype : str, np.dtype
+        The integer dtype to cast the array to.
+    copy: boolean, default False
+        Whether to make a copy of the array before returning.
+
+    Returns
+    -------
+    int_arr : ndarray
+        An array of integer or unsigned integer dtype
+
+    Raises
+    ------
+    OverflowError : the dtype is incompatible with the data
+    ValueError : loss of precision has occurred during casting
+
+    Examples
+    --------
+    If you try to coerce negative values to unsigned integers, it raises:
+
+    >>> Series([-1], dtype="uint64")
+    Traceback (most recent call last):
+        ...
+    OverflowError: Trying to coerce negative values to unsigned integers
+
+    Also, if you try to coerce float values to integers, it raises:
+
+    >>> Series([1, 2, 3.5], dtype="int64")
+    Traceback (most recent call last):
+        ...
+    ValueError: Trying to coerce float values to integers
+    """
+
+    if isinstance(arr, pd.Series):
+        arr = arr.values
+
+    arr = np.asarray(arr)
+
+    if is_unsigned_integer_dtype(dtype) and (arr < 0).any():
+        raise OverflowError("Trying to coerce negative values "
+                            "to unsigned integers")
+
+    if is_integer_dtype(dtype) and (is_float_dtype(arr) or
+                                    is_object_dtype(arr)):
+        raise ValueError("Trying to coerce float values to integers")
+
+    try:
+        casted = arr.astype(dtype, copy=copy)
+    except OverflowError:
+        raise OverflowError("The elements provided in the data cannot all be "
+                            "casted to the dtype {dtype}".format(dtype=dtype))
+
+    return casted

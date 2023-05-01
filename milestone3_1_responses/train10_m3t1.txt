@@ -1,0 +1,15 @@
+What does the following code do? 
+The above code defines a function `face_landmarks()` that takes an image containing one or more faces, and returns a list of dictionaries containing the coordinates of facial landmarks for each face in the image. 
+
+The function has three parameters:
+- `face_image`: the input image containing one or more faces.
+- `face_locations` (optional): a list of face locations to check. If not specified, the function will automatically detect the face locations in the image.
+- `model` (optional): which model to use for landmark detection. It can be set to either "large" or "small". If not specified, the default is "large". 
+
+The function internally calls `_raw_face_landmarks()` to detect facial landmarks, which returns a list of `dlib.full_object_detection` objects. It then converts the landmark points into a list of tuples, where each tuple represents the x,y coordinates of a facial landmark.
+
+Based on the model type specified, the function generates a list of dictionaries containing the facial landmark coordinates for each face in the image. The landmarks in the "large" model include chin, eyebrows, nose, eyes, and lips. The landmarks in the "small" model are limited to the nose and eyes.
+
+Finally, the function returns the list of dictionaries containing the facial landmark coordinates for each face in the image.
+Is the above code equivalent to the following code? 
+Yes, the second code block is equivalent to the first code block. The only difference is that the second code block uses list comprehension to create the final output list of dictionaries in a more concise and pythonic way.

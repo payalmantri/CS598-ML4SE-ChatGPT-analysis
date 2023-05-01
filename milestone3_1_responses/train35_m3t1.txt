@@ -1,0 +1,10 @@
+What does the following code do? 
+This code defines a function named `_apply_perspective` that applies a perspective transformation to a set of 2D coordinates. The function takes two arguments, `coords` and `coeffs`, both of which are tensors. 
+
+`coords` is a `FlowField` tensor that contains the 2D coordinates to be transformed. The `FlowField` tensor has a size of N x 2 x H x W, where N is the batch size, H and W are the height and width of the tensor.
+
+`coeffs` is a `Points` tensor that contains the coefficients of the perspective transformation. The `Points` tensor has a size of N x 3 x 3, where N is the batch size.
+
+The function first reshapes the `coords` tensor into a 2D tensor with a size of N x 2. It then transforms the `coeffs` tensor into a 3 x 3 matrix with a 1 at the bottom right corner. It applies this matrix transformation to the reshaped `coords` tensor using matrix multiplication. It then divides the resulting tensor by the last element of each row to normalize the coordinates. Finally, it reshapes the tensor back to its original size and returns it.
+Is the above code equivalent to the following code? 
+Yes, the two code blocks are equivalent. The only difference between them is that the second block includes an extra newline character at the end, but this has no effect on the functionality of the code.

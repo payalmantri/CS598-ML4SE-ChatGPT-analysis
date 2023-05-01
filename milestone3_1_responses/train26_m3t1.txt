@@ -1,0 +1,6 @@
+What does the following code do? 
+The above code defines a function called `is_dict_like` that takes an object as an argument and returns a boolean value indicating whether the object has dict-like properties. The function first checks that the object is not an instance of a class, then checks that it has all of the attributes defined in `dict_like_attrs`, which are `"__getitem__"`, `"keys"`, and `"__contains__"`. Finally, the function returns the logical AND of the two checks. The function includes a comment noting that classes are excluded from dict-like objects. 
+
+The examples show that the function returns `True` if the object passed in has the properties of a dictionary, and `False` otherwise.
+Is the above code equivalent to the following code? 
+Yes, the above code is equivalent to the following code.
