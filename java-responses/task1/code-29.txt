@@ -33,38 +33,3 @@ If the separator String has a length of 1, it is treated as a single character a
 If the input Iterable is null, an empty String is returned.
 
 In summary, the "join" method concatenates the elements of an Iterable with a separator between them and returns a single String.
-
------------------------------------------
- Prompt: What does code below do
- public static String join(Iterable<?> iterable, String separator) {
-        if (iterable != null) {
-            StringBuilder buf = new StringBuilder();
-            Iterator<?> it = iterable.iterator();
-            char singleChar = separator.length() == 1 ? separator.charAt(0) : 0;
-            while (it.hasNext()) {
-                buf.append(it.next());
-                if (it.hasNext()) {
-                    if (singleChar != 0) {
-                        // More efficient
-                        buf.append(singleChar);
-                    } else {
-                        buf.append(separator);
-                    }
-                }
-            }
-            return buf.toString();
-        } else {
-            return "";
-        }
-    }
-Code:
-
-
------------------------------------------
-ChatGPT response: The code is a static method named "join", which takes an Iterable of any type and a String separator as input arguments and returns a String. The method iterates over the elements of the input Iterable, appending each element to a StringBuilder object. The separator String is inserted between elements, except for the last one.
-
-If the separator String has a length of 1, it is treated as a single character and appended more efficiently using StringBuilder.append(char) method. Otherwise, the full separator string is appended using StringBuilder.append(String).
-
-If the input Iterable is null, an empty String is returned.
-
-In summary, the "join" method concatenates the elements of an Iterable with a separator between them and returns a single String.
