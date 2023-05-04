@@ -1,0 +1,294 @@
+
+ Mutant 1
+Prompt:
+Is the following code buggy or correct? 
+// Mutation: change conditional operator
+@CommandArgument
+public void addroles(
+      @OptionArgument(""username"") String username,
+      @OptionArgument(""roles"") String roles) {
+
+    User user = users.get(username);
+
+    if (user == null) {
+      user.roles.addAll(Arrays.asList(roles.split("","")));
+    } else {
+      System.err.println(String.format(""User '%s' does not exist"", username));
+    }
+
+  }
+The code defines a method named addroles that takes in two arguments username and roles. The method is annotated with @CommandArgument, which suggests that it is intended to be used as a command-line argument handler in some command-line tool or utility.
+
+The method first looks up the user object corresponding to the given username from a Map named users. If the user object exists, the method splits the given roles string by comma and adds the resulting role names to the user's roles field using the addAll method. If the user object does not exist, the method prints an error message to the console saying that the user does not exist.
+
+Overall, the method is designed to allow the addition of new roles to an existing user object stored in a Map. It assumes that the user objects have a roles field that is a List of strings, and that the role names are separated by commas in the roles argument.
+Response:
+The code seems to be buggy. In the if block, it should add the roles to the user.roles field instead of using `user.roles.addAll(Arrays.asList(roles.split("","")));`. The correct way of adding is by `user.roles.addAll(Arrays.asList(roles.split("","", -1)));`. The last argument (-1) makes sure that any empty strings after the last comma are also added to the list.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Mutation: change conditional operator
+@CommandArgument
+public void addroles(
+      @OptionArgument(""username"") String username,
+      @OptionArgument(""roles"") String roles) {
+
+    User user = users.get(username);
+
+    if (user == null) {
+      user.roles.addAll(Arrays.asList(roles.split("","")));
+    } else {
+      System.err.println(String.format(""User '%s' does not exist"", username));
+    }
+
+  }
+Response:
+The bug is in the if statement. Currently, if the user does not exist, the roles are added to the user. This is the opposite of the intended behavior. The correct code would be to add the roles only if the user exists, and print an error if the user does not exist. Therefore, the conditional statement should be changed to:
+
+if (user != null) {
+  user.roles.addAll(Arrays.asList(roles.split("","")));
+} else {
+  System.err.println(String.format(""User '%s' does not exist"", username));
+}
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 2
+Prompt:
+Is the following code buggy or correct? 
+// Mutation: change addAll to add
+@CommandArgument
+public void addroles(
+      @OptionArgument(""username"") String username,
+      @OptionArgument(""roles"") String roles) {
+
+    User user = users.get(username);
+
+    if (user != null) {
+      user.roles.add(Arrays.asList(roles.split("","")));
+    } else {
+      System.err.println(String.format(""User '%s' does not exist"", username));
+    }
+
+  }
+The code defines a method named addroles that takes in two arguments username and roles. The method is annotated with @CommandArgument, which suggests that it is intended to be used as a command-line argument handler in some command-line tool or utility.
+
+The method first looks up the user object corresponding to the given username from a Map named users. If the user object exists, the method splits the given roles string by comma and adds the resulting role names to the user's roles field using the addAll method. If the user object does not exist, the method prints an error message to the console saying that the user does not exist.
+
+Overall, the method is designed to allow the addition of new roles to an existing user object stored in a Map. It assumes that the user objects have a roles field that is a List of strings, and that the role names are separated by commas in the roles argument.
+Response:
+The code is buggy. In the line `user.roles.add(Arrays.asList(roles.split("","")));`, addAll method should be used instead of add method. The add method can add only one value at a time, whereas we need to add a collection of values.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Mutation: change addAll to add
+@CommandArgument
+public void addroles(
+      @OptionArgument(""username"") String username,
+      @OptionArgument(""roles"") String roles) {
+
+    User user = users.get(username);
+
+    if (user != null) {
+      user.roles.add(Arrays.asList(roles.split("","")));
+    } else {
+      System.err.println(String.format(""User '%s' does not exist"", username));
+    }
+
+  }
+Response:
+The bug is in the statement `user.roles.add(Arrays.asList(roles.split("","")));`. 
+
+The `addAll()` method should be used instead of `add()` to add multiple elements from a collection to another collection. Also, the `Arrays.asList()` method returns a list already, so there is no need to call `add()` on it. 
+
+Here's the corrected code: 
+
+// Mutation: change addAll to add
+@CommandArgument
+public void addroles(
+      @OptionArgument(""username"") String username,
+      @OptionArgument(""roles"") String roles) {
+
+    User user = users.get(username);
+
+    if (user != null) {
+      user.roles.addAll(Arrays.asList(roles.split("","")));
+    } else {
+      System.err.println(String.format(""User '%s' does not exist"", username));
+    }
+
+  }
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 3
+Prompt:
+Is the following code buggy or correct? 
+// Mutation: change split("","") to split("" "")
+@CommandArgument
+public void addroles(
+      @OptionArgument(""username"") String username,
+      @OptionArgument(""roles"") String roles) {
+
+    User user = users.get(username);
+
+    if (user != null) {
+      user.roles.addAll(Arrays.asList(roles.split("" "")));
+    } else {
+      System.err.println(String.format(""User '%s' does not exist"", username));
+    }
+
+  }
+The code defines a method named addroles that takes in two arguments username and roles. The method is annotated with @CommandArgument, which suggests that it is intended to be used as a command-line argument handler in some command-line tool or utility.
+
+The method first looks up the user object corresponding to the given username from a Map named users. If the user object exists, the method splits the given roles string by comma and adds the resulting role names to the user's roles field using the addAll method. If the user object does not exist, the method prints an error message to the console saying that the user does not exist.
+
+Overall, the method is designed to allow the addition of new roles to an existing user object stored in a Map. It assumes that the user objects have a roles field that is a List of strings, and that the role names are separated by commas in the roles argument.
+Response:
+The code is almost correct, but the mutation from `split("","")` to `split("" "")` is unnecessary and may introduce a bug. The original code splits the roles string by comma and does not have any issue. Splitting by space would split the roles using spaces as delimiters, which may not be what is intended.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Mutation: change split("","") to split("" "")
+@CommandArgument
+public void addroles(
+      @OptionArgument(""username"") String username,
+      @OptionArgument(""roles"") String roles) {
+
+    User user = users.get(username);
+
+    if (user != null) {
+      user.roles.addAll(Arrays.asList(roles.split("" "")));
+    } else {
+      System.err.println(String.format(""User '%s' does not exist"", username));
+    }
+
+  }
+Response:
+The bug is in the line: 
+
+```
+user.roles.addAll(Arrays.asList(roles.split("" "")));
+```
+
+The `split()` method is splitting the `roles` string into an array of strings using an empty string as the delimiter, which will create an array where each character in the original string is a separate element. 
+
+To split the string into an array of words, the delimiter should be a space character between the quotes, like this:
+
+``` 
+user.roles.addAll(Arrays.asList(roles.split("" ""));
+```
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 4
+Prompt:
+Is the following code buggy or correct? 
+// Mutation: change condition to always true
+@CommandArgument
+public void addroles(
+      @OptionArgument(""username"") String username,
+      @OptionArgument(""roles"") String roles) {
+
+    User user = users.get(username);
+
+    if (user != null || true) {
+      user.roles.addAll(Arrays.asList(roles.split("","")));
+    } else {
+      System.err.println(String.format(""User '%s' does not exist"", username));
+    }
+
+  }
+The code defines a method named addroles that takes in two arguments username and roles. The method is annotated with @CommandArgument, which suggests that it is intended to be used as a command-line argument handler in some command-line tool or utility.
+
+The method first looks up the user object corresponding to the given username from a Map named users. If the user object exists, the method splits the given roles string by comma and adds the resulting role names to the user's roles field using the addAll method. If the user object does not exist, the method prints an error message to the console saying that the user does not exist.
+
+Overall, the method is designed to allow the addition of new roles to an existing user object stored in a Map. It assumes that the user objects have a roles field that is a List of strings, and that the role names are separated by commas in the roles argument.
+Response:
+The code has a buggy line that always evaluates to true, which is the condition in the if statement. This means that the user.roles.addAll method will always be executed regardless of whether the user object exists or not. The condition should instead check if the user object is not null before proceeding to add roles to it. The correct code should be:
+
+```java
+@CommandArgument
+public void addroles(
+      @OptionArgument("username") String username,
+      @OptionArgument("roles") String roles) {
+
+    User user = users.get(username);
+
+    if (user != null) {
+      user.roles.addAll(Arrays.asList(roles.split(",")));
+    } else {
+      System.err.println(String.format("User '%s' does not exist", username));
+    }
+
+}
+```
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Mutation: change condition to always true
+@CommandArgument
+public void addroles(
+      @OptionArgument(""username"") String username,
+      @OptionArgument(""roles"") String roles) {
+
+    User user = users.get(username);
+
+    if (user != null || true) {
+      user.roles.addAll(Arrays.asList(roles.split("","")));
+    } else {
+      System.err.println(String.format(""User '%s' does not exist"", username));
+    }
+
+  }
+Response:
+The buggy statement is `if (user != null || true)`. Changing the condition to always true (`|| true`) causes the `if` statement to always evaluate to true, regardless of whether the user exists or not. This means that any roles added through this method will be added to every user, even if they don't exist. Instead, the condition should be corrected to check if the user is not null: `if (user != null)`.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 5
+Prompt:
+Is the following code buggy or correct? 
+// Mutation: delete the else starment
+public void addroles(
+      @OptionArgument(""username"") String username,
+      @OptionArgument(""roles"") String roles) {
+
+    User user = users.get(username);
+
+    if (user != null) {
+      user.roles.addAll(Arrays.asList(roles.split("","")));
+    } 
+
+  }
+The code defines a method named addroles that takes in two arguments username and roles. The method is annotated with @CommandArgument, which suggests that it is intended to be used as a command-line argument handler in some command-line tool or utility.
+
+The method first looks up the user object corresponding to the given username from a Map named users. If the user object exists, the method splits the given roles string by comma and adds the resulting role names to the user's roles field using the addAll method. If the user object does not exist, the method prints an error message to the console saying that the user does not exist.
+
+Overall, the method is designed to allow the addition of new roles to an existing user object stored in a Map. It assumes that the user objects have a roles field that is a List of strings, and that the role names are separated by commas in the roles argument.
+Response:
+The code is correct. However, it is assuming that the user object exists in the map. If the user does not exist, no action will be taken and there won't be any error message to indicate a user does not exist. It would be better to add an else statement to handle the case where the user does not exist.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Mutation: delete the else starment
+public void addroles(
+      @OptionArgument(""username"") String username,
+      @OptionArgument(""roles"") String roles) {
+
+    User user = users.get(username);
+
+    if (user != null) {
+      user.roles.addAll(Arrays.asList(roles.split("","")));
+    } 
+
+  }
+Response:
+The bug in the code is that there is no else statement, which means that if the user is null, nothing will happen. This might lead to unexpected behavior in the program.
+-----------------------------------------
+
+-----------------------------------------

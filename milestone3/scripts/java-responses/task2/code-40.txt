@@ -1,0 +1,307 @@
+
+ Mutant 1
+Prompt:
+Is the following code buggy or correct? 
+//     Muation 1: change if to always true
+public void add(int index, float e) {
+    if (true) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + 1);
+    if (index < size) {
+      for (int i = size; i > index; i--) {
+        elements[i] = elements[i - 1];
+      }
+    }
+    elements[index] = e;
+    size++;
+  }
+This code defines a method called add that adds an element of type float at a specified index to a dynamic array or ArrayList.
+
+Here's what the code does in detail:
+
+Check whether the specified index is within the valid range of the array, throwing an IndexOutOfBoundsException if it is not.
+Ensure that the array has enough capacity to accommodate the new element. If necessary, increase the size of the array.
+If the new element is to be inserted at an index other than the end of the array, move all the elements that come after the specified index one position to the right. This is achieved through a loop that iterates over the elements from the end of the array to the specified index.
+Insert the new element at the specified index.
+Increment the size of the array.
+Response:
+The code is buggy. The if statement always evaluates to true, meaning that the method will always throw an IndexOutOfBoundsException error and never execute any other code. Therefore, the actual functionality of the code (adding an element to the ArrayList) will never occur.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//     Muation 1: change if to always true
+public void add(int index, float e) {
+    if (true) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + 1);
+    if (index < size) {
+      for (int i = size; i > index; i--) {
+        elements[i] = elements[i - 1];
+      }
+    }
+    elements[index] = e;
+    size++;
+  }
+Response:
+The bug is in the first if-statement where it always throws an `IndexOutOfBoundsException`. This condition is always true. Therefore, the code below the if-statement never executes.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 2
+Prompt:
+Is the following code buggy or correct? 
+//     Mutation 2:Replace size + 1 with size - 1 in the ensureCapacity call
+public void add(int index, float e) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+   ensureCapacity(size - 1);
+    if (index < size) {
+      for (int i = size; i > index; i--) {
+        elements[i] = elements[i - 1];
+      }
+    }
+    elements[index] = e;
+    size++;
+  }
+This code defines a method called add that adds an element of type float at a specified index to a dynamic array or ArrayList.
+
+Here's what the code does in detail:
+
+Check whether the specified index is within the valid range of the array, throwing an IndexOutOfBoundsException if it is not.
+Ensure that the array has enough capacity to accommodate the new element. If necessary, increase the size of the array.
+If the new element is to be inserted at an index other than the end of the array, move all the elements that come after the specified index one position to the right. This is achieved through a loop that iterates over the elements from the end of the array to the specified index.
+Insert the new element at the specified index.
+Increment the size of the array.
+Response:
+The code is buggy. It should be `ensureCapacity(size + 1)` instead of `ensureCapacity(size - 1)`.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//     Mutation 2:Replace size + 1 with size - 1 in the ensureCapacity call
+public void add(int index, float e) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+   ensureCapacity(size - 1);
+    if (index < size) {
+      for (int i = size; i > index; i--) {
+        elements[i] = elements[i - 1];
+      }
+    }
+    elements[index] = e;
+    size++;
+  }
+Response:
+The statement involved in the bug is:
+
+```java
+ensureCapacity(size - 1);
+```
+
+The correct statement should be:
+
+```java
+ensureCapacity(size + 1);
+```
+
+The current statement reduces the capacity by 1, instead of increasing it by 1.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 3
+Prompt:
+Is the following code buggy or correct? 
+//    Mutation 3: replace > with >= in the for loop
+
+public void add(int index, float e) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + 1);
+    if (index < size) {
+      for (int i = size; i >= index; i--) {
+        elements[i] = elements[i - 1];
+      }
+    }
+    elements[index] = e;
+    size++;
+  }
+This code defines a method called add that adds an element of type float at a specified index to a dynamic array or ArrayList.
+
+Here's what the code does in detail:
+
+Check whether the specified index is within the valid range of the array, throwing an IndexOutOfBoundsException if it is not.
+Ensure that the array has enough capacity to accommodate the new element. If necessary, increase the size of the array.
+If the new element is to be inserted at an index other than the end of the array, move all the elements that come after the specified index one position to the right. This is achieved through a loop that iterates over the elements from the end of the array to the specified index.
+Insert the new element at the specified index.
+Increment the size of the array.
+Response:
+The code seems correct. The mutation replacing > with >= in the for loop would change the loop to execute one extra iteration but that would not cause any issues because the last element is always at size-1.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//    Mutation 3: replace > with >= in the for loop
+
+public void add(int index, float e) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + 1);
+    if (index < size) {
+      for (int i = size; i >= index; i--) {
+        elements[i] = elements[i - 1];
+      }
+    }
+    elements[index] = e;
+    size++;
+  }
+Response:
+The bug is in the for loop statement. 
+
+Instead of:
+```
+for (int i = size; i >= index; i--) {
+    elements[i] = elements[i - 1];
+}
+```
+
+It should be:
+```
+for (int i = size-1; i >= index; i--) {
+    elements[i+1] = elements[i];
+}
+```
+
+This is because when we are shifting elements to make space for the new element, we need to start from the last element in the array, not the size of the array. Additionally, we need to increment the index of the shifted element, not decrement it. 
+
+Also, replacing > with >= would actually make the for loop run one extra iteration, which is not needed.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 4
+Prompt:
+Is the following code buggy or correct? 
+//    Mutation 4:Change the order of the if and for statements:
+public void add(int index, float e) {
+  
+    ensureCapacity(size + 1);
+    if (index < size) {
+      for (int i = size; i > index; i--) {
+        elements[i] = elements[i - 1];
+      }
+    }
+	if (index < 0 || index > size) {
+	  throw new IndexOutOfBoundsException();
+	}
+    elements[index] = e;
+    size++;
+  }
+This code defines a method called add that adds an element of type float at a specified index to a dynamic array or ArrayList.
+
+Here's what the code does in detail:
+
+Check whether the specified index is within the valid range of the array, throwing an IndexOutOfBoundsException if it is not.
+Ensure that the array has enough capacity to accommodate the new element. If necessary, increase the size of the array.
+If the new element is to be inserted at an index other than the end of the array, move all the elements that come after the specified index one position to the right. This is achieved through a loop that iterates over the elements from the end of the array to the specified index.
+Insert the new element at the specified index.
+Increment the size of the array.
+Response:
+The code looks correct. The if statement checks if the index is within the valid range before proceeding to ensure capacity and inserting the element. The for loop moves all elements that come after the specified index one position to the right before inserting the new element. Finally, the size of the array is incremented.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//    Mutation 4:Change the order of the if and for statements:
+public void add(int index, float e) {
+  
+    ensureCapacity(size + 1);
+    if (index < size) {
+      for (int i = size; i > index; i--) {
+        elements[i] = elements[i - 1];
+      }
+    }
+	if (index < 0 || index > size) {
+	  throw new IndexOutOfBoundsException();
+	}
+    elements[index] = e;
+    size++;
+  }
+Response:
+The statements involved in the bug are:
+
+```
+if (index < size) {
+  for (int i = size; i > index; i--) {
+    elements[i] = elements[i - 1];
+  }
+}
+```
+
+By changing the order of the if and for statements, now the elements in the array are being shifted only if `index` is smaller than `size`, which means that if `index` is equal to `size`, the new element will not be added to the array. This will result in an incorrect behavior of the `add` method.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 5
+Prompt:
+Is the following code buggy or correct? 
+//    Mutation 5 : Change the decrement operator to an increment operator in the for loop
+public void add(int index, float e) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + 1);
+    if (index < size) {
+      for (int i = size; i > index; i++) {
+        elements[i] = elements[i - 1];
+      }
+    }
+    elements[index] = e;
+    size++;
+  }
+This code defines a method called add that adds an element of type float at a specified index to a dynamic array or ArrayList.
+
+Here's what the code does in detail:
+
+Check whether the specified index is within the valid range of the array, throwing an IndexOutOfBoundsException if it is not.
+Ensure that the array has enough capacity to accommodate the new element. If necessary, increase the size of the array.
+If the new element is to be inserted at an index other than the end of the array, move all the elements that come after the specified index one position to the right. This is achieved through a loop that iterates over the elements from the end of the array to the specified index.
+Insert the new element at the specified index.
+Increment the size of the array.
+Response:
+The code contains a bug. The mutation of changing the decrement operator to an increment operator in the for loop will cause an infinite loop as the loop would never end. It should be changed back to the decrement operator.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//    Mutation 5 : Change the decrement operator to an increment operator in the for loop
+public void add(int index, float e) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + 1);
+    if (index < size) {
+      for (int i = size; i > index; i++) {
+        elements[i] = elements[i - 1];
+      }
+    }
+    elements[index] = e;
+    size++;
+  }
+Response:
+The bug is in the for loop. The decrement operator i-- should be used instead of i++. Otherwise, it will result in an infinite loop because it will keep increasing the value of i. Here's the corrected code:
+
+```
+if (index < size) {
+  for (int i = size; i > index; i--) {
+    elements[i] = elements[i - 1];
+  }
+}
+```
+-----------------------------------------
+
+-----------------------------------------

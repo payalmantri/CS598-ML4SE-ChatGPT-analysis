@@ -1,0 +1,363 @@
+
+ Mutant 1
+Prompt:
+Is the following code buggy or correct? 
+boolean queryLineConnector(int vertex, Line line) {
+    int next = getNextVertex(vertex);
+    if (next != -1)
+            return false;
+
+    if (!m_b_has_attributes) {
+            Point2D pt = new Point2D();
+            getXY(vertex, pt);
+            line.setStartXY(pt);
+            getXY(next, pt);
+            line.setEndXY(pt);
+    } else {
+            Point pt = new Point();
+            queryPoint(vertex, pt);
+            line.setStart(pt);
+            queryPoint(next, pt);
+            line.setEnd(pt);
+    }
+
+    return true;
+}
+The given code appears to be a Java function that takes an integer parameter named `vertex` and a `Line` object parameter named `line`, and returns a boolean value.
+
+The function queries a line connector associated with the specified vertex in a geometric object. The line connector is represented as a line segment connecting the specified vertex to its next vertex. If there is no next vertex, the function returns `false`.
+
+The first `if` statement checks if the geometric object has attributes. If not, the function creates a new `Point2D` object and uses the `getXY` function to retrieve the X and Y coordinates of the specified vertex and its next vertex. It then sets the start and end points of the line segment using the `setStartXY` and `setEndXY` functions of the `line` object, respectively.
+
+If the geometric object has attributes, the function creates a new `Point` object and uses the `queryPoint` function to retrieve the coordinates of the specified vertex and its next vertex as a `Point` object. It then sets the start and end points of the line segment using the `setStart` and `setEnd` functions of the `line` object, respectively.
+
+Finally, the function returns `true` to indicate that it successfully queried the line connector.
+Response:
+The code has a bug in it. The condition `if (next != -1)` should be `if (next == -1)`, because the function needs to check if there is a next vertex, not if there isn't one. The function will currently return `false` if there is a next vertex, and `true` if there isn't one, which is the opposite of what it should be doing.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+boolean queryLineConnector(int vertex, Line line) {
+    int next = getNextVertex(vertex);
+    if (next != -1)
+            return false;
+
+    if (!m_b_has_attributes) {
+            Point2D pt = new Point2D();
+            getXY(vertex, pt);
+            line.setStartXY(pt);
+            getXY(next, pt);
+            line.setEndXY(pt);
+    } else {
+            Point pt = new Point();
+            queryPoint(vertex, pt);
+            line.setStart(pt);
+            queryPoint(next, pt);
+            line.setEnd(pt);
+    }
+
+    return true;
+}
+Response:
+Yes, I can spot a statement that is involved in the bug. The variable "next" is assigned the value of getNextVertex(vertex). Then, it checks if next != -1. Since "next" is just assigned without being initialized, it may have a garbage value that satisfies the condition. Therefore, the first statement might be causing the bug.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 2
+Prompt:
+Is the following code buggy or correct? 
+//  Mutation : return value change false to true
+boolean queryLineConnector(int vertex, Line line) {
+    int next = getNextVertex(vertex);
+    if (next == -1)
+            return true;
+
+    if (!m_b_has_attributes) {
+            Point2D pt = new Point2D();
+            getXY(vertex, pt);
+            line.setStartXY(pt);
+            getXY(next, pt);
+            line.setEndXY(pt);
+    } else {
+            Point pt = new Point();
+            queryPoint(vertex, pt);
+            line.setStart(pt);
+            queryPoint(next, pt);
+            line.setEnd(pt);
+    }
+
+    return true;
+}
+The given code appears to be a Java function that takes an integer parameter named `vertex` and a `Line` object parameter named `line`, and returns a boolean value.
+
+The function queries a line connector associated with the specified vertex in a geometric object. The line connector is represented as a line segment connecting the specified vertex to its next vertex. If there is no next vertex, the function returns `false`.
+
+The first `if` statement checks if the geometric object has attributes. If not, the function creates a new `Point2D` object and uses the `getXY` function to retrieve the X and Y coordinates of the specified vertex and its next vertex. It then sets the start and end points of the line segment using the `setStartXY` and `setEndXY` functions of the `line` object, respectively.
+
+If the geometric object has attributes, the function creates a new `Point` object and uses the `queryPoint` function to retrieve the coordinates of the specified vertex and its next vertex as a `Point` object. It then sets the start and end points of the line segment using the `setStart` and `setEnd` functions of the `line` object, respectively.
+
+Finally, the function returns `true` to indicate that it successfully queried the line connector.
+Response:
+The code is correct and doesn't contain any bugs.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//  Mutation : return value change false to true
+boolean queryLineConnector(int vertex, Line line) {
+    int next = getNextVertex(vertex);
+    if (next == -1)
+            return true;
+
+    if (!m_b_has_attributes) {
+            Point2D pt = new Point2D();
+            getXY(vertex, pt);
+            line.setStartXY(pt);
+            getXY(next, pt);
+            line.setEndXY(pt);
+    } else {
+            Point pt = new Point();
+            queryPoint(vertex, pt);
+            line.setStart(pt);
+            queryPoint(next, pt);
+            line.setEnd(pt);
+    }
+
+    return true;
+}
+Response:
+The code has a mutation comment which states "return value change false to true", but the function always returns true. Therefore, the mutation comment is incorrect and misleading.
+
+Other than that, there are no obvious bugs or errors in the code.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 3
+Prompt:
+Is the following code buggy or correct? 
+    //  Mutation : negate the if condition !m_b_has_attributes
+    boolean queryLineConnector(int vertex, Line line) {
+        int next = getNextVertex(vertex);
+        if (next == -1)
+                return false;
+
+        if (m_b_has_attributes) {
+                Point2D pt = new Point2D();
+                getXY(vertex, pt);
+                line.setStartXY(pt);
+                getXY(next, pt);
+                line.setEndXY(pt);
+        } else {
+                Point pt = new Point();
+                queryPoint(vertex, pt);
+                line.setStart(pt);
+                queryPoint(next, pt);
+                line.setEnd(pt);
+        }
+
+        return true;
+    }
+The given code appears to be a Java function that takes an integer parameter named `vertex` and a `Line` object parameter named `line`, and returns a boolean value.
+
+The function queries a line connector associated with the specified vertex in a geometric object. The line connector is represented as a line segment connecting the specified vertex to its next vertex. If there is no next vertex, the function returns `false`.
+
+The first `if` statement checks if the geometric object has attributes. If not, the function creates a new `Point2D` object and uses the `getXY` function to retrieve the X and Y coordinates of the specified vertex and its next vertex. It then sets the start and end points of the line segment using the `setStartXY` and `setEndXY` functions of the `line` object, respectively.
+
+If the geometric object has attributes, the function creates a new `Point` object and uses the `queryPoint` function to retrieve the coordinates of the specified vertex and its next vertex as a `Point` object. It then sets the start and end points of the line segment using the `setStart` and `setEnd` functions of the `line` object, respectively.
+
+Finally, the function returns `true` to indicate that it successfully queried the line connector.
+Response:
+There is no obvious bug in the code. However, without knowing the context in which this code is used, it's difficult to say for sure whether it meets the desired functionality or not.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+    //  Mutation : negate the if condition !m_b_has_attributes
+    boolean queryLineConnector(int vertex, Line line) {
+        int next = getNextVertex(vertex);
+        if (next == -1)
+                return false;
+
+        if (m_b_has_attributes) {
+                Point2D pt = new Point2D();
+                getXY(vertex, pt);
+                line.setStartXY(pt);
+                getXY(next, pt);
+                line.setEndXY(pt);
+        } else {
+                Point pt = new Point();
+                queryPoint(vertex, pt);
+                line.setStart(pt);
+                queryPoint(next, pt);
+                line.setEnd(pt);
+        }
+
+        return true;
+    }
+Response:
+It's not clear what the intended mutation is, but assuming it's to negate the if condition `!m_b_has_attributes`, the buggy version of the code would be:
+
+```
+boolean queryLineConnector(int vertex, Line line) {
+    int next = getNextVertex(vertex);
+    if (next == -1)
+            return false;
+
+    if (!m_b_has_attributes) {
+            Point2D pt = new Point2D();  // Incorrect data type
+            getXY(vertex, pt);
+            line.setStartXY(pt);
+            getXY(next, pt);
+            line.setEndXY(pt);
+    } else {
+            Point pt = new Point();  // Incorrect data type
+            queryPoint(vertex, pt);
+            line.setStart(pt);
+            queryPoint(next, pt);
+            line.setEnd(pt);
+    }
+
+    return true;
+}
+```
+
+There are two problems with this code. First, the data types of the `pt` variables are incorrect. In the original code, they match the types returned by the `getXY` and `queryPoint` methods. However, in the mutated code, they don't match, which will likely cause compile-time errors.
+
+Second, the negation of the `if` condition changes the behavior of the code. In the original code, if `m_b_has_attributes` is true, then `Point2D` objects are used to set the start and end points of the `line`. But in the mutated code, if `m_b_has_attributes` is false, then `Point2D` objects are used instead, which is likely to cause runtime errors.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 4
+Prompt:
+Is the following code buggy or correct? 
+//  Mutation : remove void method call getXY
+boolean queryLineConnector(int vertex, Line line) {
+    int next = getNextVertex(vertex);
+    if (next == -1)
+            return false;
+
+    if (!m_b_has_attributes) {
+            Point2D pt = new Point2D();
+            getXY(vertex, pt);
+            line.setStartXY(pt);
+            // getXY(next, pt);
+            line.setEndXY(pt);
+    } else {
+            Point pt = new Point();
+            queryPoint(vertex, pt);
+            line.setStart(pt);
+            queryPoint(next, pt);
+            line.setEnd(pt);
+    }
+
+    return true;
+}
+The given code appears to be a Java function that takes an integer parameter named `vertex` and a `Line` object parameter named `line`, and returns a boolean value.
+
+The function queries a line connector associated with the specified vertex in a geometric object. The line connector is represented as a line segment connecting the specified vertex to its next vertex. If there is no next vertex, the function returns `false`.
+
+The first `if` statement checks if the geometric object has attributes. If not, the function creates a new `Point2D` object and uses the `getXY` function to retrieve the X and Y coordinates of the specified vertex and its next vertex. It then sets the start and end points of the line segment using the `setStartXY` and `setEndXY` functions of the `line` object, respectively.
+
+If the geometric object has attributes, the function creates a new `Point` object and uses the `queryPoint` function to retrieve the coordinates of the specified vertex and its next vertex as a `Point` object. It then sets the start and end points of the line segment using the `setStart` and `setEnd` functions of the `line` object, respectively.
+
+Finally, the function returns `true` to indicate that it successfully queried the line connector.
+Response:
+The code appears to be correct. However, there is a commented-out call to `getXY` which might have been intended to set the end point of the line segment if the geometric object did have attributes, but is not being used currently. If this was an intentional change, then the code could be considered correct as it is.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//  Mutation : remove void method call getXY
+boolean queryLineConnector(int vertex, Line line) {
+    int next = getNextVertex(vertex);
+    if (next == -1)
+            return false;
+
+    if (!m_b_has_attributes) {
+            Point2D pt = new Point2D();
+            getXY(vertex, pt);
+            line.setStartXY(pt);
+            // getXY(next, pt);
+            line.setEndXY(pt);
+    } else {
+            Point pt = new Point();
+            queryPoint(vertex, pt);
+            line.setStart(pt);
+            queryPoint(next, pt);
+            line.setEnd(pt);
+    }
+
+    return true;
+}
+Response:
+The statement involved in the bug is the following:
+```
+// getXY(next, pt);
+```
+This statement is commented out, so the end coordinate of the line segment is not being set correctly. It needs to be uncommented for the code to work correctly.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 5
+Prompt:
+Is the following code buggy or correct? 
+//  Mutation : Remove the if condition
+boolean queryLineConnector(int vertex, Line line) {
+    int next = getNextVertex(vertex);
+
+    if (!m_b_has_attributes) {
+            Point2D pt = new Point2D();
+            getXY(vertex, pt);
+            line.setStartXY(pt);
+            getXY(next, pt);
+            line.setEndXY(pt);
+    } else {
+            Point pt = new Point();
+            queryPoint(vertex, pt);
+            line.setStart(pt);
+            queryPoint(next, pt);
+            line.setEnd(pt);
+    }
+
+    return true;
+}
+The given code appears to be a Java function that takes an integer parameter named `vertex` and a `Line` object parameter named `line`, and returns a boolean value.
+
+The function queries a line connector associated with the specified vertex in a geometric object. The line connector is represented as a line segment connecting the specified vertex to its next vertex. If there is no next vertex, the function returns `false`.
+
+The first `if` statement checks if the geometric object has attributes. If not, the function creates a new `Point2D` object and uses the `getXY` function to retrieve the X and Y coordinates of the specified vertex and its next vertex. It then sets the start and end points of the line segment using the `setStartXY` and `setEndXY` functions of the `line` object, respectively.
+
+If the geometric object has attributes, the function creates a new `Point` object and uses the `queryPoint` function to retrieve the coordinates of the specified vertex and its next vertex as a `Point` object. It then sets the start and end points of the line segment using the `setStart` and `setEnd` functions of the `line` object, respectively.
+
+Finally, the function returns `true` to indicate that it successfully queried the line connector.
+Response:
+There are no obvious bugs in the given code. However, removing the `if` condition would mean that the function would always use the second block of code no matter whether or not the geometric object has attributes. This could lead to unexpected behavior if the function is used in a context where the geometric object may or may not have attributes.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//  Mutation : Remove the if condition
+boolean queryLineConnector(int vertex, Line line) {
+    int next = getNextVertex(vertex);
+
+    if (!m_b_has_attributes) {
+            Point2D pt = new Point2D();
+            getXY(vertex, pt);
+            line.setStartXY(pt);
+            getXY(next, pt);
+            line.setEndXY(pt);
+    } else {
+            Point pt = new Point();
+            queryPoint(vertex, pt);
+            line.setStart(pt);
+            queryPoint(next, pt);
+            line.setEnd(pt);
+    }
+
+    return true;
+}
+Response:
+The bug is caused by the absence of if condition. The else statement expects the point to be of type Point, whereas the if statement expects it to be of type Point2D. This can lead to type mismatch errors.
+-----------------------------------------
+
+-----------------------------------------

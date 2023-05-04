@@ -1,0 +1,329 @@
+
+ Mutant 1
+Prompt:
+Is the following code buggy or correct? 
+// Mutation: NegateConditionals
+@CommandArgument
+  public void load(
+      @OptionArgument(""filename"") String filename) {
+
+    users.clear();
+
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+      while (!reader.ready()) {
+        User user = User.fromString(reader.readLine());
+        users.put(user.username, user);
+      }
+    } catch (FileNotFoundException e) {
+      System.err.println(String.format(""File not found: '%s'"", filename));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+This code defines a method named "load" that takes a single argument "filename". The method is annotated with "@CommandArgument", which suggests that this method is part of a command-line tool and can be called using command-line arguments.
+
+The argument "filename" is annotated with "@OptionArgument", which means that it is an optional argument that can be passed using a command-line option. The option is expected to have a name "filename".
+
+The method first clears a collection named "users". It then tries to read a file with the given filename using a BufferedReader. The method reads each line of the file and converts it into a User object using the static method "fromString" of the User class. The User object is then added to the "users" collection using the username as the key.
+
+If the file is not found, the method prints an error message. If an IOException occurs during reading the file, it is printed to the console using the "printStackTrace" method.
+
+In summary, this method reads a file containing User objects and populates a collection with the parsed User objects. The method can be called using a command-line option "filename" to specify the name of the input file.
+Response:
+The code seems correct but can be improved. Firstly, the condition inside the while loop should be changed to `while (reader.ready())` because the `ready()` method returns false only when the end of the input stream is reached or there is an error. Secondly, the error message should be printed to the standard error stream using `System.err.println`. Lastly, in case of an IOException, the program should exit with a non-zero status code.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Mutation: NegateConditionals
+@CommandArgument
+  public void load(
+      @OptionArgument(""filename"") String filename) {
+
+    users.clear();
+
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+      while (!reader.ready()) {
+        User user = User.fromString(reader.readLine());
+        users.put(user.username, user);
+      }
+    } catch (FileNotFoundException e) {
+      System.err.println(String.format(""File not found: '%s'"", filename));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+Response:
+The bug is in the while loop. The condition `!reader.ready()` will always return false if the file being read is empty, meaning that the loop will never execute and no users will be added to the `users` map. The correct condition should be `reader.readLine() != null`.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 2
+Prompt:
+Is the following code buggy or correct? 
+// Mutation: Delet void method
+@CommandArgument
+  public void load(
+      @OptionArgument(""filename"") String filename) {
+
+    // users.clear();
+
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+      while (reader.ready()) {
+        User user = User.fromString(reader.readLine());
+        users.put(user.username, user);
+      }
+    } catch (FileNotFoundException e) {
+      System.err.println(String.format(""File not found: '%s'"", filename));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+This code defines a method named "load" that takes a single argument "filename". The method is annotated with "@CommandArgument", which suggests that this method is part of a command-line tool and can be called using command-line arguments.
+
+The argument "filename" is annotated with "@OptionArgument", which means that it is an optional argument that can be passed using a command-line option. The option is expected to have a name "filename".
+
+The method first clears a collection named "users". It then tries to read a file with the given filename using a BufferedReader. The method reads each line of the file and converts it into a User object using the static method "fromString" of the User class. The User object is then added to the "users" collection using the username as the key.
+
+If the file is not found, the method prints an error message. If an IOException occurs during reading the file, it is printed to the console using the "printStackTrace" method.
+
+In summary, this method reads a file containing User objects and populates a collection with the parsed User objects. The method can be called using a command-line option "filename" to specify the name of the input file.
+Response:
+The code seems correct, but there is one bug. The method includes a commented out line that clears the "users" collection at the beginning of the method. This line should be removed, as it will cause any existing User objects in the collection to be deleted before new ones are added.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Mutation: Delet void method
+@CommandArgument
+  public void load(
+      @OptionArgument(""filename"") String filename) {
+
+    // users.clear();
+
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+      while (reader.ready()) {
+        User user = User.fromString(reader.readLine());
+        users.put(user.username, user);
+      }
+    } catch (FileNotFoundException e) {
+      System.err.println(String.format(""File not found: '%s'"", filename));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+Response:
+The code appears to be missing the closing parenthesis for the @CommandArgument annotation. The line that says "Mutation: Delet void method" should be deleted, as it is not valid Java code. 
+
+Also, there is a comment line that has been commented out, which could potentially be related to the bug. This line of code may have been initially added to clear out the users collection before loading new data from the file.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 3
+Prompt:
+Is the following code buggy or correct? 
+// Mutation: Reorder catch blocks
+@CommandArgument
+  public void load(
+      @OptionArgument(""filename"") String filename) {
+
+    users.clear();
+
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+      while (reader.ready()) {
+        User user = User.fromString(reader.readLine());
+        users.put(user.username, user);
+      }
+    } 
+    catch (IOException e) {
+        e.printStackTrace();
+      }
+    catch (FileNotFoundException e) {
+      System.err.println(String.format(""File not found: '%s'"", filename));
+    } 
+  }
+This code defines a method named "load" that takes a single argument "filename". The method is annotated with "@CommandArgument", which suggests that this method is part of a command-line tool and can be called using command-line arguments.
+
+The argument "filename" is annotated with "@OptionArgument", which means that it is an optional argument that can be passed using a command-line option. The option is expected to have a name "filename".
+
+The method first clears a collection named "users". It then tries to read a file with the given filename using a BufferedReader. The method reads each line of the file and converts it into a User object using the static method "fromString" of the User class. The User object is then added to the "users" collection using the username as the key.
+
+If the file is not found, the method prints an error message. If an IOException occurs during reading the file, it is printed to the console using the "printStackTrace" method.
+
+In summary, this method reads a file containing User objects and populates a collection with the parsed User objects. The method can be called using a command-line option "filename" to specify the name of the input file.
+Response:
+The code seems correct.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Mutation: Reorder catch blocks
+@CommandArgument
+  public void load(
+      @OptionArgument(""filename"") String filename) {
+
+    users.clear();
+
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+      while (reader.ready()) {
+        User user = User.fromString(reader.readLine());
+        users.put(user.username, user);
+      }
+    } 
+    catch (IOException e) {
+        e.printStackTrace();
+      }
+    catch (FileNotFoundException e) {
+      System.err.println(String.format(""File not found: '%s'"", filename));
+    } 
+  }
+Response:
+The catch blocks are in the wrong order. The more specific catch block for FileNotFoundException should come before the catch block for IOException, as FileNotFoundException is a subclass of IOException and otherwise the FileNotFoundException block will never be executed.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 4
+Prompt:
+Is the following code buggy or correct? 
+// Mutation: Change the put method call to a remove method call
+@CommandArgument
+  public void load(
+      @OptionArgument(""filename"") String filename) {
+
+    users.clear();
+
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+      while (reader.ready()) {
+        User user = User.fromString(reader.readLine());
+        users.remove(user.username);
+      }
+    } catch (FileNotFoundException e) {
+      System.err.println(String.format(""File not found: '%s'"", filename));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+This code defines a method named "load" that takes a single argument "filename". The method is annotated with "@CommandArgument", which suggests that this method is part of a command-line tool and can be called using command-line arguments.
+
+The argument "filename" is annotated with "@OptionArgument", which means that it is an optional argument that can be passed using a command-line option. The option is expected to have a name "filename".
+
+The method first clears a collection named "users". It then tries to read a file with the given filename using a BufferedReader. The method reads each line of the file and converts it into a User object using the static method "fromString" of the User class. The User object is then added to the "users" collection using the username as the key.
+
+If the file is not found, the method prints an error message. If an IOException occurs during reading the file, it is printed to the console using the "printStackTrace" method.
+
+In summary, this method reads a file containing User objects and populates a collection with the parsed User objects. The method can be called using a command-line option "filename" to specify the name of the input file.
+Response:
+The code is buggy. The task description says to change the put method call to a remove method call, but the code actually already contains a remove method call. Instead, the code should be modified to replace this line:
+
+```
+users.remove(user.username);
+```
+
+with this line:
+
+```
+users.put(user.username, user); // change to put method call
+``` 
+
+This will add the User object to the "users" collection using the username as the key, rather than removing it.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Mutation: Change the put method call to a remove method call
+@CommandArgument
+  public void load(
+      @OptionArgument(""filename"") String filename) {
+
+    users.clear();
+
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+      while (reader.ready()) {
+        User user = User.fromString(reader.readLine());
+        users.remove(user.username);
+      }
+    } catch (FileNotFoundException e) {
+      System.err.println(String.format(""File not found: '%s'"", filename));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+Response:
+The statement involved in the bug is `users.remove(user.username)`. It should be changed to `users.put(user.username, user)` to add the user to the map instead of removing it.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 5
+Prompt:
+Is the following code buggy or correct? 
+// Mutation: delete the catch block
+@CommandArgument
+  public void load(
+      @OptionArgument(""filename"") String filename) {
+
+    users.clear();
+
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+      while (reader.ready()) {
+        User user = User.fromString(reader.readLine());
+        users.put(user.username, user);
+      }
+    } catch (FileNotFoundException e) {
+      System.err.println(String.format(""File not found: '%s'"", filename));
+    }
+  }
+This code defines a method named "load" that takes a single argument "filename". The method is annotated with "@CommandArgument", which suggests that this method is part of a command-line tool and can be called using command-line arguments.
+
+The argument "filename" is annotated with "@OptionArgument", which means that it is an optional argument that can be passed using a command-line option. The option is expected to have a name "filename".
+
+The method first clears a collection named "users". It then tries to read a file with the given filename using a BufferedReader. The method reads each line of the file and converts it into a User object using the static method "fromString" of the User class. The User object is then added to the "users" collection using the username as the key.
+
+If the file is not found, the method prints an error message. If an IOException occurs during reading the file, it is printed to the console using the "printStackTrace" method.
+
+In summary, this method reads a file containing User objects and populates a collection with the parsed User objects. The method can be called using a command-line option "filename" to specify the name of the input file.
+Response:
+The mutation suggests deleting the catch block. However, deleting the catch block would make the code buggy because if an IOException other than FileNotFoundException occurs during reading the file, the program will continue to execute without handling the exception, which can potentially lead to unexpected behavior or crashes. Therefore, the original code is correct and the catch block should not be deleted.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Mutation: delete the catch block
+@CommandArgument
+  public void load(
+      @OptionArgument(""filename"") String filename) {
+
+    users.clear();
+
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+      while (reader.ready()) {
+        User user = User.fromString(reader.readLine());
+        users.put(user.username, user);
+      }
+    } catch (FileNotFoundException e) {
+      System.err.println(String.format(""File not found: '%s'"", filename));
+    }
+  }
+Response:
+The catch block is responsible for handling the FileNotFoundException. If that exception occurs, the program will print an error message. Without the catch block, if the file isn't found, the program will throw an exception and crash. Therefore, deleting the catch block is the cause of the bug here.
+-----------------------------------------
+
+-----------------------------------------

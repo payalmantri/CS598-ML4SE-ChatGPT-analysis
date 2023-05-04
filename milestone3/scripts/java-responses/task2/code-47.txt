@@ -1,0 +1,298 @@
+
+ Mutant 1
+Prompt:
+Is the following code buggy or correct? 
+//UOI (Unary Operator Insertion): Inserting a unary operator '-' before 'value'.
+public static int queryInt(PreparedStatement stmt, int def) throws SQLException {
+    ResultSet rs = null;
+    try {
+      rs = stmt.executeQuery();
+      if (rs.next()) {
+        int value = -rs.getInt(1);
+        if (!rs.wasNull()) {
+          return value;
+        }
+      }
+      return def;
+    } finally {
+      close(rs);
+    }
+  }
+The provided code is a method called queryInt that takes a PreparedStatement object and an integer default value as input parameters, and returns an integer value.
+
+The purpose of this method is to execute the provided PreparedStatement and retrieve the first integer value from the result set. If the result set is empty or the retrieved value is null, the method returns the default value.
+
+Here's a step-by-step breakdown of what the code does:
+
+The method initializes a ResultSet object to null.
+It executes the provided PreparedStatement by calling the executeQuery() method, which returns a ResultSet.
+If the ResultSet has at least one row, it retrieves the integer value from the first column using the getInt(1) method and assigns it to an int variable called value.
+If the retrieved value is not null, the method returns the value.
+If the result set is empty or the retrieved value is null, the method returns the default value provided as a parameter.
+The method closes the ResultSet object in the finally block to ensure proper resource management.
+Response:
+The provided code is correct.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//UOI (Unary Operator Insertion): Inserting a unary operator '-' before 'value'.
+public static int queryInt(PreparedStatement stmt, int def) throws SQLException {
+    ResultSet rs = null;
+    try {
+      rs = stmt.executeQuery();
+      if (rs.next()) {
+        int value = -rs.getInt(1);
+        if (!rs.wasNull()) {
+          return value;
+        }
+      }
+      return def;
+    } finally {
+      close(rs);
+    }
+  }
+Response:
+The code seems to be correct and there are no visible bugs.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 2
+Prompt:
+Is the following code buggy or correct? 
+public static int queryInt(PreparedStatement stmt, int def) throws SQLException {
+    ResultSet rs = null;
+    try {
+      rs = stmt.executeQuery();
+      if (rs.next()) {
+        int value = rs.getInt(1);
+        if (rs.wasNull()) {
+          return def;
+        }
+        return value;
+      }
+      return def;
+    } finally {
+      close(rs);
+    }
+  }
+The provided code is a method called queryInt that takes a PreparedStatement object and an integer default value as input parameters, and returns an integer value.
+
+The purpose of this method is to execute the provided PreparedStatement and retrieve the first integer value from the result set. If the result set is empty or the retrieved value is null, the method returns the default value.
+
+Here's a step-by-step breakdown of what the code does:
+
+The method initializes a ResultSet object to null.
+It executes the provided PreparedStatement by calling the executeQuery() method, which returns a ResultSet.
+If the ResultSet has at least one row, it retrieves the integer value from the first column using the getInt(1) method and assigns it to an int variable called value.
+If the retrieved value is not null, the method returns the value.
+If the result set is empty or the retrieved value is null, the method returns the default value provided as a parameter.
+The method closes the ResultSet object in the finally block to ensure proper resource management.
+Response:
+The provided code looks correct, and it follows best practices in terms of proper resource management by closing the ResultSet object in the finally block. However, without knowing the context in which this method is used, it is difficult to determine whether it is buggy or not.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+public static int queryInt(PreparedStatement stmt, int def) throws SQLException {
+    ResultSet rs = null;
+    try {
+      rs = stmt.executeQuery();
+      if (rs.next()) {
+        int value = rs.getInt(1);
+        if (rs.wasNull()) {
+          return def;
+        }
+        return value;
+      }
+      return def;
+    } finally {
+      close(rs);
+    }
+  }
+Response:
+The code seems fine and I cannot spot any obvious bugs. However, there might be errors in the implementation of the `close(rs)` method that is called in the finally block.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 3
+Prompt:
+Is the following code buggy or correct? 
+public static int queryInt(PreparedStatement stmt, int def) throws SQLException {
+    ResultSet rs = null;
+    try {
+        rs = stmt.executeQuery();
+        if (rs.next()) {
+            int value = rs.getInt(1);
+            if (!rs.wasNull()) {
+                return value - 1;
+            }
+        }
+        return def;
+    } finally {
+        close(rs);
+    }
+}
+The provided code is a method called queryInt that takes a PreparedStatement object and an integer default value as input parameters, and returns an integer value.
+
+The purpose of this method is to execute the provided PreparedStatement and retrieve the first integer value from the result set. If the result set is empty or the retrieved value is null, the method returns the default value.
+
+Here's a step-by-step breakdown of what the code does:
+
+The method initializes a ResultSet object to null.
+It executes the provided PreparedStatement by calling the executeQuery() method, which returns a ResultSet.
+If the ResultSet has at least one row, it retrieves the integer value from the first column using the getInt(1) method and assigns it to an int variable called value.
+If the retrieved value is not null, the method returns the value.
+If the result set is empty or the retrieved value is null, the method returns the default value provided as a parameter.
+The method closes the ResultSet object in the finally block to ensure proper resource management.
+Response:
+The code seems correct. It handles the case where the retrieved value is null by returning the default value. The ResultSet object is properly closed in the finally block to avoid resource leaks.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+public static int queryInt(PreparedStatement stmt, int def) throws SQLException {
+    ResultSet rs = null;
+    try {
+        rs = stmt.executeQuery();
+        if (rs.next()) {
+            int value = rs.getInt(1);
+            if (!rs.wasNull()) {
+                return value - 1;
+            }
+        }
+        return def;
+    } finally {
+        close(rs);
+    }
+}
+Response:
+The code has no syntax errors, but it may have a logical bug. The statement that looks suspicious is `return value - 1;`. It subtracts one from the result of the query, but it's not clear why this is necessary. If the query result is expected to be one-based (e.g., a row count), then it would make sense to subtract one. Otherwise, it could be an error that changes the result of the function.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 4
+Prompt:
+Is the following code buggy or correct? 
+public static int queryInt(PreparedStatement stmt, int def) throws SQLException {
+    ResultSet rs = null;
+    int result = def;
+    try {
+        rs = stmt.executeQuery();
+        while (rs.next()) {
+            int value = rs.getInt(1);
+            if (!rs.wasNull()) {
+                result = value;
+                break;
+            }
+        }
+    } finally {
+        //  commenting teh code 
+        // close(rs);
+    }
+    return result;
+}
+The provided code is a method called queryInt that takes a PreparedStatement object and an integer default value as input parameters, and returns an integer value.
+
+The purpose of this method is to execute the provided PreparedStatement and retrieve the first integer value from the result set. If the result set is empty or the retrieved value is null, the method returns the default value.
+
+Here's a step-by-step breakdown of what the code does:
+
+The method initializes a ResultSet object to null.
+It executes the provided PreparedStatement by calling the executeQuery() method, which returns a ResultSet.
+If the ResultSet has at least one row, it retrieves the integer value from the first column using the getInt(1) method and assigns it to an int variable called value.
+If the retrieved value is not null, the method returns the value.
+If the result set is empty or the retrieved value is null, the method returns the default value provided as a parameter.
+The method closes the ResultSet object in the finally block to ensure proper resource management.
+Response:
+The code seems to be correct, except for the fact that the code to close the ResultSet object is commented out. This can potentially lead to resource leak issues and should be uncommented.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+public static int queryInt(PreparedStatement stmt, int def) throws SQLException {
+    ResultSet rs = null;
+    int result = def;
+    try {
+        rs = stmt.executeQuery();
+        while (rs.next()) {
+            int value = rs.getInt(1);
+            if (!rs.wasNull()) {
+                result = value;
+                break;
+            }
+        }
+    } finally {
+        //  commenting teh code 
+        // close(rs);
+    }
+    return result;
+}
+Response:
+The bug is not in any particular statement of the code, but rather in the commented-out code. The "close(rs)" statement should be uncommented in the finally block to properly close the ResultSet object and release any associated resources. Failing to do so can lead to resource leaks and degradation of performance over time.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 5
+Prompt:
+Is the following code buggy or correct? 
+public static int queryInt(PreparedStatement stmt, int def) throws SQLException {
+    ResultSet rs = null;
+    int result = def;
+    try {
+        rs = stmt.executeQuery();
+        while (rs.next()) {
+            int value = rs.getInt(1);
+            if (!rs.wasNull()) {
+                result = value;
+                break;
+            }
+        }
+    } finally {
+    
+        close(rs);
+    }
+    // Mutation: Return null
+    return null;
+}
+The provided code is a method called queryInt that takes a PreparedStatement object and an integer default value as input parameters, and returns an integer value.
+
+The purpose of this method is to execute the provided PreparedStatement and retrieve the first integer value from the result set. If the result set is empty or the retrieved value is null, the method returns the default value.
+
+Here's a step-by-step breakdown of what the code does:
+
+The method initializes a ResultSet object to null.
+It executes the provided PreparedStatement by calling the executeQuery() method, which returns a ResultSet.
+If the ResultSet has at least one row, it retrieves the integer value from the first column using the getInt(1) method and assigns it to an int variable called value.
+If the retrieved value is not null, the method returns the value.
+If the result set is empty or the retrieved value is null, the method returns the default value provided as a parameter.
+The method closes the ResultSet object in the finally block to ensure proper resource management.
+Response:
+The code contains a bug. On the last line, the method is returning null instead of the expected integer value. This will cause the calling code to receive a null value instead of an actual result.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+public static int queryInt(PreparedStatement stmt, int def) throws SQLException {
+    ResultSet rs = null;
+    int result = def;
+    try {
+        rs = stmt.executeQuery();
+        while (rs.next()) {
+            int value = rs.getInt(1);
+            if (!rs.wasNull()) {
+                result = value;
+                break;
+            }
+        }
+    } finally {
+    
+        close(rs);
+    }
+    // Mutation: Return null
+    return null;
+}
+Response:
+The statement involved in the bug is the last statement, which returns null instead of the integer result.
+-----------------------------------------
+
+-----------------------------------------

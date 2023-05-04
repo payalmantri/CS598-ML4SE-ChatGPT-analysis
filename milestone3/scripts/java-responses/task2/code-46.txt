@@ -1,0 +1,194 @@
+
+ Mutant 1
+Prompt:
+Is the following code buggy or correct? 
+public static String getExtension(String fileName) {
+  int pos = fileName.lastIndexOf('.');
+  if (pos <= 0) { // Mutated conditional boundary from < 0 to <= 0
+    return "";
+  }
+  return fileName.substring(pos + 1);
+}
+This code snippet is a Java method named "getExtension" that takes a String parameter "fileName". The purpose of this method is to extract the file extension from the given file name.
+
+Here's what the code does:
+
+First, it finds the position of the last occurrence of the '.' character in the fileName string using the "lastIndexOf" method.
+If the '.' character is not found in the fileName string, then the method returns an empty string ("").
+If the '.' character is found, then the method uses the "substring" method to return the characters that come after the '.' character. This substring represents the file extension.
+So, in summary, the method extracts the file extension from the given file name and returns it as a String. For example, if the input file name is "example.txt", the method will return "txt".
+Response:
+The code seems correct. The mutation of the conditional boundary from "< 0" to "<= 0" has actually made the code more robust, since it can now handle file names that start with a dot (e.g., ".gitignore") which should be considered as having no extension.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+public static String getExtension(String fileName) {
+  int pos = fileName.lastIndexOf('.');
+  if (pos <= 0) { // Mutated conditional boundary from < 0 to <= 0
+    return "";
+  }
+  return fileName.substring(pos + 1);
+}
+Response:
+The bug is in the conditional statement `if (pos <= 0)` which should be `if (pos < 0)` instead. The current conditional boundary includes the case when the dot character is at the start of the filename, which is not a valid extension. Therefore, the method will return an empty string for files with valid extensions that happen to start with a dot.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 2
+Prompt:
+Is the following code buggy or correct? 
+public static String getExtension(String fileName) {
+  int pos = fileName.lastIndexOf('.');
+  if (pos < 0) {
+    return "";
+  }
+  return fileName.substring(++pos + 1); // Mutated post-increment operator from pos to ++pos
+}
+This code snippet is a Java method named "getExtension" that takes a String parameter "fileName". The purpose of this method is to extract the file extension from the given file name.
+
+Here's what the code does:
+
+First, it finds the position of the last occurrence of the '.' character in the fileName string using the "lastIndexOf" method.
+If the '.' character is not found in the fileName string, then the method returns an empty string ("").
+If the '.' character is found, then the method uses the "substring" method to return the characters that come after the '.' character. This substring represents the file extension.
+So, in summary, the method extracts the file extension from the given file name and returns it as a String. For example, if the input file name is "example.txt", the method will return "txt".
+Response:
+The code snippet contains a bug. The post-increment operator should not be used in this statement: `return fileName.substring(++pos + 1);`, as it would increase the value of `pos` before using it to calculate the substring, leading to a wrong output. The corrected statement should be `return fileName.substring(pos + 1);`.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+public static String getExtension(String fileName) {
+  int pos = fileName.lastIndexOf('.');
+  if (pos < 0) {
+    return "";
+  }
+  return fileName.substring(++pos + 1); // Mutated post-increment operator from pos to ++pos
+}
+Response:
+The statement involved in the bug is:
+
+```
+return fileName.substring(++pos + 1); // Mutated post-increment operator from pos to ++pos
+```
+
+The post-increment operator `++pos` changes the value of the `pos` variable before it is used as an argument for the `substring` method. This causes the substring to start one character after the period instead of at the position of the period, resulting in an incorrect file extension. 
+
+To fix this, the `pos` variable should be used without any increment or decrement operators in the `substring` method, like this:
+
+```
+return fileName.substring(pos + 1);
+```
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 3
+Prompt:
+Is the following code buggy or correct? 
+public static String getExtension(String fileName) {
+  int pos = fileName.lastIndexOf('.');
+  if (pos >= 0) { // Mutated negation of the conditional from < 0 to >= 0
+    return "";
+  }
+  return fileName.substring(pos + 1);
+}
+This code snippet is a Java method named "getExtension" that takes a String parameter "fileName". The purpose of this method is to extract the file extension from the given file name.
+
+Here's what the code does:
+
+First, it finds the position of the last occurrence of the '.' character in the fileName string using the "lastIndexOf" method.
+If the '.' character is not found in the fileName string, then the method returns an empty string ("").
+If the '.' character is found, then the method uses the "substring" method to return the characters that come after the '.' character. This substring represents the file extension.
+So, in summary, the method extracts the file extension from the given file name and returns it as a String. For example, if the input file name is "example.txt", the method will return "txt".
+Response:
+The code is buggy. The conditional statement should be changed to "if (pos < 0)" instead of "if (pos >= 0)" in order for the method to correctly handle cases where there is no file extension.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+public static String getExtension(String fileName) {
+  int pos = fileName.lastIndexOf('.');
+  if (pos >= 0) { // Mutated negation of the conditional from < 0 to >= 0
+    return "";
+  }
+  return fileName.substring(pos + 1);
+}
+Response:
+Yes, the bug is in the conditional statement. The correct version should be "pos < 0" instead of "pos >= 0". With the current condition, the method will always return an empty string when the file name contains an extension.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 4
+Prompt:
+Is the following code buggy or correct? 
+public static String getExtension(String fileName) {
+  int pos = fileName.lastIndexOf('.');
+  if (pos < 0) {
+    return "";
+  }
+  return fileName.substring(pos - 1); // Mutated the substring index from pos + 1 to pos - 1
+}
+This code snippet is a Java method named "getExtension" that takes a String parameter "fileName". The purpose of this method is to extract the file extension from the given file name.
+
+Here's what the code does:
+
+First, it finds the position of the last occurrence of the '.' character in the fileName string using the "lastIndexOf" method.
+If the '.' character is not found in the fileName string, then the method returns an empty string ("").
+If the '.' character is found, then the method uses the "substring" method to return the characters that come after the '.' character. This substring represents the file extension.
+So, in summary, the method extracts the file extension from the given file name and returns it as a String. For example, if the input file name is "example.txt", the method will return "txt".
+Response:
+The code has a bug. In the "return" statement, the substring index should be "pos + 1" instead of "pos - 1". This is because the file extension starts after the '.' character, which is at position "pos". So, we need to start the substring from the next position, which is "pos + 1".
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+public static String getExtension(String fileName) {
+  int pos = fileName.lastIndexOf('.');
+  if (pos < 0) {
+    return "";
+  }
+  return fileName.substring(pos - 1); // Mutated the substring index from pos + 1 to pos - 1
+}
+Response:
+Yes, the bug in this code is that the substring index should be pos + 1 instead of pos - 1. This is because we want to start the substring after the dot (i.e., at the next position), not before it. So, the corrected line should be:
+
+`return fileName.substring(pos + 1);`
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 5
+Prompt:
+Is the following code buggy or correct? 
+public static String getExtension(String fileName) {
+  int pos = fileName.lastIndexOf('.');
+  if (pos < 0) {
+    return "null";
+  }
+  return fileName.substring(pos + 1);
+}
+This code snippet is a Java method named "getExtension" that takes a String parameter "fileName". The purpose of this method is to extract the file extension from the given file name.
+
+Here's what the code does:
+
+First, it finds the position of the last occurrence of the '.' character in the fileName string using the "lastIndexOf" method.
+If the '.' character is not found in the fileName string, then the method returns an empty string ("").
+If the '.' character is found, then the method uses the "substring" method to return the characters that come after the '.' character. This substring represents the file extension.
+So, in summary, the method extracts the file extension from the given file name and returns it as a String. For example, if the input file name is "example.txt", the method will return "txt".
+Response:
+The code is correct. It checks if the file name has an extension by finding the last occurrence of the '.' character. If there's no '.' character, it returns "null". Otherwise, it uses the substring method to extract the extension and returns it as a String.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+public static String getExtension(String fileName) {
+  int pos = fileName.lastIndexOf('.');
+  if (pos < 0) {
+    return "null";
+  }
+  return fileName.substring(pos + 1);
+}
+Response:
+The code seems to be missing any syntax or semantic errors. However, the function may not always return an extension. For example, if the file name is "filename.", then this code will return an empty string, which may not be intended.
+-----------------------------------------
+
+-----------------------------------------

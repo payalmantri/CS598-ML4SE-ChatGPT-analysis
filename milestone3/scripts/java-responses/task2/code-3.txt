@@ -1,0 +1,221 @@
+
+ Mutant 1
+Prompt:
+Is the following code buggy or correct? 
+// Mutant 1 : Replace Geometry.isMultiPath(gt.value()) with !Geometry.isMultiPath(gt.value())
+
+int addGeometry(Geometry geometry) {
+        Geometry.Type gt = geometry.getType();
+        if (!Geometry.isMultiPath(gt.value()))
+                return addMultiPath_((MultiPath) geometry);
+        if (gt == Geometry.Type.MultiPoint)
+                return addMultiPoint_((MultiPoint) geometry);
+
+        throw GeometryException.GeometryInternalError();
+}
+The addGeometry method in the EditShape class of the geometri-api-java repository is used to add a Geometry object to an existing EditShape instance. The Geometry object can be of any type, such as Point, Line, Polygon, or MultiPoint.
+
+The method first gets the type of the Geometry object using the getType method. If the type is a MultiPath, the addMultiPath_ method is called with the MultiPath object as a parameter. Similarly, if the type is MultiPoint, the addMultiPoint_ method is called with the MultiPoint object as a parameter.
+
+If the type is not a MultiPath or a MultiPoint, the method throws a GeometryException.GeometryInternalError exception, indicating that the Geometry object is not supported by the EditShape instance.
+
+The addMultiPath_ and addMultiPoint_ methods are private methods in the EditShape class that are used to add MultiPath and MultiPoint objects, respectively, to the EditShape instance. These methods implement the specific logic for adding these types of objects to the shape.
+Response:
+The mutant code is buggy. The original code checks if the Geometry object is a MultiPath using Geometry.isMultiPath(gt.value()) and it calls addMultiPath_, which makes sense. However, in the mutant code, it checks if the Geometry object is not a MultiPath using !Geometry.isMultiPath(gt.value()). This means that it will call addMultiPath_ even if the Geometry object is not a MultiPath, which can lead to errors or unexpected behavior.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Mutant 1 : Replace Geometry.isMultiPath(gt.value()) with !Geometry.isMultiPath(gt.value())
+
+int addGeometry(Geometry geometry) {
+        Geometry.Type gt = geometry.getType();
+        if (!Geometry.isMultiPath(gt.value()))
+                return addMultiPath_((MultiPath) geometry);
+        if (gt == Geometry.Type.MultiPoint)
+                return addMultiPoint_((MultiPoint) geometry);
+
+        throw GeometryException.GeometryInternalError();
+}
+Response:
+The buggy statement is the first one inside the if block:
+
+```
+if (!Geometry.isMultiPath(gt.value()))
+```
+
+Here, instead of checking whether `gt` is equal to `Geometry.Type.MultiPath`, it is checking whether `gt` is not a MultiPath type. This will cause the code to incorrectly branch into the `addMultiPoint_()` call when a MultiPath type is passed in as an argument.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 2
+Prompt:
+Is the following code buggy or correct? 
+// Mutant 2 : Replace addMultiPath_ with removeMultiPath_
+int addGeometry(Geometry geometry) {
+        Geometry.Type gt = geometry.getType();
+        if (Geometry.isMultiPath(gt.value()))
+                return removeMultiPath_((MultiPath) geometry);
+        if (gt == Geometry.Type.MultiPoint)
+                return addMultiPoint_((MultiPoint) geometry);
+
+        throw GeometryException.GeometryInternalError();
+}
+The addGeometry method in the EditShape class of the geometri-api-java repository is used to add a Geometry object to an existing EditShape instance. The Geometry object can be of any type, such as Point, Line, Polygon, or MultiPoint.
+
+The method first gets the type of the Geometry object using the getType method. If the type is a MultiPath, the addMultiPath_ method is called with the MultiPath object as a parameter. Similarly, if the type is MultiPoint, the addMultiPoint_ method is called with the MultiPoint object as a parameter.
+
+If the type is not a MultiPath or a MultiPoint, the method throws a GeometryException.GeometryInternalError exception, indicating that the Geometry object is not supported by the EditShape instance.
+
+The addMultiPath_ and addMultiPoint_ methods are private methods in the EditShape class that are used to add MultiPath and MultiPoint objects, respectively, to the EditShape instance. These methods implement the specific logic for adding these types of objects to the shape.
+Response:
+The code is buggy. The comment above the code suggests that Mutant 2 is to replace addMultiPath_ with removeMultiPath_, but in the code, it looks like they replaced addMultiPath_ with removeMultiPath_ only for the case where the Geometry object is a MultiPath. However, the method name still starts with "add" instead of "remove" for this case. Also, there is no implementation given for the removeMultiPath_ method, so it's not clear how it should work.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Mutant 2 : Replace addMultiPath_ with removeMultiPath_
+int addGeometry(Geometry geometry) {
+        Geometry.Type gt = geometry.getType();
+        if (Geometry.isMultiPath(gt.value()))
+                return removeMultiPath_((MultiPath) geometry);
+        if (gt == Geometry.Type.MultiPoint)
+                return addMultiPoint_((MultiPoint) geometry);
+
+        throw GeometryException.GeometryInternalError();
+}
+Response:
+The bug is in the first statement. It should be calling the addMultiPath_ method instead of removeMultiPath_.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 3
+Prompt:
+Is the following code buggy or correct? 
+// Mutant 3 : Replace addMultiPoint_ with removeMultiPoint_
+int addGeometry(Geometry geometry) {
+        Geometry.Type gt = geometry.getType();
+        if (Geometry.isMultiPath(gt.value()))
+                return addMultiPath_((MultiPath) geometry);
+        if (gt == Geometry.Type.MultiPoint)
+                return removeMultiPoint_((MultiPoint) geometry);
+
+        throw GeometryException.GeometryInternalError();
+}
+The addGeometry method in the EditShape class of the geometri-api-java repository is used to add a Geometry object to an existing EditShape instance. The Geometry object can be of any type, such as Point, Line, Polygon, or MultiPoint.
+
+The method first gets the type of the Geometry object using the getType method. If the type is a MultiPath, the addMultiPath_ method is called with the MultiPath object as a parameter. Similarly, if the type is MultiPoint, the addMultiPoint_ method is called with the MultiPoint object as a parameter.
+
+If the type is not a MultiPath or a MultiPoint, the method throws a GeometryException.GeometryInternalError exception, indicating that the Geometry object is not supported by the EditShape instance.
+
+The addMultiPath_ and addMultiPoint_ methods are private methods in the EditShape class that are used to add MultiPath and MultiPoint objects, respectively, to the EditShape instance. These methods implement the specific logic for adding these types of objects to the shape.
+Response:
+The code is buggy as it is trying to call removeMultiPoint_ method instead of addMultiPoint_. The comment is misleading and needs to be corrected.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Mutant 3 : Replace addMultiPoint_ with removeMultiPoint_
+int addGeometry(Geometry geometry) {
+        Geometry.Type gt = geometry.getType();
+        if (Geometry.isMultiPath(gt.value()))
+                return addMultiPath_((MultiPath) geometry);
+        if (gt == Geometry.Type.MultiPoint)
+                return removeMultiPoint_((MultiPoint) geometry);
+
+        throw GeometryException.GeometryInternalError();
+}
+Response:
+The bug is in the conditional statement for `Geometry.Type.MultiPoint`. It should call `addMultiPoint_` instead of `removeMultiPoint_`.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 4
+Prompt:
+Is the following code buggy or correct? 
+// Mutant 4 : Remove throw GeometryException.GeometryInternalError();
+int addGeometry(Geometry geometry) {
+        Geometry.Type gt = geometry.getType();
+        if (Geometry.isMultiPath(gt.value()))
+                return addMultiPath_((MultiPath) geometry);
+        if (gt == Geometry.Type.MultiPoint)
+                return addMultiPoint_((MultiPoint) geometry);
+
+     
+}
+      
+The addGeometry method in the EditShape class of the geometri-api-java repository is used to add a Geometry object to an existing EditShape instance. The Geometry object can be of any type, such as Point, Line, Polygon, or MultiPoint.
+
+The method first gets the type of the Geometry object using the getType method. If the type is a MultiPath, the addMultiPath_ method is called with the MultiPath object as a parameter. Similarly, if the type is MultiPoint, the addMultiPoint_ method is called with the MultiPoint object as a parameter.
+
+If the type is not a MultiPath or a MultiPoint, the method throws a GeometryException.GeometryInternalError exception, indicating that the Geometry object is not supported by the EditShape instance.
+
+The addMultiPath_ and addMultiPoint_ methods are private methods in the EditShape class that are used to add MultiPath and MultiPoint objects, respectively, to the EditShape instance. These methods implement the specific logic for adding these types of objects to the shape.
+Response:
+The code is currently buggy. 
+
+The original code throws a `GeometryException.GeometryInternalError` exception when the type of the Geometry object is something other than MultiPath or MultiPoint. However, in the given code block, the exception-throwing statement has been removed, without providing any alternative response for other types of Geometries that are not MultiPath or MultiPoint. This means that the method will simply return without doing anything for such unsupported Geometries, which might lead to unpredictable behavior later in the program. 
+
+It is recommended to add a default response to handle unsupported Geometries, like throwing a suitable exception or logging an error message.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Mutant 4 : Remove throw GeometryException.GeometryInternalError();
+int addGeometry(Geometry geometry) {
+        Geometry.Type gt = geometry.getType();
+        if (Geometry.isMultiPath(gt.value()))
+                return addMultiPath_((MultiPath) geometry);
+        if (gt == Geometry.Type.MultiPoint)
+                return addMultiPoint_((MultiPoint) geometry);
+
+     
+}
+      
+Response:
+The bug is that there's no default return statement, meaning that if the input geometry's type is not a MultiPath or a MultiPoint, the function will not return anything.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 5
+Prompt:
+Is the following code buggy or correct? 
+// Mutant 5 :  Replace throw GeometryException.GeometryInternalError(); with return 0;
+int addGeometry(Geometry geometry) {
+        Geometry.Type gt = geometry.getType();
+        if (Geometry.isMultiPath(gt.value()))
+
+                return addMultiPath_((MultiPath) geometry);
+        if (gt == Geometry.Type.MultiPoint)
+                return addMultiPoint_((MultiPoint) geometry);
+
+        return 0;
+}
+The addGeometry method in the EditShape class of the geometri-api-java repository is used to add a Geometry object to an existing EditShape instance. The Geometry object can be of any type, such as Point, Line, Polygon, or MultiPoint.
+
+The method first gets the type of the Geometry object using the getType method. If the type is a MultiPath, the addMultiPath_ method is called with the MultiPath object as a parameter. Similarly, if the type is MultiPoint, the addMultiPoint_ method is called with the MultiPoint object as a parameter.
+
+If the type is not a MultiPath or a MultiPoint, the method throws a GeometryException.GeometryInternalError exception, indicating that the Geometry object is not supported by the EditShape instance.
+
+The addMultiPath_ and addMultiPoint_ methods are private methods in the EditShape class that are used to add MultiPath and MultiPoint objects, respectively, to the EditShape instance. These methods implement the specific logic for adding these types of objects to the shape.
+Response:
+The code has been modified and the line "Replace throw GeometryException.GeometryInternalError(); with return 0;" appears to be the mutant code. Therefore, this modified code does not throw any exception and will always return 0 if the type of the object is not a MultiPath or a MultiPoint. This may not be desirable behavior since it does not provide any useful information about why the object was not added to the EditShape instance.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Mutant 5 :  Replace throw GeometryException.GeometryInternalError(); with return 0;
+int addGeometry(Geometry geometry) {
+        Geometry.Type gt = geometry.getType();
+        if (Geometry.isMultiPath(gt.value()))
+
+                return addMultiPath_((MultiPath) geometry);
+        if (gt == Geometry.Type.MultiPoint)
+                return addMultiPoint_((MultiPoint) geometry);
+
+        return 0;
+}
+Response:
+It is difficult to identify the bug without knowing what the code is supposed to do and what the Geometry class looks like. However, it seems like there may be a problem with the handling of the Geometry.Type enumeration. If there are other possible values of gt besides MultiPath and MultiPoint, then the function will return 0 for those cases as well, which may not be intended. Additionally, the comment suggests that there was previously a throw statement for a GeometryInternalError exception, which may indicate that there were error conditions that are not being properly handled or reported in the current implementation. Finally, it is unclear what the addMultiPath_() and addMultiPoint_() functions do, so there may be issues with those as well.
+-----------------------------------------
+
+-----------------------------------------
