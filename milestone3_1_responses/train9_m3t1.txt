@@ -1,0 +1,12 @@
+What does the following code do? 
+The `batch_face_locations` function takes a list of images as input and returns a list of tuples of found face locations in CSS (top, right, bottom, left) order using the CNN face detector. It is optimized for GPU processing by processing images in batches of size `batch_size`. 
+
+The function first splits the input images into batches using list comprehension. Then, for each batch of images, it calls `_raw_face_locations_batched` function to get the raw face detections in batched form. After that, it uses `_trim_css_to_bounds` and `_rect_to_css` functions to convert the raw face detection coordinates to CSS coordinates. Finally, it extends the CSS faces list with the batch's CSS faces and returns the complete list of CSS faces.
+Is the above code equivalent to the following code? 
+No, the two codes are not equivalent. 
+
+The original code uses a for loop to iterate through each batch of images and process them one at a time, while the second code uses the `map` function to apply the `convert_cnn_detections_to_css` function to each batch of raw detections.
+
+In addition, the original code uses a helper function called `get_css_faces_batch` to process each batch of images, while the second code includes the processing logic directly in the main function.
+
+Finally, the second code returns a list of lists, where each inner list contains the face locations for a single batch, while the original code returns a single list containing all the face locations for all batches.
