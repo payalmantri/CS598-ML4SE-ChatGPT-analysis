@@ -1,0 +1,279 @@
+
+ Mutant 1
+Prompt:
+Is the following code buggy or correct? 
+// mutation : null return
+public static int update(Connection con, String query, Object... param) throws SQLException {
+    PreparedStatement stmt = null;
+    try {
+      stmt = con.prepareStatement(query);
+      for (int i = 0; i < param.length; i++) {
+        stmt.setObject(i + 1, param[i]);
+      }
+      return null;
+    } finally {
+      close(stmt);
+    }
+  }
+This is a Java method named update that takes a java.sql.Connection object, a String query, and a variable number of parameters as input, and returns an integer value indicating the number of rows affected by the SQL statement.
+
+The method executes a SQL query by creating a PreparedStatement object with the query parameter, and sets the values of the parameters in the SQL statement using the setObject method of the PreparedStatement object. The parameter values are passed as a variable argument list using the ... syntax.
+
+The executeUpdate method of the PreparedStatement object is then called to execute the SQL statement and return the number of rows affected.
+
+Finally, the PreparedStatement object is closed using the close method, which is a private method that likely takes care of closing the statement and freeing any associated resources.
+
+If any SQLException occurs during the execution of the method, it is thrown to the calling code.
+Response:
+The code is buggy. The method is supposed to return an integer, but instead it is returning null. The correct implementation should be to call the executeUpdate method of the PreparedStatement object and return the result as follows:
+
+```
+public static int update(Connection con, String query, Object... param) throws SQLException {
+    PreparedStatement stmt = null;
+    try {
+      stmt = con.prepareStatement(query);
+      for (int i = 0; i < param.length; i++) {
+        stmt.setObject(i + 1, param[i]);
+      }
+      int rowsAffected = stmt.executeUpdate();
+      return rowsAffected;
+    } finally {
+      close(stmt);
+    }
+  }
+``` 
+
+This code will now execute the SQL statement by calling the executeUpdate method of the PreparedStatement object and returning the number of rows affected as an integer.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// mutation : null return
+public static int update(Connection con, String query, Object... param) throws SQLException {
+    PreparedStatement stmt = null;
+    try {
+      stmt = con.prepareStatement(query);
+      for (int i = 0; i < param.length; i++) {
+        stmt.setObject(i + 1, param[i]);
+      }
+      return null;
+    } finally {
+      close(stmt);
+    }
+  }
+Response:
+Yes, there is a bug in this code. The statement involved in the bug is the return statement. It should be returning an integer value instead of null.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 2
+Prompt:
+Is the following code buggy or correct? 
+// mutation : ARITHMETIC_OPERATION_REPLACEMENT
+public static int update(Connection con, String query, Object... param) throws SQLException {
+    PreparedStatement stmt = null;
+    try {
+      stmt = con.prepareStatement(query);
+      for (int i = 0; i < param.length; i++) {
+        stmt.setObject(i - 1, param[i]);
+      }
+      return stmt.executeUpdate();
+    } finally {
+      close(stmt);
+    }
+  }
+This is a Java method named update that takes a java.sql.Connection object, a String query, and a variable number of parameters as input, and returns an integer value indicating the number of rows affected by the SQL statement.
+
+The method executes a SQL query by creating a PreparedStatement object with the query parameter, and sets the values of the parameters in the SQL statement using the setObject method of the PreparedStatement object. The parameter values are passed as a variable argument list using the ... syntax.
+
+The executeUpdate method of the PreparedStatement object is then called to execute the SQL statement and return the number of rows affected.
+
+Finally, the PreparedStatement object is closed using the close method, which is a private method that likely takes care of closing the statement and freeing any associated resources.
+
+If any SQLException occurs during the execution of the method, it is thrown to the calling code.
+Response:
+The code looks correct, but there is a potential bug in the loop that sets the parameter values. The loop starts from index 0 but should start from index 1, as the first parameter index in a PreparedStatement object is 1, not 0. Therefore, the stmt.setObject(i - 1, param[i]) should be changed to stmt.setObject(i, param[i]).
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// mutation : ARITHMETIC_OPERATION_REPLACEMENT
+public static int update(Connection con, String query, Object... param) throws SQLException {
+    PreparedStatement stmt = null;
+    try {
+      stmt = con.prepareStatement(query);
+      for (int i = 0; i < param.length; i++) {
+        stmt.setObject(i - 1, param[i]);
+      }
+      return stmt.executeUpdate();
+    } finally {
+      close(stmt);
+    }
+  }
+Response:
+The statement that is causing the bug is `stmt.setObject(i - 1, param[i]);`. This statement will throw an `ArrayIndexOutOfBoundsException` because `i` starts from `0`, and the index of `PreparedStatement` starts from `1`. So, you need to change the loop statement to `for (int i = 1; i <= param.length; i++)`.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 3
+Prompt:
+Is the following code buggy or correct? 
+// mutation : VOID METHOD CALL
+public static int update(Connection con, String query, Object... param) throws SQLException {
+    PreparedStatement stmt = null;
+    try {
+      stmt = con.prepareStatement(query);
+      for (int i = 0; i < param.length; i++) {
+        stmt.setObject(i - 1, param[i]);
+      }
+      return stmt.executeUpdate();
+    } finally {
+    //   close(stmt);
+    }
+  }
+This is a Java method named update that takes a java.sql.Connection object, a String query, and a variable number of parameters as input, and returns an integer value indicating the number of rows affected by the SQL statement.
+
+The method executes a SQL query by creating a PreparedStatement object with the query parameter, and sets the values of the parameters in the SQL statement using the setObject method of the PreparedStatement object. The parameter values are passed as a variable argument list using the ... syntax.
+
+The executeUpdate method of the PreparedStatement object is then called to execute the SQL statement and return the number of rows affected.
+
+Finally, the PreparedStatement object is closed using the close method, which is a private method that likely takes care of closing the statement and freeing any associated resources.
+
+If any SQLException occurs during the execution of the method, it is thrown to the calling code.
+Response:
+The code looks correct, but it might be improved by uncommenting the `close(stmt);` statement in the `finally` block to ensure that the resources are cleaned up properly.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// mutation : VOID METHOD CALL
+public static int update(Connection con, String query, Object... param) throws SQLException {
+    PreparedStatement stmt = null;
+    try {
+      stmt = con.prepareStatement(query);
+      for (int i = 0; i < param.length; i++) {
+        stmt.setObject(i - 1, param[i]);
+      }
+      return stmt.executeUpdate();
+    } finally {
+    //   close(stmt);
+    }
+  }
+Response:
+The bug is in the for-loop where stmt.setObject() is called. The loop iterator variable i should start from 1 instead of 0. It should be modified to:
+
+    for (int i = 1; i <= param.length; i++) {
+        stmt.setObject(i, param[i-1]);
+    } 
+
+This is because PreparedStatement uses 1-based indexing to set parameters, and we need to adjust the index accordingly when iterating over the array of parameters.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 4
+Prompt:
+Is the following code buggy or correct? 
+// mutation : CONDITIONAL_EXPRESSION_CHANGE
+public static int update(Connection con, String query, Object... param) throws SQLException {
+    PreparedStatement stmt = null;
+    try {
+      stmt = con.prepareStatement(query);
+      for (int i = 0; i <= param.length; i++) {
+        stmt.setObject(i - 1, param[i]);
+      }
+      return stmt.executeUpdate();
+    } finally {
+       close(stmt);
+    }
+  }
+This is a Java method named update that takes a java.sql.Connection object, a String query, and a variable number of parameters as input, and returns an integer value indicating the number of rows affected by the SQL statement.
+
+The method executes a SQL query by creating a PreparedStatement object with the query parameter, and sets the values of the parameters in the SQL statement using the setObject method of the PreparedStatement object. The parameter values are passed as a variable argument list using the ... syntax.
+
+The executeUpdate method of the PreparedStatement object is then called to execute the SQL statement and return the number of rows affected.
+
+Finally, the PreparedStatement object is closed using the close method, which is a private method that likely takes care of closing the statement and freeing any associated resources.
+
+If any SQLException occurs during the execution of the method, it is thrown to the calling code.
+Response:
+The code has a bug in the for loop condition. It should be "i < param.length" instead of "i <= param.length". The current condition will cause an IndexOutOfBoundsException when trying to set the last parameter value because the loop will try to access an index that is out of bounds.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// mutation : CONDITIONAL_EXPRESSION_CHANGE
+public static int update(Connection con, String query, Object... param) throws SQLException {
+    PreparedStatement stmt = null;
+    try {
+      stmt = con.prepareStatement(query);
+      for (int i = 0; i <= param.length; i++) {
+        stmt.setObject(i - 1, param[i]);
+      }
+      return stmt.executeUpdate();
+    } finally {
+       close(stmt);
+    }
+  }
+Response:
+The bug is located in the for loop. 
+
+The loop condition should be "i < param.length" instead of "i <= param.length" to avoid an IndexOutOfBoundsException when accessing the last element of the param array.
+
+Also, the index used in the setObject method should start at 1 instead of 0 since JDBC parameters start at position 1. Therefore, it should be "stmt.setObject(i, param[i-1]);".
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 5
+Prompt:
+Is the following code buggy or correct? 
+// mutation : UNARY OPERTION INSERT
+public static int update(Connection con, String query, Object... param) throws SQLException {
+    PreparedStatement stmt = null;
+    try {
+      stmt = con.prepareStatement(query);
+      for (int i = 0; i < param.length; i++) {
+        stmt.setObject(i - 1, param[i]);
+        param[i]++;
+      }
+      return stmt.executeUpdate();
+    } finally {
+       close(stmt);
+    }
+  }
+This is a Java method named update that takes a java.sql.Connection object, a String query, and a variable number of parameters as input, and returns an integer value indicating the number of rows affected by the SQL statement.
+
+The method executes a SQL query by creating a PreparedStatement object with the query parameter, and sets the values of the parameters in the SQL statement using the setObject method of the PreparedStatement object. The parameter values are passed as a variable argument list using the ... syntax.
+
+The executeUpdate method of the PreparedStatement object is then called to execute the SQL statement and return the number of rows affected.
+
+Finally, the PreparedStatement object is closed using the close method, which is a private method that likely takes care of closing the statement and freeing any associated resources.
+
+If any SQLException occurs during the execution of the method, it is thrown to the calling code.
+Response:
+The code seems to be buggy. In the for-loop, the line `param[i]++;` increments the parameter value, which shouldn't happen in a method whose purpose is to update database rows. Additionally, the `stmt.setObject(i - 1, param[i]);` should have an index of `i + 1` instead of `i - 1` since parameter indexes in a prepared statement start from `1`.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// mutation : UNARY OPERTION INSERT
+public static int update(Connection con, String query, Object... param) throws SQLException {
+    PreparedStatement stmt = null;
+    try {
+      stmt = con.prepareStatement(query);
+      for (int i = 0; i < param.length; i++) {
+        stmt.setObject(i - 1, param[i]);
+        param[i]++;
+      }
+      return stmt.executeUpdate();
+    } finally {
+       close(stmt);
+    }
+  }
+Response:
+Yes, there are two statements that are involved in the bug:
+
+1. The line 'stmt.setObject(i - 1, param[i])' - This is assuming that the index of the prepared statement parameters starts at 0, when in fact it starts at 1. This will cause an error when trying to set the first parameter.
+
+2. The line 'param[i]++' - This is incrementing the value of the parameter array which can lead to unexpected behavior or errors if the parameter is meant to be used again later in the code.
+-----------------------------------------
+
+-----------------------------------------

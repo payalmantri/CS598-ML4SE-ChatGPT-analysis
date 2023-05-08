@@ -1,0 +1,298 @@
+
+ Mutant 1
+Prompt:
+Is the following code buggy or correct? 
+//     Muation 1: Remove the negation operator in the if statement:
+void clearPath(int path) {
+        int first_vertex = getFirstVertex(path);
+        if (first_vertex == -1) {
+                // TODO: can ve do this in one shot?
+                int vertex = first_vertex;
+                for (int i = 0, n = getPathSize(path); i < n; i++) {
+                        int v = vertex;
+                        vertex = getNextVertex(vertex);
+                        freeVertex_(v);
+                }
+                int geometry = getGeometryFromPath(path);
+                setGeometryVertexCount_(geometry, getPointCount(geometry)
+                        - getPathSize(path));
+        }
+        setPathSize_(path, 0);
+}
+"This code defines a function called clearPath() that takes an integer parameter called path. The function first retrieves the index of the first vertex in the path using the getFirstVertex() function. If the index is not -1 (meaning there is at least one vertex in the path), then the function iterates over each vertex in the path, calling freeVertex_() to release the memory allocated for the vertex. The vertex index is obtained using getNextVertex() and assigned to vertex, which is initially set to first_vertex.
+
+After all vertices have been freed, the function retrieves the index of the geometry that contains the path using getGeometryFromPath(). It then updates the number of vertices in the geometry by subtracting the size of the path (as obtained using getPathSize()) from the total number of points in the geometry (as obtained using getPointCount()) using setGeometryVertexCount_().
+
+Finally, the function sets the size of the path to 0 using setPathSize_(), effectively clearing the path of all vertices."
+Response:
+The code is buggy. One of the mutations to the original code was removing the negation operator in the if statement. This means that the code inside the if statement will only execute if the index of the first vertex in the path is -1, which is the opposite of the intended behavior. The correct condition should be if (first_vertex != -1).
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//     Muation 1: Remove the negation operator in the if statement:
+void clearPath(int path) {
+        int first_vertex = getFirstVertex(path);
+        if (first_vertex == -1) {
+                // TODO: can ve do this in one shot?
+                int vertex = first_vertex;
+                for (int i = 0, n = getPathSize(path); i < n; i++) {
+                        int v = vertex;
+                        vertex = getNextVertex(vertex);
+                        freeVertex_(v);
+                }
+                int geometry = getGeometryFromPath(path);
+                setGeometryVertexCount_(geometry, getPointCount(geometry)
+                        - getPathSize(path));
+        }
+        setPathSize_(path, 0);
+}
+Response:
+The bug involves the initialization of the "vertex" variable within the if statement. Since "first_vertex" is already set to -1, the initialization of "vertex" will also be -1. This means that the loop inside the if statement will not iterate at all. Therefore, none of the vertices in the path will be freed and the geometry associated with the path will not have its vertex count reduced. 
+
+To fix this bug, we can initialize "vertex" to "getFirstVertex(path)" instead of "first_vertex".
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 2
+Prompt:
+Is the following code buggy or correct? 
+//     Mutation 2:Replace i < n with i <= n in the for loop:
+void clearPath(int path) {
+        int first_vertex = getFirstVertex(path);
+        if (first_vertex != -1) {
+                // TODO: can ve do this in one shot?
+                int vertex = first_vertex;
+                for (int i = 0, n = getPathSize(path); i <= n; i++) {
+                        int v = vertex;
+                        vertex = getNextVertex(vertex);
+                        freeVertex_(v);
+                }
+                int geometry = getGeometryFromPath(path);
+                setGeometryVertexCount_(geometry, getPointCount(geometry)
+                        - getPathSize(path));
+        }
+        setPathSize_(path, 0);
+}
+"This code defines a function called clearPath() that takes an integer parameter called path. The function first retrieves the index of the first vertex in the path using the getFirstVertex() function. If the index is not -1 (meaning there is at least one vertex in the path), then the function iterates over each vertex in the path, calling freeVertex_() to release the memory allocated for the vertex. The vertex index is obtained using getNextVertex() and assigned to vertex, which is initially set to first_vertex.
+
+After all vertices have been freed, the function retrieves the index of the geometry that contains the path using getGeometryFromPath(). It then updates the number of vertices in the geometry by subtracting the size of the path (as obtained using getPathSize()) from the total number of points in the geometry (as obtained using getPointCount()) using setGeometryVertexCount_().
+
+Finally, the function sets the size of the path to 0 using setPathSize_(), effectively clearing the path of all vertices."
+Response:
+The code may be correct or may contain a bug depending on the specific use case. In the for loop, changing i < n to i <= n means that an extra iteration will be performed, potentially causing the function to access memory that it shouldn't and leading to undefined behavior or a segmentation fault. It is important to ensure that the loop only iterates over valid indices.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//     Mutation 2:Replace i < n with i <= n in the for loop:
+void clearPath(int path) {
+        int first_vertex = getFirstVertex(path);
+        if (first_vertex != -1) {
+                // TODO: can ve do this in one shot?
+                int vertex = first_vertex;
+                for (int i = 0, n = getPathSize(path); i <= n; i++) {
+                        int v = vertex;
+                        vertex = getNextVertex(vertex);
+                        freeVertex_(v);
+                }
+                int geometry = getGeometryFromPath(path);
+                setGeometryVertexCount_(geometry, getPointCount(geometry)
+                        - getPathSize(path));
+        }
+        setPathSize_(path, 0);
+}
+Response:
+The bug is in the for loop condition. It should be i < n instead of i <= n because the loop runs n times, and the last iteration should not access elements beyond the array size. When i = n, it accesses the (n+1)th element, which causes undefined behavior. So, the statement involved in the bug is:
+
+```
+for (int i = 0, n = getPathSize(path); i <= n; i++)
+```
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 3
+Prompt:
+Is the following code buggy or correct? 
+//    Mutation 3: Replace the for loop with a while loop: 
+
+void clearPath(int path) {
+        int first_vertex = getFirstVertex(path);
+        if (first_vertex != -1) {
+                // TODO: can ve do this in one shot?
+                int vertex = first_vertex;
+                int i = 0;
+                int n = getPathSize(path);
+                while (i < n) {
+                         int v = vertex;
+                        vertex = getNextVertex(vertex);
+                        freeVertex_(v);
+                        i++;
+                }
+                int geometry = getGeometryFromPath(path);
+                setGeometryVertexCount_(geometry, getPointCount(geometry)
+                        - getPathSize(path));
+        }
+        setPathSize_(path, 0);
+}
+"This code defines a function called clearPath() that takes an integer parameter called path. The function first retrieves the index of the first vertex in the path using the getFirstVertex() function. If the index is not -1 (meaning there is at least one vertex in the path), then the function iterates over each vertex in the path, calling freeVertex_() to release the memory allocated for the vertex. The vertex index is obtained using getNextVertex() and assigned to vertex, which is initially set to first_vertex.
+
+After all vertices have been freed, the function retrieves the index of the geometry that contains the path using getGeometryFromPath(). It then updates the number of vertices in the geometry by subtracting the size of the path (as obtained using getPathSize()) from the total number of points in the geometry (as obtained using getPointCount()) using setGeometryVertexCount_().
+
+Finally, the function sets the size of the path to 0 using setPathSize_(), effectively clearing the path of all vertices."
+Response:
+The code seems correct. The for loop has been replaced with a while loop which iterates over each vertex in the path, frees the memory allocated for the vertex and updates the geometry accordingly. The function also sets the size of the path to 0, effectively clearing the path of all vertices.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//    Mutation 3: Replace the for loop with a while loop: 
+
+void clearPath(int path) {
+        int first_vertex = getFirstVertex(path);
+        if (first_vertex != -1) {
+                // TODO: can ve do this in one shot?
+                int vertex = first_vertex;
+                int i = 0;
+                int n = getPathSize(path);
+                while (i < n) {
+                         int v = vertex;
+                        vertex = getNextVertex(vertex);
+                        freeVertex_(v);
+                        i++;
+                }
+                int geometry = getGeometryFromPath(path);
+                setGeometryVertexCount_(geometry, getPointCount(geometry)
+                        - getPathSize(path));
+        }
+        setPathSize_(path, 0);
+}
+Response:
+The bug is in the following statement:
+
+```
+int v = vertex;
+vertex = getNextVertex(vertex);
+freeVertex_(v);
+```
+
+This code fragment is not updating the "next" vertex of the one that was freed. It should be:
+
+```
+int v = vertex;
+vertex = getNextVertex(vertex);
+setNextVertex(v, 0);
+freeVertex_(v);
+``` 
+
+This will set the next pointer of the current vertex to zero before freeing it, preventing it from pointing to an invalid memory location after it has been freed.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 4
+Prompt:
+Is the following code buggy or correct? 
+//    Mutation 4:  Change the setGeometryVertexCount_ call to increment instead of decrement:
+void clearPath(int path) {
+        int first_vertex = getFirstVertex(path);
+        if (first_vertex != -1) {
+                // TODO: can ve do this in one shot?
+                int vertex = first_vertex;
+                for (int i = 0, n = getPathSize(path); i < n; i++) {
+                        int v = vertex;
+                        vertex = getNextVertex(vertex);
+                        freeVertex_(v);
+                }
+                int geometry = getGeometryFromPath(path);
+                setGeometryVertexCount_(geometry, getPointCount(geometry)
+                        + getPathSize(path));
+        }
+        setPathSize_(path, 0);
+}
+"This code defines a function called clearPath() that takes an integer parameter called path. The function first retrieves the index of the first vertex in the path using the getFirstVertex() function. If the index is not -1 (meaning there is at least one vertex in the path), then the function iterates over each vertex in the path, calling freeVertex_() to release the memory allocated for the vertex. The vertex index is obtained using getNextVertex() and assigned to vertex, which is initially set to first_vertex.
+
+After all vertices have been freed, the function retrieves the index of the geometry that contains the path using getGeometryFromPath(). It then updates the number of vertices in the geometry by subtracting the size of the path (as obtained using getPathSize()) from the total number of points in the geometry (as obtained using getPointCount()) using setGeometryVertexCount_().
+
+Finally, the function sets the size of the path to 0 using setPathSize_(), effectively clearing the path of all vertices."
+Response:
+The code is buggy. The comment in the code says to increment the setGeometryVertexCount_ call, but the code actually decrements it.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//    Mutation 4:  Change the setGeometryVertexCount_ call to increment instead of decrement:
+void clearPath(int path) {
+        int first_vertex = getFirstVertex(path);
+        if (first_vertex != -1) {
+                // TODO: can ve do this in one shot?
+                int vertex = first_vertex;
+                for (int i = 0, n = getPathSize(path); i < n; i++) {
+                        int v = vertex;
+                        vertex = getNextVertex(vertex);
+                        freeVertex_(v);
+                }
+                int geometry = getGeometryFromPath(path);
+                setGeometryVertexCount_(geometry, getPointCount(geometry)
+                        + getPathSize(path));
+        }
+        setPathSize_(path, 0);
+}
+Response:
+The buggy statement is the "setGeometryVertexCount_(geometry, getPointCount(geometry) + getPathSize(path)" statement. 
+
+It should decrement the vertex count by calling "setGeometryVertexCount_(geometry, getPointCount(geometry) - getPathSize(path));" instead of incrementing it.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 5
+Prompt:
+Is the following code buggy or correct? 
+//    Mutation 5: delete the call to setPathSize_:
+void clearPath(int path) {
+        int first_vertex = getFirstVertex(path);
+        if (first_vertex != -1) {
+                // TODO: can ve do this in one shot?
+                int vertex = first_vertex;
+                for (int i = 0, n = getPathSize(path); i < n; i++) {
+                        int v = vertex;
+                        vertex = getNextVertex(vertex);
+                        freeVertex_(v);
+                }
+                int geometry = getGeometryFromPath(path);
+                setGeometryVertexCount_(geometry, getPointCount(geometry)
+                        - getPathSize(path));
+        }
+        
+}
+"This code defines a function called clearPath() that takes an integer parameter called path. The function first retrieves the index of the first vertex in the path using the getFirstVertex() function. If the index is not -1 (meaning there is at least one vertex in the path), then the function iterates over each vertex in the path, calling freeVertex_() to release the memory allocated for the vertex. The vertex index is obtained using getNextVertex() and assigned to vertex, which is initially set to first_vertex.
+
+After all vertices have been freed, the function retrieves the index of the geometry that contains the path using getGeometryFromPath(). It then updates the number of vertices in the geometry by subtracting the size of the path (as obtained using getPathSize()) from the total number of points in the geometry (as obtained using getPointCount()) using setGeometryVertexCount_().
+
+Finally, the function sets the size of the path to 0 using setPathSize_(), effectively clearing the path of all vertices."
+Response:
+The code is buggy because it deletes the call to `setPathSize_()` function without any alternative solution. The function is responsible for setting the size of the path to 0, which is necessary to effectively clear the path of all vertices. Without this line, the path size will not be reset and may cause issues in further usage of the path.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//    Mutation 5: delete the call to setPathSize_:
+void clearPath(int path) {
+        int first_vertex = getFirstVertex(path);
+        if (first_vertex != -1) {
+                // TODO: can ve do this in one shot?
+                int vertex = first_vertex;
+                for (int i = 0, n = getPathSize(path); i < n; i++) {
+                        int v = vertex;
+                        vertex = getNextVertex(vertex);
+                        freeVertex_(v);
+                }
+                int geometry = getGeometryFromPath(path);
+                setGeometryVertexCount_(geometry, getPointCount(geometry)
+                        - getPathSize(path));
+        }
+        
+}
+Response:
+The bug is caused by the deletion of the call to setPathSize_ method. Without this statement, the geometry vertex count is not updated correctly. As a result, the geometry may have an incorrect number of vertices.
+-----------------------------------------
+
+-----------------------------------------

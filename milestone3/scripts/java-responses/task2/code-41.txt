@@ -1,0 +1,406 @@
+
+ Mutant 1
+Prompt:
+Is the following code buggy or correct? 
+//     Muation 1:Mutate the comparison operator in the if statement to its complement:
+ public boolean addAll(int index, FloatArray items) {
+    if (index > =0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + items.size);
+    if (index < size) {
+      for (int i = size - 1; i >= index; i--) {
+        elements[i + items.size] = elements[i];
+      }
+    }
+    for (int i = 0; i < items.size; i++) {
+      elements[index++] = items.elements[i];
+    }
+    size += items.size;
+    return items.size > 0;
+  }
+The given code is a method called addAll that adds all the elements of a FloatArray object to another FloatArray object at a specified index.
+
+Here's an explanation of what the code does, step by step:
+
+The method takes two arguments, an integer index and a FloatArray object named items.
+The method first checks if the index is valid, i.e., if it is within the bounds of the current array. If the index is less than 0 or greater than the size of the array, it throws an IndexOutOfBoundsException.
+The method then calls the ensureCapacity method to ensure that there is enough space in the array to add the new items.
+If the index is less than the size of the array, the method shifts the elements to the right to make space for the new items. This is done using a loop that starts from the last element and moves towards the specified index, shifting each element to the right by the size of the new items.
+The method then copies the elements of the items array to the specified index in the elements array, using a loop that increments the index for each item in the items array.
+Finally, the method updates the size of the array and returns true if the size of the items array is greater than 0.
+Here's an example of how the method works. Let's say we have an existing FloatArray object called array with the following elements:
+
+csharp
+Copy code
+[1.0, 2.0, 3.0]
+And we want to add the following elements to array at index 1:
+
+csharp
+Copy code
+[4.0, 5.0]
+When we call addAll(1, items) on array, the method will first check if the index is valid (which it is). It will then shift the elements to the right to make space for the new items:
+
+csharp
+Copy code
+[1.0, _, 2.0, 3.0]
+Next, it will copy the elements of the items array to the specified index:
+
+csharp
+Copy code
+[1.0, 4.0, 5.0, 2.0, 3.0]
+Response:
+The code is buggy. The comparison operator in the if statement in line 3 should be changed to && instead of || to ensure that the index is within the bounds of the array. 
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//     Muation 1:Mutate the comparison operator in the if statement to its complement:
+ public boolean addAll(int index, FloatArray items) {
+    if (index > =0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + items.size);
+    if (index < size) {
+      for (int i = size - 1; i >= index; i--) {
+        elements[i + items.size] = elements[i];
+      }
+    }
+    for (int i = 0; i < items.size; i++) {
+      elements[index++] = items.elements[i];
+    }
+    size += items.size;
+    return items.size > 0;
+  }
+Response:
+The bug is in the first if statement where the OR operator should have been replaced with the AND operator. The correct statement should be `if (index < 0 || index > size)` to check for both conditions.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 2
+Prompt:
+Is the following code buggy or correct? 
+//     Mutation 2: Mutate the loop condition to be always true:
+ public boolean addAll(int index, FloatArray items) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + items.size);
+    if (index < size) {
+      for (int i = size - 1;; i--) {
+        elements[i + items.size] = elements[i];
+      }
+    }
+    for (int i = 0; i < items.size; i++) {
+      elements[index++] = items.elements[i];
+    }
+    size += items.size;
+    return items.size > 0;
+  }
+The given code is a method called addAll that adds all the elements of a FloatArray object to another FloatArray object at a specified index.
+
+Here's an explanation of what the code does, step by step:
+
+The method takes two arguments, an integer index and a FloatArray object named items.
+The method first checks if the index is valid, i.e., if it is within the bounds of the current array. If the index is less than 0 or greater than the size of the array, it throws an IndexOutOfBoundsException.
+The method then calls the ensureCapacity method to ensure that there is enough space in the array to add the new items.
+If the index is less than the size of the array, the method shifts the elements to the right to make space for the new items. This is done using a loop that starts from the last element and moves towards the specified index, shifting each element to the right by the size of the new items.
+The method then copies the elements of the items array to the specified index in the elements array, using a loop that increments the index for each item in the items array.
+Finally, the method updates the size of the array and returns true if the size of the items array is greater than 0.
+Here's an example of how the method works. Let's say we have an existing FloatArray object called array with the following elements:
+
+csharp
+Copy code
+[1.0, 2.0, 3.0]
+And we want to add the following elements to array at index 1:
+
+csharp
+Copy code
+[4.0, 5.0]
+When we call addAll(1, items) on array, the method will first check if the index is valid (which it is). It will then shift the elements to the right to make space for the new items:
+
+csharp
+Copy code
+[1.0, _, 2.0, 3.0]
+Next, it will copy the elements of the items array to the specified index:
+
+csharp
+Copy code
+[1.0, 4.0, 5.0, 2.0, 3.0]
+Response:
+The given code is buggy. The loop condition in line 9 is always true, which means that the loop will continue indefinitely and likely result in a stack overflow or memory error. The loop should have a stopping condition based on `i` and the size of the items array. One possible stopping condition could be `i >= index`, since once we reach the index where we want to insert the new elements, we no longer need to shift any more elements.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//     Mutation 2: Mutate the loop condition to be always true:
+ public boolean addAll(int index, FloatArray items) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + items.size);
+    if (index < size) {
+      for (int i = size - 1;; i--) {
+        elements[i + items.size] = elements[i];
+      }
+    }
+    for (int i = 0; i < items.size; i++) {
+      elements[index++] = items.elements[i];
+    }
+    size += items.size;
+    return items.size > 0;
+  }
+Response:
+The statement involved in the bug is:
+
+```
+for (int i = size - 1;; i--) {
+        elements[i + items.size] = elements[i];
+      }
+```
+
+The loop condition is always true, which creates an infinite loop causing the program to hang.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 3
+Prompt:
+Is the following code buggy or correct? 
+//    Mutation 3:  Mutate the loop condition to be always false:
+
+ public boolean addAll(int index, FloatArray items) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + items.size);
+    if (index < size) {
+      for (int i = size - 1; i >= index; i--) {
+        elements[i + items.size] = elements[i];
+      }
+    }
+    for (int i = 0; i > items.size; i++) {
+      elements[index++] = items.elements[i];
+    }
+    size += items.size;
+    return items.size > 0;
+  }
+The given code is a method called addAll that adds all the elements of a FloatArray object to another FloatArray object at a specified index.
+
+Here's an explanation of what the code does, step by step:
+
+The method takes two arguments, an integer index and a FloatArray object named items.
+The method first checks if the index is valid, i.e., if it is within the bounds of the current array. If the index is less than 0 or greater than the size of the array, it throws an IndexOutOfBoundsException.
+The method then calls the ensureCapacity method to ensure that there is enough space in the array to add the new items.
+If the index is less than the size of the array, the method shifts the elements to the right to make space for the new items. This is done using a loop that starts from the last element and moves towards the specified index, shifting each element to the right by the size of the new items.
+The method then copies the elements of the items array to the specified index in the elements array, using a loop that increments the index for each item in the items array.
+Finally, the method updates the size of the array and returns true if the size of the items array is greater than 0.
+Here's an example of how the method works. Let's say we have an existing FloatArray object called array with the following elements:
+
+csharp
+Copy code
+[1.0, 2.0, 3.0]
+And we want to add the following elements to array at index 1:
+
+csharp
+Copy code
+[4.0, 5.0]
+When we call addAll(1, items) on array, the method will first check if the index is valid (which it is). It will then shift the elements to the right to make space for the new items:
+
+csharp
+Copy code
+[1.0, _, 2.0, 3.0]
+Next, it will copy the elements of the items array to the specified index:
+
+csharp
+Copy code
+[1.0, 4.0, 5.0, 2.0, 3.0]
+Response:
+The code contains a mutation which makes the loop condition always false, resulting in the loop never executing. Therefore, the elements of the items array will not be copied to the specified index in the elements array. This is a bug and the code needs to be fixed.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//    Mutation 3:  Mutate the loop condition to be always false:
+
+ public boolean addAll(int index, FloatArray items) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + items.size);
+    if (index < size) {
+      for (int i = size - 1; i >= index; i--) {
+        elements[i + items.size] = elements[i];
+      }
+    }
+    for (int i = 0; i > items.size; i++) {
+      elements[index++] = items.elements[i];
+    }
+    size += items.size;
+    return items.size > 0;
+  }
+Response:
+The statement involved in the bug is:
+
+```
+for (int i = 0; i > items.size; i++) {
+```
+
+The loop condition `i > items.size` will always be false, since i starts from 0 and is incremented by one at each iteration. Therefore, this loop will never be executed.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 4
+Prompt:
+Is the following code buggy or correct? 
+//    Mutation 4:Mutate the assignment operator in the loop to a different operator:
+ public boolean addAll(int index, FloatArray items) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + items.size);
+    if (index < size) {
+      for (int i = size - 1; i >= index;i -= items.size) {
+        elements[i + items.size] = elements[i];
+      }
+    }
+    for (int i = 0; i < items.size; i++) {
+      elements[index++] = items.elements[i];
+    }
+    size += items.size;
+    return items.size > 0;
+  }
+The given code is a method called addAll that adds all the elements of a FloatArray object to another FloatArray object at a specified index.
+
+Here's an explanation of what the code does, step by step:
+
+The method takes two arguments, an integer index and a FloatArray object named items.
+The method first checks if the index is valid, i.e., if it is within the bounds of the current array. If the index is less than 0 or greater than the size of the array, it throws an IndexOutOfBoundsException.
+The method then calls the ensureCapacity method to ensure that there is enough space in the array to add the new items.
+If the index is less than the size of the array, the method shifts the elements to the right to make space for the new items. This is done using a loop that starts from the last element and moves towards the specified index, shifting each element to the right by the size of the new items.
+The method then copies the elements of the items array to the specified index in the elements array, using a loop that increments the index for each item in the items array.
+Finally, the method updates the size of the array and returns true if the size of the items array is greater than 0.
+Here's an example of how the method works. Let's say we have an existing FloatArray object called array with the following elements:
+
+csharp
+Copy code
+[1.0, 2.0, 3.0]
+And we want to add the following elements to array at index 1:
+
+csharp
+Copy code
+[4.0, 5.0]
+When we call addAll(1, items) on array, the method will first check if the index is valid (which it is). It will then shift the elements to the right to make space for the new items:
+
+csharp
+Copy code
+[1.0, _, 2.0, 3.0]
+Next, it will copy the elements of the items array to the specified index:
+
+csharp
+Copy code
+[1.0, 4.0, 5.0, 2.0, 3.0]
+Response:
+The code seems correct as per the given problem statement. However, without knowing the problem statement, it is hard to say if the code is buggy or not.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//    Mutation 4:Mutate the assignment operator in the loop to a different operator:
+ public boolean addAll(int index, FloatArray items) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + items.size);
+    if (index < size) {
+      for (int i = size - 1; i >= index;i -= items.size) {
+        elements[i + items.size] = elements[i];
+      }
+    }
+    for (int i = 0; i < items.size; i++) {
+      elements[index++] = items.elements[i];
+    }
+    size += items.size;
+    return items.size > 0;
+  }
+Response:
+The statement involved in the bug is `for (int i = size - 1; i >= index;i -= items.size)`. The decrement of "i" by "items.size" instead of 1 causes the loop to skip some elements when shifting them towards the end of the array.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 5
+Prompt:
+Is the following code buggy or correct? 
+//    Mutation 5 : Mutate the return value to always be false:
+ public boolean addAll(int index, FloatArray items) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + items.size);
+    if (index < size) {
+      for (int i = size - 1; i >= index; i--) {
+        elements[i + items.size] = elements[i];
+      }
+    }
+    for (int i = 0; i < items.size; i++) {
+      elements[index++] = items.elements[i];
+    }
+    size += items.size;
+    return false;
+  }
+The given code is a method called addAll that adds all the elements of a FloatArray object to another FloatArray object at a specified index.
+
+Here's an explanation of what the code does, step by step:
+
+The method takes two arguments, an integer index and a FloatArray object named items.
+The method first checks if the index is valid, i.e., if it is within the bounds of the current array. If the index is less than 0 or greater than the size of the array, it throws an IndexOutOfBoundsException.
+The method then calls the ensureCapacity method to ensure that there is enough space in the array to add the new items.
+If the index is less than the size of the array, the method shifts the elements to the right to make space for the new items. This is done using a loop that starts from the last element and moves towards the specified index, shifting each element to the right by the size of the new items.
+The method then copies the elements of the items array to the specified index in the elements array, using a loop that increments the index for each item in the items array.
+Finally, the method updates the size of the array and returns true if the size of the items array is greater than 0.
+Here's an example of how the method works. Let's say we have an existing FloatArray object called array with the following elements:
+
+csharp
+Copy code
+[1.0, 2.0, 3.0]
+And we want to add the following elements to array at index 1:
+
+csharp
+Copy code
+[4.0, 5.0]
+When we call addAll(1, items) on array, the method will first check if the index is valid (which it is). It will then shift the elements to the right to make space for the new items:
+
+csharp
+Copy code
+[1.0, _, 2.0, 3.0]
+Next, it will copy the elements of the items array to the specified index:
+
+csharp
+Copy code
+[1.0, 4.0, 5.0, 2.0, 3.0]
+Response:
+The code is buggy. The mutation that always returns false makes the method useless as it will always indicate that the addition of the elements was unsuccessful, even if it actually was. Returning false will also prevent the caller of the method from knowing whether or not the operation was successful, which could lead to bugs in their code.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+//    Mutation 5 : Mutate the return value to always be false:
+ public boolean addAll(int index, FloatArray items) {
+    if (index < 0 || index > size) {
+      throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + items.size);
+    if (index < size) {
+      for (int i = size - 1; i >= index; i--) {
+        elements[i + items.size] = elements[i];
+      }
+    }
+    for (int i = 0; i < items.size; i++) {
+      elements[index++] = items.elements[i];
+    }
+    size += items.size;
+    return false;
+  }
+Response:
+The bug in the code is at the return statement, which always returns false. This means that the method will always return false, regardless of whether the operation was successful or not.
+-----------------------------------------
+
+-----------------------------------------

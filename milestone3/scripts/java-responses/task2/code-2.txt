@@ -1,0 +1,313 @@
+
+ Mutant 1
+Prompt:
+Is the following code buggy or correct? 
+// Replace return pt1 with pt2
+/double offset(/* const */Point2D pt1, /* const */Point2D pt2) {
+    Point2D p = construct(x, y);
+    double newDistance = distance(pt1, pt2);
+    if (newDistance != 0.0) {
+        // get vectors relative to pt_1
+        Point2D p2 = new Point2D();
+        p2.setCoords(pt2);
+        p2.sub(pt1);
+        p.sub(pt1);
+
+        double cross = p.crossProduct(p2);
+        return cross / newDistance;
+    } else {
+        return distance(p, pt2);
+    }
+
+}
+"Yes, I can explain what the offset method does. Here's a breakdown:
+
+The offset method takes two Point2D objects pt1 and pt2 as arguments. It first computes the Euclidean distance between pt1 and pt2 using the distance method of the Point2D class. It then constructs a new Point2D object p with the same coordinates as the current point, and checks if the distance between pt1 and pt2 is zero. If it is, the method returns the distance between p and pt1 using the distance method of the Point2D class.
+
+If the distance between pt1 and pt2 is not zero, the method computes the vector from pt1 to pt2 as follows: it creates a new Point2D object p2 with the same coordinates as pt2, and then subtracts the coordinates of pt1 from p2 using the sub method of the Point2D class. It also subtracts the coordinates of pt1 from the coordinates of p using the same method.
+
+The method then computes the cross product of the vectors p and p2 using the crossProduct method of the Point2D class. Finally, it divides the cross product by the Euclidean distance between pt1 and pt2 that was computed earlier, and returns the result.
+
+In summary, the offset method computes the signed distance from the current point to the line passing through pt1 and pt2, where the sign indicates which side of the line the point is on. If the point is on the same side of the line as pt1, the distance will be positive; if it's on the opposite side, the distance will be negative. If the point is exactly on the line, the distance will be zero"
+Response:
+As for the code itself, it seems to be missing a return type. The method signature should be something like "double offset(Point2D pt1, Point2D pt2)". Additionally, the line "Point2D p = construct(x, y);" is not valid syntax. It should be replaced with "Point2D p = new Point2D(pt1.getX(), pt1.getY());" or something similar to create a new object with the same coordinates as pt1.
+
+Lastly, the comment "// Replace return pt1 with pt2" is confusing and doesn't seem to have any effect on the method itself.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Replace return pt1 with pt2
+/double offset(/* const */Point2D pt1, /* const */Point2D pt2) {
+    Point2D p = construct(x, y);
+    double newDistance = distance(pt1, pt2);
+    if (newDistance != 0.0) {
+        // get vectors relative to pt_1
+        Point2D p2 = new Point2D();
+        p2.setCoords(pt2);
+        p2.sub(pt1);
+        p.sub(pt1);
+
+        double cross = p.crossProduct(p2);
+        return cross / newDistance;
+    } else {
+        return distance(p, pt2);
+    }
+
+}
+Response:
+The statement `Point2D p = construct(x, y);` is not defined and needs to be replaced with `Point2D p = new Point2D(x, y);`. Additionally, the return statement `return distance(p, pt2);` should be modified to `return distance(pt1, pt2);`.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 2
+Prompt:
+Is the following code buggy or correct? 
+// Replace p2.setCoords(pt2) with p2.setCoords(pt1)
+/double offset(/* const */Point2D pt1, /* const */Point2D pt2) {
+    Point2D p = construct(x, y);
+    double newDistance = distance(pt1, pt2);
+    if (newDistance != 0.0) {
+        // get vectors relative to pt_1
+        Point2D p2 = new Point2D();
+        p2.setCoords(pt1);
+        p2.sub(pt1);
+        p.sub(pt1);
+
+        double cross = p.crossProduct(p2);
+        return cross / newDistance;
+    } else {
+        return distance(p, pt1);
+    }
+
+}
+"Yes, I can explain what the offset method does. Here's a breakdown:
+
+The offset method takes two Point2D objects pt1 and pt2 as arguments. It first computes the Euclidean distance between pt1 and pt2 using the distance method of the Point2D class. It then constructs a new Point2D object p with the same coordinates as the current point, and checks if the distance between pt1 and pt2 is zero. If it is, the method returns the distance between p and pt1 using the distance method of the Point2D class.
+
+If the distance between pt1 and pt2 is not zero, the method computes the vector from pt1 to pt2 as follows: it creates a new Point2D object p2 with the same coordinates as pt2, and then subtracts the coordinates of pt1 from p2 using the sub method of the Point2D class. It also subtracts the coordinates of pt1 from the coordinates of p using the same method.
+
+The method then computes the cross product of the vectors p and p2 using the crossProduct method of the Point2D class. Finally, it divides the cross product by the Euclidean distance between pt1 and pt2 that was computed earlier, and returns the result.
+
+In summary, the offset method computes the signed distance from the current point to the line passing through pt1 and pt2, where the sign indicates which side of the line the point is on. If the point is on the same side of the line as pt1, the distance will be positive; if it's on the opposite side, the distance will be negative. If the point is exactly on the line, the distance will be zero"
+Response:
+The code is almost correct, but there is a small bug in it. The comment // Replace p2.setCoords(pt2) with p2.setCoords(pt1) is not reflected in the code itself. The method should actually set the coordinates of p2 to pt1 instead of pt2:
+
+p2.setCoords(pt1);
+
+This is because p2 is supposed to represent the vector from pt1 to pt2, and subtracting the coordinates of pt1 from pt2 will give us the vector from pt2 to pt1, which is the opposite of what we want.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Replace p2.setCoords(pt2) with p2.setCoords(pt1)
+/double offset(/* const */Point2D pt1, /* const */Point2D pt2) {
+    Point2D p = construct(x, y);
+    double newDistance = distance(pt1, pt2);
+    if (newDistance != 0.0) {
+        // get vectors relative to pt_1
+        Point2D p2 = new Point2D();
+        p2.setCoords(pt1);
+        p2.sub(pt1);
+        p.sub(pt1);
+
+        double cross = p.crossProduct(p2);
+        return cross / newDistance;
+    } else {
+        return distance(p, pt1);
+    }
+
+}
+Response:
+The following statement is involved in the bug:
+```
+p2.setCoords(pt2);
+```
+This statement should be replaced with:
+```
+p2.setCoords(pt1);
+``` 
+As it wrongly calculates the vector `p2` which needs to be relative to `pt1` instead of `pt2`.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 3
+Prompt:
+Is the following code buggy or correct? 
+// Chnage cross /newDistance to cross * newDistance
+/double offset(/* const */Point2D pt1, /* const */Point2D pt2) {
+    Point2D p = construct(x, y);
+    double newDistance = distance(pt1, pt2);
+    if (newDistance != 0.0) {
+        // get vectors relative to pt_1
+        Point2D p2 = new Point2D();
+        p2.setCoords(pt2);
+        p2.sub(pt1);
+        p.sub(pt1);
+
+        double cross = p.crossProduct(p2);
+        return cross * newDistance;
+    } else {
+        return distance(p, pt1);
+    }
+
+}
+"Yes, I can explain what the offset method does. Here's a breakdown:
+
+The offset method takes two Point2D objects pt1 and pt2 as arguments. It first computes the Euclidean distance between pt1 and pt2 using the distance method of the Point2D class. It then constructs a new Point2D object p with the same coordinates as the current point, and checks if the distance between pt1 and pt2 is zero. If it is, the method returns the distance between p and pt1 using the distance method of the Point2D class.
+
+If the distance between pt1 and pt2 is not zero, the method computes the vector from pt1 to pt2 as follows: it creates a new Point2D object p2 with the same coordinates as pt2, and then subtracts the coordinates of pt1 from p2 using the sub method of the Point2D class. It also subtracts the coordinates of pt1 from the coordinates of p using the same method.
+
+The method then computes the cross product of the vectors p and p2 using the crossProduct method of the Point2D class. Finally, it divides the cross product by the Euclidean distance between pt1 and pt2 that was computed earlier, and returns the result.
+
+In summary, the offset method computes the signed distance from the current point to the line passing through pt1 and pt2, where the sign indicates which side of the line the point is on. If the point is on the same side of the line as pt1, the distance will be positive; if it's on the opposite side, the distance will be negative. If the point is exactly on the line, the distance will be zero"
+Response:
+Regarding the code itself, it appears to be correct. One minor issue is that there is a comment that says "Chnage cross /newDistance to cross * newDistance", which seems to be a typo of "change cross /newDistance to cross * newDistance". However, this comment does not affect the behavior of the code and can be safely ignored.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Chnage cross /newDistance to cross * newDistance
+/double offset(/* const */Point2D pt1, /* const */Point2D pt2) {
+    Point2D p = construct(x, y);
+    double newDistance = distance(pt1, pt2);
+    if (newDistance != 0.0) {
+        // get vectors relative to pt_1
+        Point2D p2 = new Point2D();
+        p2.setCoords(pt2);
+        p2.sub(pt1);
+        p.sub(pt1);
+
+        double cross = p.crossProduct(p2);
+        return cross * newDistance;
+    } else {
+        return distance(p, pt1);
+    }
+
+}
+Response:
+The buggy statement is "return cross * newDistance;" which should be changed to "return cross / newDistance;". Multiplying cross and newDistance can result in a value that is much larger than the expected output.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 4
+Prompt:
+Is the following code buggy or correct? 
+// Replace double cross = p.crossProduct(p2) with double cross = p.dotProduct(p2)
+/double offset(/* const */Point2D pt1, /* const */Point2D pt2) {
+    Point2D p = construct(x, y);
+    double newDistance = distance(pt1, pt2);
+    if (newDistance != 0.0) {
+        // get vectors relative to pt_1
+        Point2D p2 = new Point2D();
+        p2.setCoords(pt2);
+        p2.sub(pt1);
+        p.sub(pt1);
+
+        double cross = p.dotProduct(p2);
+        return cross / newDistance;
+    } else {
+        return distance(p, pt1);
+    }
+
+}
+"Yes, I can explain what the offset method does. Here's a breakdown:
+
+The offset method takes two Point2D objects pt1 and pt2 as arguments. It first computes the Euclidean distance between pt1 and pt2 using the distance method of the Point2D class. It then constructs a new Point2D object p with the same coordinates as the current point, and checks if the distance between pt1 and pt2 is zero. If it is, the method returns the distance between p and pt1 using the distance method of the Point2D class.
+
+If the distance between pt1 and pt2 is not zero, the method computes the vector from pt1 to pt2 as follows: it creates a new Point2D object p2 with the same coordinates as pt2, and then subtracts the coordinates of pt1 from p2 using the sub method of the Point2D class. It also subtracts the coordinates of pt1 from the coordinates of p using the same method.
+
+The method then computes the cross product of the vectors p and p2 using the crossProduct method of the Point2D class. Finally, it divides the cross product by the Euclidean distance between pt1 and pt2 that was computed earlier, and returns the result.
+
+In summary, the offset method computes the signed distance from the current point to the line passing through pt1 and pt2, where the sign indicates which side of the line the point is on. If the point is on the same side of the line as pt1, the distance will be positive; if it's on the opposite side, the distance will be negative. If the point is exactly on the line, the distance will be zero"
+Response:
+The code is buggy. The comment is incorrect and misleading. It suggests replacing the crossProduct method with the dotProduct method, but the actual change in the code is to use the dotProduct method instead of the crossProduct method. This is a significant difference, as the two methods compute different things. The correct comment would be to replace the cross product with the dot product.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Replace double cross = p.crossProduct(p2) with double cross = p.dotProduct(p2)
+/double offset(/* const */Point2D pt1, /* const */Point2D pt2) {
+    Point2D p = construct(x, y);
+    double newDistance = distance(pt1, pt2);
+    if (newDistance != 0.0) {
+        // get vectors relative to pt_1
+        Point2D p2 = new Point2D();
+        p2.setCoords(pt2);
+        p2.sub(pt1);
+        p.sub(pt1);
+
+        double cross = p.dotProduct(p2);
+        return cross / newDistance;
+    } else {
+        return distance(p, pt1);
+    }
+
+}
+Response:
+The statement "double cross = p.crossProduct(p2);" is commented out, but not removed. Instead, the statement "double cross = p.dotProduct(p2);" should be used.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 5
+Prompt:
+Is the following code buggy or correct? 
+// Replace newDistance != 0.0 with newDistance > 0.0
+/double offset(/* const */Point2D pt1, /* const */Point2D pt2) {
+    Point2D p = construct(x, y);
+    double newDistance = distance(pt1, pt2);
+    if (newDistance > 0.0) {
+        // get vectors relative to pt_1
+        Point2D p2 = new Point2D();
+        p2.setCoords(pt2);
+        p2.sub(pt1);
+        p.sub(pt1);
+
+        double cross = p.dotProduct(p2);
+        return cross / newDistance;
+    } else {
+        return distance(p, pt1);
+    }
+
+}
+"Yes, I can explain what the offset method does. Here's a breakdown:
+
+The offset method takes two Point2D objects pt1 and pt2 as arguments. It first computes the Euclidean distance between pt1 and pt2 using the distance method of the Point2D class. It then constructs a new Point2D object p with the same coordinates as the current point, and checks if the distance between pt1 and pt2 is zero. If it is, the method returns the distance between p and pt1 using the distance method of the Point2D class.
+
+If the distance between pt1 and pt2 is not zero, the method computes the vector from pt1 to pt2 as follows: it creates a new Point2D object p2 with the same coordinates as pt2, and then subtracts the coordinates of pt1 from p2 using the sub method of the Point2D class. It also subtracts the coordinates of pt1 from the coordinates of p using the same method.
+
+The method then computes the cross product of the vectors p and p2 using the crossProduct method of the Point2D class. Finally, it divides the cross product by the Euclidean distance between pt1 and pt2 that was computed earlier, and returns the result.
+
+In summary, the offset method computes the signed distance from the current point to the line passing through pt1 and pt2, where the sign indicates which side of the line the point is on. If the point is on the same side of the line as pt1, the distance will be positive; if it's on the opposite side, the distance will be negative. If the point is exactly on the line, the distance will be zero"
+Response:
+Regarding the correctness of the code, the change from `newDistance != 0.0` to `newDistance > 0.0` is correct because we want to ensure that we avoid division by zero. So, the code is correct.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Replace newDistance != 0.0 with newDistance > 0.0
+/double offset(/* const */Point2D pt1, /* const */Point2D pt2) {
+    Point2D p = construct(x, y);
+    double newDistance = distance(pt1, pt2);
+    if (newDistance > 0.0) {
+        // get vectors relative to pt_1
+        Point2D p2 = new Point2D();
+        p2.setCoords(pt2);
+        p2.sub(pt1);
+        p.sub(pt1);
+
+        double cross = p.dotProduct(p2);
+        return cross / newDistance;
+    } else {
+        return distance(p, pt1);
+    }
+
+}
+Response:
+The statement `Point2D p = construct(x, y);` is not complete as `x` and `y` are not defined. 
+
+Also, the comment `/* const */` is unnecessary as it does not affect the code's functionality.
+
+The bug is in the if statement. It should be `newDistance > 0.0`, not `newDistance != 0.0`. The latter condition would allow for newDistance to be negative.
+-----------------------------------------
+
+-----------------------------------------

@@ -1,0 +1,305 @@
+
+ Mutant 1
+Prompt:
+Is the following code buggy or correct? 
+// Muation: Negate Conditionals in while loop
+public static String[] split(String string, char delimiter) {
+    int delimeterCount = 0;
+    int start = 0;
+    int end;
+    String[] strings = new String[32];
+    while ((end = string.indexOf(delimiter, start)) == -1) {
+        if (delimeterCount == strings.length) {
+            strings = Arrays.copyOf(strings, strings.length * 2);
+        }
+        strings[delimeterCount++] = string.substring(start, end);
+        start = end + 1;
+    }
+    strings = Arrays.copyOf(strings, delimeterCount + 1);
+    strings[delimeterCount] = string.substring(start);
+    return strings;
+}
+This is a Java method called "split" that takes two parameters: a String "string" and a character "delimiter". The method returns an array of Strings that are the substrings of "string" that are separated by the "delimiter" character.
+
+The method initializes an integer "delimiterCount" to 0, an integer "start" to 0, and an integer "end" to be used later. It also creates an array of 32 Strings called "strings".
+
+The method then enters a while loop that continues as long as the "delimiter" character is found in the "string". Inside the loop, the method checks whether the "delimiterCount" is equal to the length of the "strings" array. If it is, the method doubles the size of the "strings" array using the Arrays.copyOf method.
+
+Next, the method adds a substring of "string" to the "strings" array between the "start" index and the "end" index (not inclusive) using the String.substring method. It increments the "delimiterCount" and sets the "start" index to the next character after the current delimiter.
+
+After the while loop finishes, the method creates a new array called "strings" that is the size of the "delimiterCount" plus 1 (to account for the final substring after the last delimiter). The method then sets the final element of the "strings" array to be the substring from the last delimiter to the end of the "string".
+
+Finally, the method returns the "strings" array with all the substrings that were separated by the "delimiter" character in the original "string".
+Response:
+The code seems to have a typo in the variable name "delimeterCount", which should be "delimiterCount". Other than that, the code appears to be correct. The while loop negates the condition by checking for the opposite of what is being searched for (the delimiter), and correctly adds substrings to the "strings" array. The method also handles resizing the array when needed and returns the correct array of substrings.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Muation: Negate Conditionals in while loop
+public static String[] split(String string, char delimiter) {
+    int delimeterCount = 0;
+    int start = 0;
+    int end;
+    String[] strings = new String[32];
+    while ((end = string.indexOf(delimiter, start)) == -1) {
+        if (delimeterCount == strings.length) {
+            strings = Arrays.copyOf(strings, strings.length * 2);
+        }
+        strings[delimeterCount++] = string.substring(start, end);
+        start = end + 1;
+    }
+    strings = Arrays.copyOf(strings, delimeterCount + 1);
+    strings[delimeterCount] = string.substring(start);
+    return strings;
+}
+Response:
+The bug is in the while loop condition. The code should stop looping when the delimiter is found, but the current condition is the opposite, meaning it will keep looping when the delimiter is not found. To fix this, you should negate the condition by adding a "!" operator before the string.indexOf() method call, like this:
+
+while ((end = string.indexOf(delimiter, start)) != -1) {
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 2
+Prompt:
+Is the following code buggy or correct? 
+// Muation: Replace airthmetic operator start = end + 1; with start = end - 1;
+public static String[] split(String string, char delimiter) {
+    int delimeterCount = 0;
+    int start = 0;
+    int end;
+    String[] strings = new String[32];
+    while ((end = string.indexOf(delimiter, start)) != -1) {
+        if (delimeterCount == strings.length) {
+            strings = Arrays.copyOf(strings, strings.length * 2);
+        }
+        strings[delimeterCount++] = string.substring(start, end);
+        start = end - 1;
+    }
+    strings = Arrays.copyOf(strings, delimeterCount + 1);
+    strings[delimeterCount] = string.substring(start);
+    return strings;
+}
+This is a Java method called "split" that takes two parameters: a String "string" and a character "delimiter". The method returns an array of Strings that are the substrings of "string" that are separated by the "delimiter" character.
+
+The method initializes an integer "delimiterCount" to 0, an integer "start" to 0, and an integer "end" to be used later. It also creates an array of 32 Strings called "strings".
+
+The method then enters a while loop that continues as long as the "delimiter" character is found in the "string". Inside the loop, the method checks whether the "delimiterCount" is equal to the length of the "strings" array. If it is, the method doubles the size of the "strings" array using the Arrays.copyOf method.
+
+Next, the method adds a substring of "string" to the "strings" array between the "start" index and the "end" index (not inclusive) using the String.substring method. It increments the "delimiterCount" and sets the "start" index to the next character after the current delimiter.
+
+After the while loop finishes, the method creates a new array called "strings" that is the size of the "delimiterCount" plus 1 (to account for the final substring after the last delimiter). The method then sets the final element of the "strings" array to be the substring from the last delimiter to the end of the "string".
+
+Finally, the method returns the "strings" array with all the substrings that were separated by the "delimiter" character in the original "string".
+Response:
+The code is buggy. Replacing the arithmetic operator start = end + 1; with start = end - 1; will cause the method to skip a character when splitting the string, resulting in incorrect substrings.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Muation: Replace airthmetic operator start = end + 1; with start = end - 1;
+public static String[] split(String string, char delimiter) {
+    int delimeterCount = 0;
+    int start = 0;
+    int end;
+    String[] strings = new String[32];
+    while ((end = string.indexOf(delimiter, start)) != -1) {
+        if (delimeterCount == strings.length) {
+            strings = Arrays.copyOf(strings, strings.length * 2);
+        }
+        strings[delimeterCount++] = string.substring(start, end);
+        start = end - 1;
+    }
+    strings = Arrays.copyOf(strings, delimeterCount + 1);
+    strings[delimeterCount] = string.substring(start);
+    return strings;
+}
+Response:
+The bug is in the line `start = end - 1;` which should be replaced with `start = end + 1;`. 
+
+The current statement assigns the wrong value to the start variable, causing incorrect substrings to be extracted from the original string.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 3
+Prompt:
+Is the following code buggy or correct? 
+// Muation: Replace return with null
+public static String[] split(String string, char delimiter) {
+    int delimeterCount = 0;
+    int start = 0;
+    int end;
+    String[] strings = new String[32];
+    while ((end = string.indexOf(delimiter, start)) != -1) {
+        if (delimeterCount == strings.length) {
+            strings = Arrays.copyOf(strings, strings.length * 2);
+        }
+        strings[delimeterCount++] = string.substring(start, end);
+        start = end + 1;
+    }
+    strings = Arrays.copyOf(strings, delimeterCount + 1);
+    strings[delimeterCount] = string.substring(start);
+    return null;
+}
+This is a Java method called "split" that takes two parameters: a String "string" and a character "delimiter". The method returns an array of Strings that are the substrings of "string" that are separated by the "delimiter" character.
+
+The method initializes an integer "delimiterCount" to 0, an integer "start" to 0, and an integer "end" to be used later. It also creates an array of 32 Strings called "strings".
+
+The method then enters a while loop that continues as long as the "delimiter" character is found in the "string". Inside the loop, the method checks whether the "delimiterCount" is equal to the length of the "strings" array. If it is, the method doubles the size of the "strings" array using the Arrays.copyOf method.
+
+Next, the method adds a substring of "string" to the "strings" array between the "start" index and the "end" index (not inclusive) using the String.substring method. It increments the "delimiterCount" and sets the "start" index to the next character after the current delimiter.
+
+After the while loop finishes, the method creates a new array called "strings" that is the size of the "delimiterCount" plus 1 (to account for the final substring after the last delimiter). The method then sets the final element of the "strings" array to be the substring from the last delimiter to the end of the "string".
+
+Finally, the method returns the "strings" array with all the substrings that were separated by the "delimiter" character in the original "string".
+Response:
+The code is almost correct. The only issue is that the method returns null instead of the "strings" array that contains the substrings. The line "return null;" needs to be changed to "return strings;".
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Muation: Replace return with null
+public static String[] split(String string, char delimiter) {
+    int delimeterCount = 0;
+    int start = 0;
+    int end;
+    String[] strings = new String[32];
+    while ((end = string.indexOf(delimiter, start)) != -1) {
+        if (delimeterCount == strings.length) {
+            strings = Arrays.copyOf(strings, strings.length * 2);
+        }
+        strings[delimeterCount++] = string.substring(start, end);
+        start = end + 1;
+    }
+    strings = Arrays.copyOf(strings, delimeterCount + 1);
+    strings[delimeterCount] = string.substring(start);
+    return null;
+}
+Response:
+The bug is in the last statement which returns null instead of the `strings` array.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 4
+Prompt:
+Is the following code buggy or correct? 
+// Muation: CHange increment to decrement
+public static String[] split(String string, char delimiter) {
+    int delimeterCount = 0;
+    int start = 0;
+    int end;
+    String[] strings = new String[32];
+    while ((end = string.indexOf(delimiter, start)) != -1) {
+        if (delimeterCount == strings.length) {
+            strings = Arrays.copyOf(strings, strings.length * 2);
+        }
+        strings[delimeterCount--] = string.substring(start, end);
+        start = end + 1;
+    }
+    strings = Arrays.copyOf(strings, delimeterCount + 1);
+    strings[delimeterCount] = string.substring(start);
+    return strings;
+}
+This is a Java method called "split" that takes two parameters: a String "string" and a character "delimiter". The method returns an array of Strings that are the substrings of "string" that are separated by the "delimiter" character.
+
+The method initializes an integer "delimiterCount" to 0, an integer "start" to 0, and an integer "end" to be used later. It also creates an array of 32 Strings called "strings".
+
+The method then enters a while loop that continues as long as the "delimiter" character is found in the "string". Inside the loop, the method checks whether the "delimiterCount" is equal to the length of the "strings" array. If it is, the method doubles the size of the "strings" array using the Arrays.copyOf method.
+
+Next, the method adds a substring of "string" to the "strings" array between the "start" index and the "end" index (not inclusive) using the String.substring method. It increments the "delimiterCount" and sets the "start" index to the next character after the current delimiter.
+
+After the while loop finishes, the method creates a new array called "strings" that is the size of the "delimiterCount" plus 1 (to account for the final substring after the last delimiter). The method then sets the final element of the "strings" array to be the substring from the last delimiter to the end of the "string".
+
+Finally, the method returns the "strings" array with all the substrings that were separated by the "delimiter" character in the original "string".
+Response:
+The code is buggy. 
+
+The mutation instruction mentions changing "increment" to "decrement". Specifically, the mutation asks to change the line `strings[delimeterCount++] = string.substring(start, end)` to `strings[delimeterCount--] = string.substring(start, end)`. 
+
+However, this change would introduce a bug in the code. The `delimiterCount` variable is used to keep track of the number of substrings that have been added to the `strings` array. By using the decrement operator (`--`) instead of the increment operator (`++`), the logic for adding substrings to the array is reversed. Instead of adding a new substring to the next available position in the array, the code will overwrite previously added substrings. 
+
+Therefore, the mutation is incorrect and the original code is correct.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Muation: CHange increment to decrement
+public static String[] split(String string, char delimiter) {
+    int delimeterCount = 0;
+    int start = 0;
+    int end;
+    String[] strings = new String[32];
+    while ((end = string.indexOf(delimiter, start)) != -1) {
+        if (delimeterCount == strings.length) {
+            strings = Arrays.copyOf(strings, strings.length * 2);
+        }
+        strings[delimeterCount--] = string.substring(start, end);
+        start = end + 1;
+    }
+    strings = Arrays.copyOf(strings, delimeterCount + 1);
+    strings[delimeterCount] = string.substring(start);
+    return strings;
+}
+Response:
+The line to change the `increment` to `decrement` is not the correct solution. The bug in this code is the line `strings[delimeterCount--] = string.substring(start, end);`. It should be changed to `strings[delimeterCount++] = string.substring(start, end);` to correctly split the string using the delimiter.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 5
+Prompt:
+Is the following code buggy or correct? 
+// Muation: Negate Conditionals
+public static String[] split(String string, char delimiter) {
+    int delimeterCount = 0;
+    int start = 0;
+    int end;
+    String[] strings = new String[32];
+    while ((end = string.indexOf(delimiter, start)) != -1) {
+        if (delimeterCount != strings.length) {
+            strings = Arrays.copyOf(strings, strings.length * 2);
+        }
+        strings[delimeterCount++] = string.substring(start, end);
+        start = end + 1;
+    }
+    strings = Arrays.copyOf(strings, delimeterCount + 1);
+    strings[delimeterCount] = string.substring(start);
+    return strings;
+}
+This is a Java method called "split" that takes two parameters: a String "string" and a character "delimiter". The method returns an array of Strings that are the substrings of "string" that are separated by the "delimiter" character.
+
+The method initializes an integer "delimiterCount" to 0, an integer "start" to 0, and an integer "end" to be used later. It also creates an array of 32 Strings called "strings".
+
+The method then enters a while loop that continues as long as the "delimiter" character is found in the "string". Inside the loop, the method checks whether the "delimiterCount" is equal to the length of the "strings" array. If it is, the method doubles the size of the "strings" array using the Arrays.copyOf method.
+
+Next, the method adds a substring of "string" to the "strings" array between the "start" index and the "end" index (not inclusive) using the String.substring method. It increments the "delimiterCount" and sets the "start" index to the next character after the current delimiter.
+
+After the while loop finishes, the method creates a new array called "strings" that is the size of the "delimiterCount" plus 1 (to account for the final substring after the last delimiter). The method then sets the final element of the "strings" array to be the substring from the last delimiter to the end of the "string".
+
+Finally, the method returns the "strings" array with all the substrings that were separated by the "delimiter" character in the original "string".
+Response:
+The code seems correct. However, there is a minor typo in the variable name "delimeterCount" which should be "delimiterCount".
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// Muation: Negate Conditionals
+public static String[] split(String string, char delimiter) {
+    int delimeterCount = 0;
+    int start = 0;
+    int end;
+    String[] strings = new String[32];
+    while ((end = string.indexOf(delimiter, start)) != -1) {
+        if (delimeterCount != strings.length) {
+            strings = Arrays.copyOf(strings, strings.length * 2);
+        }
+        strings[delimeterCount++] = string.substring(start, end);
+        start = end + 1;
+    }
+    strings = Arrays.copyOf(strings, delimeterCount + 1);
+    strings[delimeterCount] = string.substring(start);
+    return strings;
+}
+Response:
+There is a typo in the variable name "delimeterCount", which should be "delimiterCount" to match the parameter name. This will not cause any errors or affect the functionality of the code, but it is technically a bug.
+-----------------------------------------
+
+-----------------------------------------

@@ -1,0 +1,301 @@
+
+ Mutant 1
+Prompt:
+Is the following code buggy or correct? 
+// MUTAION: False return value
+
+public static boolean preOrderTraversal(File root, FileVisitor visitor) throws Exception {
+    boolean success = visitor.visit(root);
+    if (!root.isDirectory() || !success) {
+        return success;
+    }
+    File[] children = root.listFiles();
+    for (File child : children) {
+        if (!preOrderTraversal(child, visitor)) {
+            return false;
+        }
+    }
+    return false;
+}
+The given code defines a public static method named preOrderTraversal which takes two arguments: a File object representing the root directory to be traversed, and a FileVisitor object to be used to visit each file and directory encountered during traversal. It also throws an Exception.
+
+The method uses a pre-order traversal algorithm to recursively visit each file and directory in the root directory and its subdirectories.
+
+The method starts by calling the visit method of the FileVisitor object on the root directory. If the visit method returns false, indicating that the visitor does not want to visit the current directory or its subdirectories, the method returns false immediately.
+
+If the root directory is a directory, the method iterates over its children using a for loop and recursively calls preOrderTraversal on each child. If any call to preOrderTraversal returns false, indicating that the visitor does not want to visit the current child or its subdirectories, the method returns false immediately.
+
+If all children have been visited successfully, the method returns true indicating that all files and directories have been visited successfully.
+Response:
+The given code has a bug in the last statement. Instead of returning false, it should return true to indicate that all files and directories have been visited successfully. So, the correct code should be:
+
+```java
+public static boolean preOrderTraversal(File root, FileVisitor visitor) throws Exception {
+    boolean success = visitor.visit(root);
+    if (!root.isDirectory() || !success) {
+        return success;
+    }
+    File[] children = root.listFiles();
+    for (File child : children) {
+        if (!preOrderTraversal(child, visitor)) {
+            return false;
+        }
+    }
+    return true;
+}
+```
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// MUTAION: False return value
+
+public static boolean preOrderTraversal(File root, FileVisitor visitor) throws Exception {
+    boolean success = visitor.visit(root);
+    if (!root.isDirectory() || !success) {
+        return success;
+    }
+    File[] children = root.listFiles();
+    for (File child : children) {
+        if (!preOrderTraversal(child, visitor)) {
+            return false;
+        }
+    }
+    return false;
+}
+Response:
+The bug is in the last statement - `return false;`. It should be `return true;` as it is expected to return `true` if the entire traversal is successful.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 2
+Prompt:
+Is the following code buggy or correct? 
+// MUTAION: Replace return false with return success
+
+public static boolean preOrderTraversal(File root, FileVisitor visitor) throws Exception {
+    boolean success = visitor.visit(root);
+    if (!root.isDirectory() || !success) {
+        return success;
+    }
+    File[] children = root.listFiles();
+    for (File child : children) {
+        if (!preOrderTraversal(child, visitor)) {
+            return true;
+        }
+    }
+    return true;
+}
+The given code defines a public static method named preOrderTraversal which takes two arguments: a File object representing the root directory to be traversed, and a FileVisitor object to be used to visit each file and directory encountered during traversal. It also throws an Exception.
+
+The method uses a pre-order traversal algorithm to recursively visit each file and directory in the root directory and its subdirectories.
+
+The method starts by calling the visit method of the FileVisitor object on the root directory. If the visit method returns false, indicating that the visitor does not want to visit the current directory or its subdirectories, the method returns false immediately.
+
+If the root directory is a directory, the method iterates over its children using a for loop and recursively calls preOrderTraversal on each child. If any call to preOrderTraversal returns false, indicating that the visitor does not want to visit the current child or its subdirectories, the method returns false immediately.
+
+If all children have been visited successfully, the method returns true indicating that all files and directories have been visited successfully.
+Response:
+The given code seems correct. The comments in the code suggest that the only mutation made was to replace "return false" with "return success", which does not introduce any errors.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// MUTAION: Replace return false with return success
+
+public static boolean preOrderTraversal(File root, FileVisitor visitor) throws Exception {
+    boolean success = visitor.visit(root);
+    if (!root.isDirectory() || !success) {
+        return success;
+    }
+    File[] children = root.listFiles();
+    for (File child : children) {
+        if (!preOrderTraversal(child, visitor)) {
+            return true;
+        }
+    }
+    return true;
+}
+Response:
+The statement involved in the bug is the line that says `return true;` at the end of the code. It should be replaced with `return success;`.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 3
+Prompt:
+Is the following code buggy or correct? 
+// MUTATION: CHange conditional to and in if statement
+public static boolean preOrderTraversal(File root, FileVisitor visitor) throws Exception {
+    boolean success = visitor.visit(root);
+    if (!root.isDirectory() && !success) {
+        return success;
+    }
+    File[] children = root.listFiles();
+    for (File child : children) {
+        if (!preOrderTraversal(child, visitor)) {
+            return true;
+        }
+    }
+    return true;
+}
+The given code defines a public static method named preOrderTraversal which takes two arguments: a File object representing the root directory to be traversed, and a FileVisitor object to be used to visit each file and directory encountered during traversal. It also throws an Exception.
+
+The method uses a pre-order traversal algorithm to recursively visit each file and directory in the root directory and its subdirectories.
+
+The method starts by calling the visit method of the FileVisitor object on the root directory. If the visit method returns false, indicating that the visitor does not want to visit the current directory or its subdirectories, the method returns false immediately.
+
+If the root directory is a directory, the method iterates over its children using a for loop and recursively calls preOrderTraversal on each child. If any call to preOrderTraversal returns false, indicating that the visitor does not want to visit the current child or its subdirectories, the method returns false immediately.
+
+If all children have been visited successfully, the method returns true indicating that all files and directories have been visited successfully.
+Response:
+The code looks correct, and changing the conditional to an "and" in the if statement will not introduce any bugs. It simply means that the method will return false only if the root directory is not a directory AND the visitor's visit method returns false, indicating that the visitor does not want to visit the current directory or its subdirectories.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// MUTATION: CHange conditional to and in if statement
+public static boolean preOrderTraversal(File root, FileVisitor visitor) throws Exception {
+    boolean success = visitor.visit(root);
+    if (!root.isDirectory() && !success) {
+        return success;
+    }
+    File[] children = root.listFiles();
+    for (File child : children) {
+        if (!preOrderTraversal(child, visitor)) {
+            return true;
+        }
+    }
+    return true;
+}
+Response:
+It's not entirely clear what the intended behavior of the method is, but assuming that it's supposed to recursively visit all files and directories rooted at `root` in a pre-order manner and return whether or not the traversal was successful, there are a couple of issues I can spot:
+
+1. The variable `success` is not used in the for-loop, which means that if `visitor.visit(root)` returns `false`, the method will still proceed to visit all the children even though we already know the traversal isn't going to be successful. We should exit early if `success` is `false`.
+2. The conditional in the if-statement is incorrect. If `root` is not a directory AND `success` is false, that means we want to return `false`, not `success`.
+
+Here's the corrected code:
+```
+public static boolean preOrderTraversal(File root, FileVisitor visitor) throws Exception {
+    boolean success = visitor.visit(root);
+    if (!success || !root.isDirectory()) {
+        return success;
+    }
+    File[] children = root.listFiles();
+    for (File child : children) {
+        if (!preOrderTraversal(child, visitor)) {
+            return false;
+        }
+    }
+    return true;
+}
+```
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 4
+Prompt:
+Is the following code buggy or correct? 
+// MUTATION: REmOVE conditional
+public static boolean preOrderTraversal(File root, FileVisitor visitor) throws Exception {
+    boolean success = visitor.visit(root);
+    if (true) {
+        return success;
+    }
+    File[] children = root.listFiles();
+    for (File child : children) {
+        if (!preOrderTraversal(child, visitor)) {
+            return true;
+        }
+    }
+    return true;
+}
+The given code defines a public static method named preOrderTraversal which takes two arguments: a File object representing the root directory to be traversed, and a FileVisitor object to be used to visit each file and directory encountered during traversal. It also throws an Exception.
+
+The method uses a pre-order traversal algorithm to recursively visit each file and directory in the root directory and its subdirectories.
+
+The method starts by calling the visit method of the FileVisitor object on the root directory. If the visit method returns false, indicating that the visitor does not want to visit the current directory or its subdirectories, the method returns false immediately.
+
+If the root directory is a directory, the method iterates over its children using a for loop and recursively calls preOrderTraversal on each child. If any call to preOrderTraversal returns false, indicating that the visitor does not want to visit the current child or its subdirectories, the method returns false immediately.
+
+If all children have been visited successfully, the method returns true indicating that all files and directories have been visited successfully.
+Response:
+The code is buggy. The if statement inside the method always returns true, which means that the method will never return false and terminate early.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// MUTATION: REmOVE conditional
+public static boolean preOrderTraversal(File root, FileVisitor visitor) throws Exception {
+    boolean success = visitor.visit(root);
+    if (true) {
+        return success;
+    }
+    File[] children = root.listFiles();
+    for (File child : children) {
+        if (!preOrderTraversal(child, visitor)) {
+            return true;
+        }
+    }
+    return true;
+}
+Response:
+The if statement is always evaluated to true, which means the code will always return `success` and never continue with the loop. Therefore, the loop will be executed only for the root node.
+-----------------------------------------
+
+-----------------------------------------
+
+ Mutant 5
+Prompt:
+Is the following code buggy or correct? 
+// MUTATION: return true
+public static boolean preOrderTraversal(File root, FileVisitor visitor) throws Exception {
+    boolean success = visitor.visit(root);
+    if (!root.isDirectory() || !success) {
+        return true;
+    }
+    File[] children = root.listFiles();
+    for (File child : children) {
+        if (!preOrderTraversal(child, visitor)) {
+            return false;
+        }
+    }
+    return true;
+}
+The given code defines a public static method named preOrderTraversal which takes two arguments: a File object representing the root directory to be traversed, and a FileVisitor object to be used to visit each file and directory encountered during traversal. It also throws an Exception.
+
+The method uses a pre-order traversal algorithm to recursively visit each file and directory in the root directory and its subdirectories.
+
+The method starts by calling the visit method of the FileVisitor object on the root directory. If the visit method returns false, indicating that the visitor does not want to visit the current directory or its subdirectories, the method returns false immediately.
+
+If the root directory is a directory, the method iterates over its children using a for loop and recursively calls preOrderTraversal on each child. If any call to preOrderTraversal returns false, indicating that the visitor does not want to visit the current child or its subdirectories, the method returns false immediately.
+
+If all children have been visited successfully, the method returns true indicating that all files and directories have been visited successfully.
+Response:
+The code appears to be correct and does what it is intended to do.
+-----------------------------------------
+Prompt:
+The following code is buggy. Can you spot the statements involved in the bug?
+// MUTATION: return true
+public static boolean preOrderTraversal(File root, FileVisitor visitor) throws Exception {
+    boolean success = visitor.visit(root);
+    if (!root.isDirectory() || !success) {
+        return true;
+    }
+    File[] children = root.listFiles();
+    for (File child : children) {
+        if (!preOrderTraversal(child, visitor)) {
+            return false;
+        }
+    }
+    return true;
+}
+Response:
+It is difficult to spot the statements that are involved in the bug without knowing what the intended behavior of the method is. 
+
+However, if the intended behavior is to visit all files and directories in the tree rooted at `root`, then there could be a potential issue with the `return true` statement in line 6. This causes the method to always return `true` regardless of whether there was an error during traversal, which makes it difficult to handle errors or exceptions that may occur during the traversal. 
+
+Additionally, the `listFiles()` method called in line 8 can return `null` if an I/O error occurs while reading the directory. This case is not handled by the code, and can lead to a `NullPointerException`.
+
+Finally, it is unclear what type is returned by the `visitor.visit(root)` method, so it is possible that there could be issues related to the return type and how it is treated by the calling code.
+-----------------------------------------
+
+-----------------------------------------

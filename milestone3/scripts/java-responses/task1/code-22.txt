@@ -1,0 +1,107 @@
+Prompt:
+ What do you know abou the following code? 
+        public final void startAddingEdges() {
+                if (numEdges_ > 0) {
+                        for (int i = 0; i < height_; i++) {
+                                for (Edge e = ySortedEdges_[i]; e != null;) {
+                                        Edge p = e;
+                                        e = e.next;
+                                        p.next = null;
+                                }
+                                
+                                ySortedEdges_[i] = null;
+                        }
+
+                        activeEdgesTable_ = null;
+                }
+                
+                minY_ = height_;
+                maxY_ = -1;
+                numEdges_ = 0;        
+        }
+Response:
+This is a method in Java that starts the process of adding edges. Here's an overview of what this code does:
+
+1. The method checks if there are any edges present in the graph by checking the value of "numEdges_". If there are no edges, the method returns without doing anything.
+
+2. If edges are present, the method iterates through all the edges in the "ySortedEdges_" array. This array contains a list of all the edges sorted by their y-coordinates.
+
+3. For each edge in the array, the method removes it from the linked list and sets its "next" reference to null. 
+
+4. After all the edges have been removed, the "ySortedEdges_" array is set to null.
+
+5. Finally, the method resets certain variables such as "minY_", "maxY_", and "numEdges_". These variables keep track of various properties of the graph. 
+
+Overall, this method seems to be used to reset the state of the graph before adding new edges or performing other operations.
+-----------------------------------------
+Prompt:
+ What do you know abou the following code? 
+public final void startAddingEdges() {
+    if (numEdges_ == 0) {
+        return;
+    }
+    
+    for (int i = 0; i < height_; i++) {
+        Edge e = ySortedEdges_[i];
+        while (e != null) {
+            Edge p = e;
+            e = e.next;
+            p.next = null;
+        }
+        ySortedEdges_[i] = null;
+    }
+    
+    activeEdgesTable_ = null;
+    minY_ = height_;
+    maxY_ = -1;
+    numEdges_ = 0;
+}
+Response:
+This code appears to be a method called `startAddingEdges()`. 
+
+The first `if` statement checks if the `numEdges_` variable is equal to 0. If it is, the method immediately returns and does not execute the rest of the code. 
+
+If `numEdges_` is not equal to 0, the method proceeds to a `for` loop that iterates through every value from 0 up to the value of `height_`. 
+
+Within each iteration of the loop, the code sets an `Edge` variable `e` to the value of `ySortedEdges_[i]`. It then enters a `while` loop that repeatedly sets a variable `p` to `e`, sets `e` to the next edge in the linked list, and sets `p.next` to null. Essentially, this code appears to be clearing out the linked list of edges for a particular y-coordinate.
+
+After each iteration of the `while` loop, the code sets `ySortedEdges_[i]` to null. 
+
+Finally, the method sets `activeEdgesTable_` to null, sets `minY_` to the value of `height_`, sets `maxY_` to -1, and sets `numEdges_` to 0. These actions appear to be resetting various state variables for this object.
+-----------------------------------------
+Prompt:
+ What do you know abou the following code? 
+public final void startAddingEdges(Edge[][] sortedEdges, int numEdges, int height) {
+    if (numEdges <= 0) {
+        return;
+    }
+    
+    for (int i = 0; i < height; i++) {
+        Edge[] edges = sortedEdges[i];
+        if (edges != null) {
+            for (int j = 0; j < edges.length; j++) {
+                edges[j] = null;
+            }
+            sortedEdges[i] = null;
+        }
+    }
+    
+    activeEdgesTable_ = null;
+    minY_ = height;
+    maxY_ = -1;
+    numEdges_ = 0;
+}
+Response:
+This code is defining a method called `startAddingEdges` which takes three parameters - a 2D array of `Edge` objects called `sortedEdges`, an integer called `numEdges`, and an integer called `height`. The method has a return type of `void`, meaning it does not return anything.
+
+The first thing the method does is check if `numEdges` is less than or equal to zero. If that's the case, the method returns immediately without doing anything else.
+
+Otherwise, the method proceeds to loop over each row in the `sortedEdges` array, up to the `height` value given as a parameter. For each row, the method sets all its elements to `null`. Once all the rows have been looped over, the method sets the entire `sortedEdges` array to `null`.
+
+Finally, the method sets a number of instance variables (not shown in the code you provided) to `null` or specific values.
+-----------------------------------------
+Prompt:
+Are the 3 code sninnepts discussed above semantically equivalent? 
+
+Response:
+I'm sorry, but without knowing which 3 code snippets you are referring to, I cannot provide a proper answer. Please provide more information or context so that I can assist you better.
