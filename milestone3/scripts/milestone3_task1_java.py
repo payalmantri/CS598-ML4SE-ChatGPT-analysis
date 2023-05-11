@@ -1,9 +1,7 @@
-from chatgpt_wrapper import OpenAIAPI
+from chatgpt_wrapper import ChatGPT
 from chatgpt_wrapper.core.config import Config
-# from chatgpt_wrapper.config import Config
-import pandas as pd
 import os
-
+import pandas as pd
 
 
 prompt = "What do you know about code execution? " 
@@ -11,11 +9,12 @@ prompt = "What do you know about code execution? "
 
 config = Config()
 config.set('browser.debug', False)
-bot = OpenAIAPI(config)
+bot = ChatGPT(config)
+
 
 
 success, response, message = bot.ask(prompt )
-print(response)
+print(response, success, message)
 print ("------------------")
 
 # print()
@@ -28,13 +27,13 @@ print ("------------------")
 
 
 # open the excel file and read the contents into pandas dataframe
-df = pd.read_excel('milestone-3-java.xlsx')
+df = pd.read_excel('milestone-3-java-context.xlsx')
 df
 print(df.head())
 # print the columns of the dataframe
 print(df.columns)
 
-number_of_rows_to_process = 49
+number_of_rows_to_process = 50
 
 
 def generate_responses(df):
@@ -50,7 +49,7 @@ def generate_responses(df):
     #     if index>20:
     #         break
     for index, row in df.iterrows():
-        if index<= 30:
+        if index<= 43:
             continue
         if index>number_of_rows_to_process:
             break
@@ -70,15 +69,19 @@ def generate_responses(df):
         prompt3 =" What do you know abou the following code? \n" + data_flow_change_code
         success, response3, message = bot.ask(prompt3)
 
-        prompt4 ="Are the 3 code sninnepts discussed above semantically equivalent? \n"
+        prompt4 ="Are the 3 code snippets discussed above equivalent? \n"
         success, response4, message= bot.ask(prompt4)
 
         # create a markdown file with the prompt and the response .
         # put in folder corresponding to the task
     
         with open('java-responses/task1/code-' + str(index) + '.txt', 'w') as f:
+            # get the instance type of prompt and response
+            print( "prompt instance of code: " + str(type(prompt1)))
+            print( "response instance of code: " + str(type(response1)))
+            print(response1)
             f.write("Prompt:\n" + prompt1 + "\nResponse:\n" + response1)
-            print("Prompt:\n" + prompt1 + "\nResponse:\n" + response1)
+    
             f.write("\n-----------------------------------------\n")
             f.write("Prompt:\n" + prompt2 + "\nResponse:\n" + response2)
             f.write("\n-----------------------------------------\n")
