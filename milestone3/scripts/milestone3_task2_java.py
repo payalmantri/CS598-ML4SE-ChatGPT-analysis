@@ -1,8 +1,7 @@
-from chatgpt_wrapper import OpenAIAPI
+from chatgpt_wrapper import ChatGPT
 from chatgpt_wrapper.core.config import Config
-# from chatgpt_wrapper.config import Config
-import pandas as pd
 import os
+import pandas as pd
 import math
 
 
@@ -12,20 +11,12 @@ prompt = "What do you know about code execution? "
 
 config = Config()
 config.set('browser.debug', False)
-bot = OpenAIAPI(config)
+bot = ChatGPT(config)
 
 
 success, response, message = bot.ask(prompt )
 print(response)
 print ("------------------")
-
-# print()
-
-
-# metaPrompt = "Does this description match the following code correctly?"
-
-# response = bot.ask(metaPrompt + "\nDescription:\n" + response + "\nCode:\n" +adversary_file_contents)
-# print(response)
 
 
 # open the excel file and read the contents into pandas dataframe
@@ -34,8 +25,8 @@ df
 print(df.head())
 # print the columns of the dataframe
 print(df.columns)
-startIndex = 0
-endIndex = 1
+startIndex = 46
+endIndex = 50
 
 
 def generate_responses(df):

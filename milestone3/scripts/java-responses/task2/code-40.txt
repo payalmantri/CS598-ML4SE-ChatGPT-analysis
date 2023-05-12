@@ -26,7 +26,27 @@ If the new element is to be inserted at an index other than the end of the array
 Insert the new element at the specified index.
 Increment the size of the array.
 Response:
-The code is buggy. The if statement always evaluates to true, meaning that the method will always throw an IndexOutOfBoundsException error and never execute any other code. Therefore, the actual functionality of the code (adding an element to the ArrayList) will never occur.
+The code you provided is buggy due to the mutation that changes the `if` condition to always be `true`. This change introduces an unconditional `throw` statement for `IndexOutOfBoundsException`, which means the code will always throw an exception and never execute the remaining statements.
+
+To fix the bug and make the code functional, you should revert the `if` condition to its original form where it checks whether the index is within the valid range. Here's the corrected version of the code:
+
+```java
+public void add(int index, float e) {
+    if (index < 0 || index > size) {
+        throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + 1);
+    if (index < size) {
+        for (int i = size; i > index; i--) {
+            elements[i] = elements[i - 1];
+        }
+    }
+    elements[index] = e;
+    size++;
+}
+```
+
+In this corrected code, the `if` condition checks whether the index is within the valid range (between 0 and `size`). If the index is out of bounds, it throws an `IndexOutOfBoundsException`. Otherwise, it proceeds with the remaining logic to insert the element at the specified index and update the array's size.
 -----------------------------------------
 Prompt:
 The following code is buggy. Can you spot the statements involved in the bug?
@@ -45,7 +65,27 @@ public void add(int index, float e) {
     size++;
   }
 Response:
-The bug is in the first if-statement where it always throws an `IndexOutOfBoundsException`. This condition is always true. Therefore, the code below the if-statement never executes.
+The code you provided is buggy due to the mutation that changes the `if` condition to always be `true`. This change introduces an unconditional `throw` statement for `IndexOutOfBoundsException`, which means the code will always throw an exception and never execute the remaining statements.
+
+To fix the bug and make the code functional, you should revert the `if` condition to its original form where it checks whether the index is within the valid range. Here's the corrected version of the code:
+
+```java
+public void add(int index, float e) {
+    if (index < 0 || index > size) {
+        throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + 1);
+    if (index < size) {
+        for (int i = size; i > index; i--) {
+            elements[i] = elements[i - 1];
+        }
+    }
+    elements[index] = e;
+    size++;
+}
+```
+
+In this corrected code, the `if` condition checks whether the index is within the valid range (between 0 and `size`). If the index is out of bounds, it throws an `IndexOutOfBoundsException`. Otherwise, it proceeds with the remaining logic to insert the element at the specified index and update the array's size.
 -----------------------------------------
 
 -----------------------------------------
@@ -77,7 +117,29 @@ If the new element is to be inserted at an index other than the end of the array
 Insert the new element at the specified index.
 Increment the size of the array.
 Response:
-The code is buggy. It should be `ensureCapacity(size + 1)` instead of `ensureCapacity(size - 1)`.
+The code you provided is buggy due to the mutation that replaces `size + 1` with `size - 1` in the `ensureCapacity` call. This change would result in incorrect behavior and potential issues with the capacity of the array.
+
+The purpose of the `ensureCapacity` method is to ensure that the array has enough capacity to accommodate the new element being added. The original code uses `size + 1` to account for the additional element. However, the mutated code uses `size - 1`, which would decrease the capacity by one instead.
+
+To fix the bug, you should revert the `ensureCapacity` call to its original form, using `size + 1` to ensure that the capacity is increased appropriately. Here's the corrected version of the code:
+
+```java
+public void add(int index, float e) {
+    if (index < 0 || index > size) {
+        throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + 1);
+    if (index < size) {
+        for (int i = size; i > index; i--) {
+            elements[i] = elements[i - 1];
+        }
+    }
+    elements[index] = e;
+    size++;
+}
+```
+
+In this corrected code, the `ensureCapacity` call uses `size + 1` to ensure that the array has enough capacity to accommodate the new element.
 -----------------------------------------
 Prompt:
 The following code is buggy. Can you spot the statements involved in the bug?
@@ -96,19 +158,29 @@ public void add(int index, float e) {
     size++;
   }
 Response:
-The statement involved in the bug is:
+The bug in the code lies in the `ensureCapacity` call where `size - 1` is used instead of `size + 1`. This mutation would result in incorrect behavior and potential issues with the capacity of the array.
+
+The purpose of the `ensureCapacity` method is to ensure that the array has enough capacity to accommodate the new element being added. The original code correctly uses `size + 1` to account for the additional element. However, the mutated code uses `size - 1`, which would decrease the capacity by one instead.
+
+To fix the bug, you should revert the `ensureCapacity` call to its original form, using `size + 1` to ensure that the capacity is increased appropriately. Here's the corrected version of the code:
 
 ```java
-ensureCapacity(size - 1);
+public void add(int index, float e) {
+    if (index < 0 || index > size) {
+        throw new IndexOutOfBoundsException();
+    }
+    ensureCapacity(size + 1);
+    if (index < size) {
+        for (int i = size; i > index; i--) {
+            elements[i] = elements[i - 1];
+        }
+    }
+    elements[index] = e;
+    size++;
+}
 ```
 
-The correct statement should be:
-
-```java
-ensureCapacity(size + 1);
-```
-
-The current statement reduces the capacity by 1, instead of increasing it by 1.
+In this corrected code, the `ensureCapacity` call uses `size + 1` to ensure that the array has enough capacity to accommodate the new element.
 -----------------------------------------
 
 -----------------------------------------
@@ -141,7 +213,11 @@ If the new element is to be inserted at an index other than the end of the array
 Insert the new element at the specified index.
 Increment the size of the array.
 Response:
-The code seems correct. The mutation replacing > with >= in the for loop would change the loop to execute one extra iteration but that would not cause any issues because the last element is always at size-1.
+The code you provided is correct and not buggy. The mutation you mentioned, which replaces the `>` operator with `>=` in the for loop condition, does not introduce any issues or bugs in the code.
+
+The purpose of the for loop is to shift the elements in the array to the right starting from the last element up to the specified index. The condition `i >= index` ensures that the loop iterates until it reaches the specified index, inclusive. This is the correct behavior because we want to make space for the new element at the specified index.
+
+Therefore, the code you provided is correct and functions as intended.
 -----------------------------------------
 Prompt:
 The following code is buggy. Can you spot the statements involved in the bug?
@@ -161,25 +237,19 @@ public void add(int index, float e) {
     size++;
   }
 Response:
-The bug is in the for loop statement. 
+Apologies for the confusion in my previous response. You're correct, the code you provided is indeed buggy. The bug is introduced by the mutation that replaces the `>` operator with `>=` in the for loop condition.
 
-Instead of:
-```
-for (int i = size; i >= index; i--) {
+The issue lies in the loop condition `i >= index`. When `index` is equal to `size`, the loop will iterate one extra time, causing an ArrayIndexOutOfBoundsException. This is because the loop should only iterate until `i > index`, not until `i >= index`.
+
+To fix the bug, you should revert the mutation and use the original condition `i > index` in the for loop:
+
+```java
+for (int i = size; i > index; i--) {
     elements[i] = elements[i - 1];
 }
 ```
 
-It should be:
-```
-for (int i = size-1; i >= index; i--) {
-    elements[i+1] = elements[i];
-}
-```
-
-This is because when we are shifting elements to make space for the new element, we need to start from the last element in the array, not the size of the array. Additionally, we need to increment the index of the shifted element, not decrement it. 
-
-Also, replacing > with >= would actually make the for loop run one extra iteration, which is not needed.
+With this correction, the code will function correctly by shifting the elements to the right up to the specified index and then inserting the new element at that index.
 -----------------------------------------
 
 -----------------------------------------
@@ -212,7 +282,25 @@ If the new element is to be inserted at an index other than the end of the array
 Insert the new element at the specified index.
 Increment the size of the array.
 Response:
-The code looks correct. The if statement checks if the index is within the valid range before proceeding to ensure capacity and inserting the element. The for loop moves all elements that come after the specified index one position to the right before inserting the new element. Finally, the size of the array is incremented.
+The provided code is indeed buggy. The bug is introduced by the mutation that changes the order of the if and for statements. 
+
+In the original code, the first check is performed to ensure that the index is within the valid range of the array. However, in the mutated code, the order is reversed, and the capacity is ensured before performing the index range check. This means that if the index is out of bounds, an IndexOutOfBoundsException should be thrown before attempting to ensure the capacity of the array.
+
+To fix the bug, you should revert the mutation and use the original order of the if statements:
+
+```java
+if (index < 0 || index > size) {
+    throw new IndexOutOfBoundsException();
+}
+ensureCapacity(size + 1);
+if (index < size) {
+    for (int i = size; i > index; i--) {
+        elements[i] = elements[i - 1];
+    }
+}
+```
+
+With this correction, the code will first check the index range and throw an exception if it's out of bounds. Only if the index is within the valid range, it will ensure the capacity and proceed with shifting the elements and inserting the new element.
 -----------------------------------------
 Prompt:
 The following code is buggy. Can you spot the statements involved in the bug?
@@ -232,17 +320,27 @@ public void add(int index, float e) {
     size++;
   }
 Response:
-The statements involved in the bug are:
+The provided code has a bug. The bug is introduced by the mutation that changes the order of the if and for statements.
 
-```
+In the original code, the first check is performed to ensure that the index is within the valid range of the array. However, in the mutated code, the order is reversed. The code first ensures the capacity of the array and then checks the index range.
+
+The bug occurs when the index is out of bounds. In this case, the code should throw an IndexOutOfBoundsException before attempting to ensure the capacity of the array. However, in the buggy code, the capacity is ensured first, potentially leading to incorrect behavior and wasted memory allocation.
+
+To fix the bug, you should revert the mutation and use the original order of the if statements:
+
+```java
+if (index < 0 || index > size) {
+    throw new IndexOutOfBoundsException();
+}
+ensureCapacity(size + 1);
 if (index < size) {
-  for (int i = size; i > index; i--) {
-    elements[i] = elements[i - 1];
-  }
+    for (int i = size; i > index; i--) {
+        elements[i] = elements[i - 1];
+    }
 }
 ```
 
-By changing the order of the if and for statements, now the elements in the array are being shifted only if `index` is smaller than `size`, which means that if `index` is equal to `size`, the new element will not be added to the array. This will result in an incorrect behavior of the `add` method.
+With this correction, the code will first check the index range and throw an exception if it's out of bounds. Only if the index is within the valid range, it will ensure the capacity and proceed with shifting the elements and inserting the new element.
 -----------------------------------------
 
 -----------------------------------------
@@ -274,7 +372,21 @@ If the new element is to be inserted at an index other than the end of the array
 Insert the new element at the specified index.
 Increment the size of the array.
 Response:
-The code contains a bug. The mutation of changing the decrement operator to an increment operator in the for loop will cause an infinite loop as the loop would never end. It should be changed back to the decrement operator.
+The provided code is buggy. The bug is introduced by the mutation that changes the decrement operator to an increment operator in the for loop.
+
+In the original code, the loop iterates over the elements from the end of the array to the specified index, moving each element one position to the right. This is achieved by decrementing the loop variable `i` in each iteration.
+
+However, in the mutated code, the decrement operator `--` is changed to an increment operator `++`. This means that the loop will now increment `i` in each iteration, which results in an incorrect behavior. Instead of shifting the elements to the right, the loop will keep overwriting the same element with the previous element's value, resulting in incorrect data and potentially losing elements from the array.
+
+To fix the bug, you should revert the mutation and use the original decrement operator in the for loop:
+
+```java
+for (int i = size; i > index; i--) {
+    elements[i] = elements[i - 1];
+}
+```
+
+With this correction, the loop will correctly shift the elements to the right, creating space for the new element to be inserted at the specified index.
 -----------------------------------------
 Prompt:
 The following code is buggy. Can you spot the statements involved in the bug?
@@ -293,15 +405,21 @@ public void add(int index, float e) {
     size++;
   }
 Response:
-The bug is in the for loop. The decrement operator i-- should be used instead of i++. Otherwise, it will result in an infinite loop because it will keep increasing the value of i. Here's the corrected code:
+The code you provided is indeed buggy. The bug is introduced by the mutation that changes the decrement operator to an increment operator in the for loop.
 
-```
-if (index < size) {
-  for (int i = size; i > index; i--) {
+In the original code, the loop iterates over the elements from the end of the array to the specified index, moving each element one position to the right. This is achieved by decrementing the loop variable `i` in each iteration.
+
+However, in the mutated code, the decrement operator `--` is changed to an increment operator `++`. This means that the loop will now increment `i` in each iteration, which results in incorrect behavior. Instead of shifting the elements to the right, the loop will keep overwriting the same element with the previous element's value, leading to incorrect data and potentially losing elements from the array.
+
+To fix the bug, you should revert the mutation and use the original decrement operator in the for loop:
+
+```java
+for (int i = size; i > index; i--) {
     elements[i] = elements[i - 1];
-  }
 }
 ```
+
+With this correction, the loop will correctly shift the elements to the right, creating space for the new element to be inserted at the specified index.
 -----------------------------------------
 
 -----------------------------------------
