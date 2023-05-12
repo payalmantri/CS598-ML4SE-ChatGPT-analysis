@@ -1,0 +1,10 @@
+What does the following code do? 
+The `TTA` method implements test time augmentation, which is a technique used to improve model predictions by applying data augmentation techniques to test/validation images. It takes two arguments, `n_aug` and `is_test`. 
+
+If `is_test` is `True`, the method loads test images into `dl1` and test augmentation images into `dl2`. If `is_test` is `False`, the method loads validation images into `dl1` and validation augmentation images into `dl2`.
+
+The method uses `predict_with_targs` function to get predictions from the original images in `dl1`, and then applies data augmentation techniques `n_aug` times to each image in `dl2` to get `n_aug` predictions per image. 
+
+Finally, it returns a tuple containing the log predictions for all predictions (original images and augmentation images) and target values for validation data (zeros otherwise). The `log_preds` are log probabilities, so to obtain actual probabilities `np.exp(log_preds)` can be used.
+Is the above code equivalent to the following code? 
+Yes, the above code is equivalent to the following code.

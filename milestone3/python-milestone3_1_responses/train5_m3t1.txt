@@ -1,0 +1,8 @@
+What does the following code do? 
+The given code defines a function `face_distance` that takes in two arguments: `face_encodings`, which is a list of face encodings, and `face_to_compare`, which is a single face encoding. 
+
+The function then calculates the euclidean distance between `face_to_compare` and each of the face encodings in the `face_encodings` list using the `numpy` function `np.linalg.norm`. The distance measures how similar the faces are.
+
+The function returns a list of distances between `face_to_compare` and each face encoding in the `face_encodings` list in the same order as the `face_encodings` list.
+Is the above code equivalent to the following code? 
+Yes, the two functions perform the same task of computing the Euclidean distance between a list of face encodings and a known face encoding, and returning the distances in the same order as the input list. The main difference is that the second function uses NumPy to compute the distances more efficiently, and returns the result as a NumPy ndarray. The second function also includes a check for an empty input list, and returns an empty array in that case, whereas the first function would return an empty list.

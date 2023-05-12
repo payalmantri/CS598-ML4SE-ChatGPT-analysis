@@ -11,3 +11,7 @@ The function first checks whether `shape` is an integer, and if so, converts it 
 The function then creates a new NumPy array called `values` with the desired `dtype` and the shape stored in `arr_shape`. This array is then filled with the `fill_value`, which is the scalar value that was passed as an argument (or an inferred value if `dtype` was not specified). Finally, the function returns the newly created `values` array.
 Is the above code equivalent to the following code? 
 No, the two codes are not equivalent. The first code converts the shape argument to a tuple and creates an ndarray of zeros with the given shape. It then fills the ndarray with the scalar value and returns the resulting ndarray. The second code assumes that the shape argument is already a tuple or list, creates an ndarray of the given shape, and fills it with the scalar value. The second code also does not use np.zeros to create the ndarray.
+
+would the outputs be the same in nominal cases?
+
+Yes, the outputs of both functions should be the same in nominal cases. The only difference is that the first function converts a single integer shape into a tuple with that integer as the only element, whereas the second function assumes that the shape is already a tuple or array. However, both functions create an empty array of the specified shape and fill it with the scalar value.

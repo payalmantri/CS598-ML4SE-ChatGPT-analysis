@@ -3,6 +3,18 @@ from chatgpt_wrapper import ChatGPT
 from chatgpt_wrapper.config import Config
 import os
 
+'''
+cannot identify domain knowledge fixes
+did very well with boolean operation mutations
+did well with catching string modifications if the string was in a set list of allowable values - either defined in code or docstrings
+
+did not do well with tuple and array index modifications
+arithmetic, negative signs, string modification, array and tuple index, constant modification, default value modification,
+
+82 correctly found
+42 not found
+'''
+
 prompt1 = "Given that the following code should do the following task, is the code buggy or not?\n"
 prompt2 = "\nThe code I provided above is buggy. Where is the bug?\n"
 

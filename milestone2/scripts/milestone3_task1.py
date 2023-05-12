@@ -32,7 +32,11 @@ def run():
             except ValueError:
                 # skip this file if number1 is not an integer
                 continue
-            
+            # construct the output file name
+            output_filename = f'../milestone3_1_responses/train{number1}_m3t1.txt'
+
+            if os.path.isfile(output_filename):
+                continue
             # construct the file 2 name
             filename2 = f'train{number1}.py'
             
@@ -49,8 +53,7 @@ def run():
             output1 = bot.ask(prompt1 + text1)
             output2 = bot.ask(prompt2 + text2)
             
-            # construct the output file name
-            output_filename = f'../milestone3_1_responses/train{number1}_m3t1.txt'
+            
             
             # write the output strings to the output file
             with open(output_filename, 'w') as f:

@@ -1,0 +1,12 @@
+What does the following code do? 
+The `fit_opt_sched` function is used to train the neural network model using a customized learning schedule. It takes a list of `TrainingPhase` objects as input, where each phase is defined by different values of learning rates, weight decays, momentums, and optimizer. The function divides the training process into several parts, each with their own learning rates/ wds/momentums/optimizer detailed in the phases list. 
+
+This function allows training on different datasets by providing a list of different `Data` objects in `data_list`.
+
+The function also enables the use of Stochastic Weight Averaging (SWA), which is a technique that maintains a running average of weights during training and uses that average for making predictions. It improves the generalization performance of the model by smoothing out the weight updates during training.
+
+Other optional arguments for the function include `cycle_save_name` and `best_save_name` for saving the model weights during training and `stop_div` for stopping the training if the loss goes too high. The function also takes `callbacks` as input, which is a list of callbacks to be used during training. 
+
+The function returns None, as the training process updates the model weights directly.
+Is the above code equivalent to the following code? 
+Yes, the above code and the code you provided are equivalent. The only difference is that the first code block is a method inside a class, while the second code block is a standalone function. The functionality of the two code blocks is the same.

@@ -1,0 +1,8 @@
+What does the following code do? 
+The above code applies Automatic Relevance Determination (ARD) and Temporal Activation Regularization (TAR) to the loss during the backward pass in training a neural network. 
+
+ARD is a regularization technique that tries to automatically set the strength of regularization (weight decay) applied to each weight in a neural network, depending on how important the weight is. In this code, if the `alpha` parameter is non-zero, then the loss is modified by adding `alpha` times the mean of the square of the last output tensor (`self.out[-1]`) to the original loss (`last_loss`).
+
+TAR is a regularization technique that encourages the activations in a neural network to be smooth across time. In this code, if the `beta` parameter is non-zero, then the loss is modified by adding `beta` times the mean of the square of the difference between adjacent time steps of the last raw output tensor (`self.raw_out[-1]`) to the original loss (`last_loss`). Note that the first dimension of `h` is assumed to be the batch size, and the second dimension represents the time steps.
+Is the above code equivalent to the following code? 
+Yes, the two code snippets are equivalent. The only difference is the formatting of the code.

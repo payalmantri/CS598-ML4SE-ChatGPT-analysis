@@ -1,0 +1,8 @@
+What does the following code do? 
+The `on_loss_begin` method is a callback method that is called at the beginning of each loss calculation during training. 
+
+This specific implementation of the method saves the second and third tensor in the `last_output` tuple (i.e., `last_output[1]` and `last_output[2]`) as `self.raw_out` and `self.out`, respectively. It then returns a dictionary with the first tensor in the `last_output` tuple (i.e., `last_output[0]`), which is the actual output used for computing the loss. 
+
+The purpose of saving the extra outputs is to allow for post-processing or additional analysis of these outputs after training is complete.
+Is the above code equivalent to the following code? 
+Yes, the two code snippets are equivalent. They both define a method called `on_loss_begin` that takes a tuple of three tensors as its input argument (`last_output`) and saves the second and third tensors in `self.raw_out` and `self.out`, respectively. The method then returns a dictionary with a single key-value pair, where the key is `'last_output'` and the value is the first tensor in `last_output`.

@@ -10,3 +10,10 @@ No, the two codes are not equivalent.
 In the original code, an object is considered file-like if it has either a `read` or a `write` method. In contrast, in the modified code, an object is considered file-like if it is an iterator and has either a `read` or a `write` method. 
 
 Additionally, in the modified code, if the object does not have either a `read` or a `write` method, or if it is not an iterator, it is immediately deemed not file-like and `False` is returned. However, in the original code, the check is combined into a single `return` statement, where `False` is returned if neither `hasattr(obj, 'read')` nor `hasattr(obj, 'write')` evaluates to `True`.
+
+would the codes output the same thing in nominal cases
+
+
+Yes, both versions of the is_file_like function would return the same result in nominal cases. They both check whether an object has a read and/or write method, which are typical attributes of file-like objects.
+
+However, the second version is stricter in its definition of what qualifies as a file-like object. It requires the object to be an iterator in addition to having a read and/or write method. This means that some objects that the first version might consider file-like, but that are not iterable, would be considered not file-like by the second version.

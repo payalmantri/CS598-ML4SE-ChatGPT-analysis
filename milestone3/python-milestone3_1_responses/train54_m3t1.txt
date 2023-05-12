@@ -1,0 +1,12 @@
+What does the following code do? 
+The function `convert_weights` takes in three arguments: `wgts`, `stoi_wgts`, and `itos_new`. 
+
+`wgts` is a dictionary of the model weights. `stoi_wgts` is a dictionary that maps tokens in the old vocabulary to their integer index in the old vocabulary, and `itos_new` is a list of tokens in the new vocabulary.
+
+The function converts the model weights to work with the new vocabulary. Specifically, it creates new embeddings for each token in the new vocabulary by copying the corresponding embedding from the old vocabulary if it exists, or by using the mean embedding if it does not. It also copies the decoder weights from the old vocabulary to the new vocabulary.
+
+If the model has bias terms, the function also creates new bias terms for each token in the new vocabulary by copying the corresponding bias term from the old vocabulary if it exists, or by using the mean bias term if it does not.
+
+The function returns a dictionary of the new model weights.
+Is the above code equivalent to the following code? 
+Yes, the two code blocks are equivalent. There are no differences in the code between the two.
