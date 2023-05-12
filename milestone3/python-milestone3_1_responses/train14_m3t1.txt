@@ -15,3 +15,39 @@ In the first code, for a dictionary,
 Similarly, in the first code, only the first non-null element in a list is used to infer the data type for the array, 
     while in the second code, all the elements are checked. 
 These differences can result in different inferred data types for the same input object.
+
+
+under what input data would the codes differ?
+
+The codes would differ in their inferred data types for input data that has multiple non-null values of different data types in a dictionary.
+
+For example, consider the following input data:
+
+```python
+my_object = {"key1": 1, "key2": "two", "key3": 3.0}
+```
+
+In this case, the `non_null_values` list computed by the list comprehension in the given code would contain three elements: `1`, `"two"`, and `3.0`. Since the elements in this list have different data types, the given code would incorrectly return a MapType with the wrong data type for the values.
+
+In contrast, the modified code would loop over the key-value pairs in the dictionary and infer the data type from the first non-null pair. In this case, the first non-null pair has key `"key1"` and value `1`, which have the same data type, so the modified code would correctly return a MapType with the data type for the values inferred from this pair.
+
+Therefore, the codes would differ in their inferred data types for input data with multiple non-null values of different data types in a dictionary.
+
+
+would the outputs be the same in nominal cases
+
+Yes, in nominal cases, the outputs of the two code snippets should be the same.
+
+In nominal cases, the input data would typically consist of values with the same data type in a dictionary or a list. In these cases, both code snippets would correctly infer the data type for the input data and return the same output.
+
+For example, consider the following input data:
+
+```python
+my_object = {"key1": 1, "key2": 2, "key3": 3}
+```
+
+In this case, both code snippets would correctly infer that the data type for the dictionary values is IntegerType and return the same output, i.e., a MapType with the data type for the values inferred as IntegerType.
+
+Similarly, for input data in a list with values of the same data type, both code snippets would return the same output.
+
+Therefore, in nominal cases, the two code snippets should have the same output.

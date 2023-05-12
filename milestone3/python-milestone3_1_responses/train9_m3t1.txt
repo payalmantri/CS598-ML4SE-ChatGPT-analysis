@@ -10,3 +10,23 @@ The original code uses a for loop to iterate through each batch of images and pr
 In addition, the original code uses a helper function called `get_css_faces_batch` to process each batch of images, while the second code includes the processing logic directly in the main function.
 
 Finally, the second code returns a list of lists, where each inner list contains the face locations for a single batch, while the original code returns a single list containing all the face locations for all batches.
+
+what is the difference in the outputs of the given codes
+
+The outputs of the two code snippets will be different.
+
+The first code snippet returns a flat list of bounding box tuples for all detected faces across all input images. Each bounding box tuple contains the top, right, bottom, and left coordinates of a detected face in CSS order.
+
+The second code snippet returns a list of lists, where each inner list corresponds to the detected faces in a single input image. Each inner list contains the bounding box tuples for the detected faces in that image. 
+
+Therefore, the first code snippet provides a flattened list of all detected faces, regardless of which input image they belong to. The second code snippet returns a nested list, where each element of the outer list corresponds to one of the input images, and contains the bounding boxes of the faces detected in that image.
+
+The choice of which code to use would depend on the specific use case and the desired format of the output.
+
+the first snippet also returns a list of lists
+
+I apologize for my mistake in my previous response. You are correct that the first code snippet returns a list of bounding box tuples for each input image, and each list is nested within an outer list. Therefore, the outputs of the two code snippets are more similar than I originally stated.
+
+However, there is still a difference in the structure of the outputs. The first code snippet returns a flat list of bounding box tuples for all detected faces across all input images, where the order of the tuples in the list corresponds to the order of the input images. In contrast, the second code snippet returns a nested list of bounding box tuples, where each inner list corresponds to the detected faces in a single input image.
+
+So, while both code snippets detect the same number of faces and return the same number of bounding boxes, the order of the boxes in the output list is different, with the first code snippet returning a flattened list of boxes across all images, while the second code snippet returns a nested list of boxes for each image.

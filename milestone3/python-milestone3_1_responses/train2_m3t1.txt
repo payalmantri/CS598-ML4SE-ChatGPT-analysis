@@ -10,3 +10,12 @@ No, the above code using OpenCV is not equivalent to the following code using Pi
 The first code uses OpenCV library to load, manipulate, and display the image while the second code uses Pillow library. The two libraries have different functions and methods to perform the same tasks. For example, OpenCV uses the `cv2.rectangle()` function to draw a rectangle around the face while Pillow uses the `draw.rectangle()` method to do the same. Similarly, OpenCV uses `cv2.putText()` to write text on the image while Pillow uses `draw.text()` method.
 
 Therefore, the two codes are not equivalent, and you cannot replace one with the other without making significant changes.
+
+
+are the outputs the same in nominal cases of the algorithm?
+
+Assuming that the input images and the predictions parameter in both functions are the same, the outputs of the two functions should be visually equivalent in nominal cases of the algorithm.
+
+Both functions draw a rectangle around each detected face and write the corresponding label below it. The rectangles and labels should have the same size, position, and color in both cases, and the resulting images should look identical.
+
+However, there might be some minor differences due to the differences in the libraries and the drawing functions used. For example, the rectangle outlines and the label fonts might look slightly different between the two libraries. But these differences should not be significant enough to affect the overall face recognition results.

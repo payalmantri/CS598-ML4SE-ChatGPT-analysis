@@ -7,6 +7,22 @@ from chatgpt_wrapper import ChatGPT
 from chatgpt_wrapper.config import Config
 import os
 
+'''
+will they produce the same output in nominal cases of execution?
+ignoring error cases, and library differences, will these two programs produce the same output?
+2, 7, 9, 14, 15, 18, 20, 22, 23, 28, 29-33, 39, 40, 49
+
+write a test case where the codes would have different outputs
+what cases would the codes have different outputs?
+would the codes be the same under nominal cases of execution?
+what are the error cases that would cause the codes to have different outputs?
+under what input data would the outputs be different?
+ask about the difference in outputs between the two codes...
+
+"semantically equivalent" needs to be defined as invariant outputs between 2 codes. 
+just because they use different algorithms doesn't mean they're not semantically equivalent.    
+'''
+
 
 
 

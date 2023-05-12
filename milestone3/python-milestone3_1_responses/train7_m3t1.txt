@@ -4,3 +4,44 @@ Is the above code equivalent to the following code?
 No, the two functions are not equivalent. 
 
 The original code performs an additional step of converting a grayscale image to RGB using OpenCV's `cvtColor` function if the input image is grayscale. The equivalent code does not have this step and assumes that the input image is already in RGB format.
+
+
+can you give me a test case that shows how these two cases are different
+
+
+import cv2
+import dlib
+
+# Load the face detection models
+detector = dlib.get_frontal_face_detector()
+cnn_detector = dlib.cnn_face_detection_model_v1('mmod_human_face_detector.dat')
+
+# Load an image
+img = cv2.imread('test_image.jpg')
+
+# Call the first function to get the face locations in the format (top, right, bottom, left)
+face_locations_1 = _raw_face_locations(img, model='hog')
+
+# Call the second function to get the raw face detection output
+face_locations_2 = _raw_face_locations(img, model='hog')
+
+# Draw the face bounding boxes on the image
+for (top, right, bottom, left) in face_locations_1:
+    cv2.rectangle(img, (left, top), (right, bottom), (0, 0, 255), 2)
+
+for face_rect in face_locations_2:
+    cv2.rectangle(img, (face_rect.left(), face_rect.top()), (face_rect.right(), face_rect.bottom()), (0, 0, 255), 2)
+
+# Display the image with the face bounding boxes
+cv2.imshow('Face Detection', img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+isn't the tuple that contains the output identical?
+
+In theory, the output tuple from both functions should contain the same information regarding the face locations, since the second function is simply returning the raw output of the face detection model used in the first function.
+
+However, there could be slight differences in the exact coordinates of the face bounding boxes returned by each function, depending on the implementation of the face detection model used and any differences in the parameters passed to the model by each function.
+
+Additionally, as mentioned before, the second function returns the raw output of the face detection model without any further formatting or processing, while the first function formats the output into a list of tuples in a specific format, which may be more convenient for some use cases.
